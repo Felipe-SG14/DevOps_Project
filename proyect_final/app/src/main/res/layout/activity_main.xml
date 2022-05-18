@@ -1,29 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:paddingBottom="@dimen/activity_vertical_margin"
+android:paddingLeft="@dimen/activity_horizontal_margin"
+android:paddingRight="@dimen/activity_horizontal_margin"
+android:paddingTop="@dimen/activity_vertical_margin"
+app:layout_behavior="@string/appbar_scrolling_view_behavior"
+tools:context=".MainActivity">
+
+
+    <ImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="98dp"
+        android:layout_height="98dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/avatar_example"
+        app:civ_border_color="#FFF"
+        app:civ_border_width="2dp" />
+
+<TableLayout
+    android:id="@+id/coordinates"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".MainActivity">
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/iv_avatar"
+    android:layout_marginTop="48dp">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_latitude"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="New Text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            tools:text="20.3" />
+
+        <TextView
+            android:id="@+id/tv_longitude"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="New Text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            tools:text="45.2" />
+    </TableRow>
+
+    <TableRow
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_latitude_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/latitude_label"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+        <TextView
+            android:id="@+id/tv_longitude_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/longitude_label"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:id="@+id/iv_activity_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:src="@drawable/ic_question" />
+
+    </TableRow>
+
+    <TextView
+        android:id="@+id/tv_activity_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:text="@string/activity_label"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+    <TableRow>
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_weight="3"
+            android:layout_width="410dp"
+            android:layout_height="61dp"
+            android:layout_marginTop="159dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginRight="1dp"
+            android:switchMinWidth="55dp"
+            android:text="ON/OFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:checked="false"/>
+
+</TableRow>
+
+</TableLayout>
 
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="410dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="159dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
-        android:switchMinWidth="55dp"
-        android:text="ON/OFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:checked="false"/>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
+</RelativeLayout>
