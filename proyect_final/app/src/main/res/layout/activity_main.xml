@@ -17,9 +17,7 @@ tools:context=".MainActivity">
         android:layout_width="98dp"
         android:layout_height="98dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/avatar_example"
-        app:civ_border_color="#FFF"
-        app:civ_border_width="2dp" />
+        android:src="@drawable/avatar_example" />
 
 <TableLayout
     android:id="@+id/coordinates"
@@ -106,6 +104,7 @@ tools:context=".MainActivity">
         android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
     <TableRow>
+
         <Switch
             android:id="@+id/switch1"
             android:layout_weight="3"
@@ -126,7 +125,5 @@ tools:context=".MainActivity">
 </TableRow>
 
 </TableLayout>
-
-
 
 </RelativeLayout>
