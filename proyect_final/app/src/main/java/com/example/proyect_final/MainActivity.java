@@ -4,15 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.annotation.Nullable;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
+
 import android.nfc.Tag;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+
     protected void onStart() {
         super.onStart();
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -65,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getLastLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.ACCESS_FINE_LOCATION},
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     LOCATION_REQUEST_CODE);
             return;
         }
@@ -74,17 +79,14 @@ public class MainActivity extends AppCompatActivity {
         locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                if(location!=null)
-                {
+                if (location != null) {
                     //We hava a loction
                     Log.d(TAG, "onSuccess" + location.toString());
-                    Log.d(TAG,"onSuccess" + location.getLatitude());
+                    Log.d(TAG, "onSuccess" + location.getLatitude());
                     Log.d(TAG, "onSuccess" + location.getLongitude());
 
-                }
-                else
-                {
-                    Log.d(TAG,"onSuccess: Location was null...");
+                } else {
+                    Log.d(TAG, "onSuccess: Location was null...");
                 }
             }
         });
@@ -92,25 +94,20 @@ public class MainActivity extends AppCompatActivity {
         locationTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e(TAG, "onFaiure: "+ e.getLocalizedMessage());
+                Log.e(TAG, "onFaiure: " + e.getLocalizedMessage());
             }
         });
 
     }
 
-    private void askLocationPermission()
-    {
-        if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED)
-        {
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION))
-            {
+    private void askLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                 Log.d(TAG, "askLocationPermission: you should show an alert dialog");
-                ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.ACCESS_FINE_LOCATION},
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         LOCATION_REQUEST_CODE);
-            }
-            else
-            {
-                ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.ACCESS_FINE_LOCATION},
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         LOCATION_REQUEST_CODE);
             }
         }
@@ -119,15 +116,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == LOCATION_REQUEST_CODE)
-        {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            {
+        if (requestCode == LOCATION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //Permission granted
                 getLastLocation();
-            }
-            else
-            {
+            } else {
                 //Permission not granted
             }
         }
