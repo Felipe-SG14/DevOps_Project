@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     int LOCATION_REQUEST_CODE = 1001;
 
+    private double latitude;
+    private double longitude;
+
     FusedLocationProviderClient fusedLocationProviderClient;
 
     Switch switch1;
@@ -80,10 +83,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
-                    //We hava a loction
+                    //We have a location
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+
                     Log.d(TAG, "onSuccess" + location.toString());
-                    Log.d(TAG, "onSuccess" + location.getLatitude());
-                    Log.d(TAG, "onSuccess" + location.getLongitude());
+                    Log.d(TAG, "onSuccess" + latitude);
+                    Log.d(TAG, "onSuccess" + longitude);
 
                 } else {
                     Log.d(TAG, "onSuccess: Location was null...");
