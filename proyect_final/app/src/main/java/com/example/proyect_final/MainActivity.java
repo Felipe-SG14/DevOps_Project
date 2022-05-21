@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b){
 
                 if(b){
-                    String url = "http://davinci999.xyz/solicitud.php"; //http://davinci999.xyz
+                    String url = "https://spiralweb.000webhostapp.com/solicitud.php"; //http://davinci999.xyz
                     JSONObject jsonObject_foco_on = new JSONObject();
                     try {
                         jsonObject_foco_on.put("dispositivo_id",1);
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    String url = "http://davinci999.xyz/solicitud.php"; //http://davinci999.xyz
+                    String url = "https://spiralweb.000webhostapp.com/solicitud.php"; //http://davinci999.xyz
                     String message = "Light off";
                     try {
                         dataUsingVolley(jsonObject_foco_off, url, message);
