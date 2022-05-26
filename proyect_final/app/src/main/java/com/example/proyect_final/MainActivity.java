@@ -38,37 +38,55 @@ public class MainActivity extends AppCompatActivity {
 
     FusedLocationProviderClient fusedLocationProviderClient;
 
-
-    public class MainActivity extends AppCompatActivity {
-
-        Button mama;
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-            mama=(Button)findViewById(R.id.mama);
-
-            mama.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startActivity(new Intent (MainActivity.this, MamaActivity.class));
-                }
-            });
-
-        }
-    }
+    ///////// Variables roles
+    // public Button mama; NO NECESARIO POR EL MOMENTO
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        // mama = (Button)findViewById(R.id.mama); NO NECESARIO POR EL MOMENTO
+
+
 
     }
 
+    /////////  Código para hacer el cambio entre ventanas ///////////////////////////////////////////////////////////////////
+    public void rol_mama(View view)
+    {
+        String rolMama = "mama";
+        Intent i1 = new Intent(this, MamaActivity.class);
+        i1.putExtra("dato",rolMama);
+        startActivity(i1);
+    }
+
+    public void rol_papa(View view)
+    {
+        // String rolPapa = "papa"; NO ES NECESARIO POR AHORA
+        Intent i2 = new Intent(this, PapaActivity.class);
+        // i2.putExtra("dato",rolPapa);
+        startActivity(i2);
+    }
+
+    public void rol_hija(View view)
+    {
+        String rolHija = "hija";
+        Intent i3 = new Intent(this, MamaActivity.class);
+        i3.putExtra("dato",rolHija);
+        startActivity(i3);
+    }
+
+    public void rol_hijo(View view)
+    {
+        String rolHijo = "hijo";
+        Intent i4 = new Intent(this, MamaActivity.class);
+        i4.putExtra("dato",rolHijo);
+        startActivity(i4);
+    }
+
+    /////////  Código de PHP-JSON ////////////////////////////////////////////////////////////////////////////////////////////
     public void dataUsingVolley(JSONObject jsonObject, String url, String message) throws JSONException {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
@@ -83,10 +101,9 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);
     }
 
-//////////////////////////////////////// Codigo de GPS y permisos ////////////////////////////////////////////////////////////////
+    /////////  Código de GPS y permisos //////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-
     protected void onStart() {
         super.onStart();
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -156,4 +173,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }

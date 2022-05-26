@@ -26,7 +26,8 @@
                 android:id="@+id/mama"
                 android:layout_width="114dp"
                 android:layout_height="65dp"
-                android:text="mamá"
+                android:onClick="rol_mama"
+                android:text="MAMÁ"
                 tools:layout_editor_absoluteX="57dp"
                 tools:layout_editor_absoluteY="194dp" />
 
@@ -34,25 +35,28 @@
                 android:id="@+id/button7"
                 android:layout_width="114dp"
                 android:layout_height="65dp"
-                android:text="Papá"
+                android:text="PAPÁ"
                 tools:layout_editor_absoluteX="258dp"
-                tools:layout_editor_absoluteY="194dp" />
+                tools:layout_editor_absoluteY="194dp"
+                android:onClick="rol_papa"/>
 
             <Button
                 android:id="@+id/button4"
                 android:layout_width="114dp"
                 android:layout_height="65dp"
-                android:text="Hija"
+                android:text="HIJA"
                 tools:layout_editor_absoluteX="258dp"
-                tools:layout_editor_absoluteY="476dp" />
+                tools:layout_editor_absoluteY="476dp"
+                android:onClick="rol_hija"/>
 
             <Button
                 android:id="@+id/button5"
                 android:layout_width="114dp"
                 android:layout_height="65dp"
-                android:text="Hijo"
+                android:text="HIJO"
                 tools:layout_editor_absoluteX="57dp"
-                tools:layout_editor_absoluteY="476dp" />
+                tools:layout_editor_absoluteY="476dp"
+                android:onClick="rol_hijo"/>
 
 
         </LinearLayout>
