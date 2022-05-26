@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Location Tracker</string>
+    <string name="action_settings">Settings</string>
+    <string name="longitude_label">Longitud</string>
+    <string name="latitude_label">Latitud</string>
+    <string name="activity_label">Actividad</string>
+</resources>
