@@ -13,7 +13,7 @@
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="7dp">>
+        tools:layout_editor_absoluteX="7dp">
 
         <LinearLayout
             android:layout_width="360dp"
@@ -23,7 +23,7 @@
 
 
             <Switch
-                android:id="@+id/switch2"
+                android:id="@+id/switch1"
                 android:layout_width="355dp"
                 android:layout_height="42dp"
                 android:layout_marginTop="92dp"
@@ -40,7 +40,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
-                android:id="@+id/switch3"
+                android:id="@+id/switch2"
                 android:layout_width="355dp"
                 android:layout_height="42dp"
                 android:layout_marginTop="92dp"
@@ -57,7 +57,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
-                android:id="@+id/switch4"
+                android:id="@+id/switch3"
                 android:layout_width="355dp"
                 android:layout_height="42dp"
                 android:layout_marginTop="92dp"
@@ -74,7 +74,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
-                android:id="@+id/switch5"
+                android:id="@+id/switch4"
                 android:layout_width="355dp"
                 android:layout_height="42dp"
                 android:layout_marginTop="92dp"
@@ -91,7 +91,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
-                android:id="@+id/switch6"
+                android:id="@+id/switch5"
                 android:layout_width="355dp"
                 android:layout_height="42dp"
                 android:layout_marginTop="92dp"
@@ -108,7 +108,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
-                android:id="@+id/switch7"
+                android:id="@+id/switch6"
                 android:layout_width="355dp"
                 android:layout_height="42dp"
                 android:layout_marginTop="92dp"
@@ -125,7 +125,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
-                android:id="@+id/switch8"
+                android:id="@+id/switch7"
                 android:layout_width="355dp"
                 android:layout_height="42dp"
                 android:layout_marginTop="92dp"
@@ -142,7 +142,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
-                android:id="@+id/switch9"
+                android:id="@+id/switch8"
                 android:layout_width="355dp"
                 android:layout_height="42dp"
                 android:layout_marginTop="92dp"
@@ -159,14 +159,21 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <SeekBar
-                android:id="@+id/seekBar2"
+                android:id="@+id/seekBar1"
                 android:layout_width="match_parent"
                 android:layout_height="60dp" />
 
             <SeekBar
-                android:id="@+id/seekBar3"
+                android:id="@+id/seekBar2"
                 android:layout_width="match_parent"
                 android:layout_height="60dp" />
+
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:onClick="Regresar"
+                android:text="@string/btn_regresar" />
 
 
         </LinearLayout>
