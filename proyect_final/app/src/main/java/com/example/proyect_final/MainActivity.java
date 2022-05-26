@@ -39,36 +39,28 @@ public class MainActivity extends AppCompatActivity {
     FusedLocationProviderClient fusedLocationProviderClient;
 
 
-    public class MainActivity extends AppCompatActivity {
-
-        Button mama;
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-            mama=(Button)findViewById(R.id.mama);
-
-            mama.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startActivity(new Intent (MainActivity.this, MamaActivity.class));
-                }
-            });
-
-        }
-    }
+    Button mama;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        mama=(Button)findViewById(R.id.mama);
+
+        mama.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent (MainActivity.this, MamaActivity.class));
+            }
+        });
 
     }
 
+
+
+    /////////  Codigo de PHP-JSON
     public void dataUsingVolley(JSONObject jsonObject, String url, String message) throws JSONException {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
