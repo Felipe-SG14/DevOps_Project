@@ -65,56 +65,56 @@ public class MamaActivity extends AppCompatActivity {
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                switchAccion(b);
+                switchAccion(b,1);
             }
         });
 
         switch2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                switchAccion(b);
+                switchAccion(b,2);
             }
         });
 
         switch3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                switchAccion(b);
+                switchAccion(b,3);
             }
         });
 
         switch4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                switchAccion(b);
+                switchAccion(b,4);
             }
         });
 
         switch5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                switchAccion(b);
+                switchAccion(b,5);
             }
         });
 
         switch6.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                switchAccion(b);
+                switchAccion(b,6);
             }
         });
 
         switchHija.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                switchAccion(b);
+                switchAccion(b,7);
             }
         });
 
         switchHijo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                switchAccion(b);
+                switchAccion(b,8);
             }
         });
 
@@ -122,12 +122,12 @@ public class MamaActivity extends AppCompatActivity {
 
 
     //switchAccion(boolean b) ---> Adentro estan las acciones de Verdadero o Falso del Switch
-    private void switchAccion(boolean b){
+    private void switchAccion(boolean b, int number_switch){
         if(b){
-            String url = "https://spiralweb.000webhostapp.com/solicitud.php"; //http://davinci999.xyz
+            String url = "https://davinci999.xyz/solicitud.php"; //http://davinci999.xyz
             JSONObject jsonObject_foco_on = new JSONObject();
             try {
-                jsonObject_foco_on.put("dispositivo_id",1);
+                jsonObject_foco_on.put("dispositivo_id",number_switch);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -151,7 +151,7 @@ public class MamaActivity extends AppCompatActivity {
         else{
             JSONObject jsonObject_foco_off = new JSONObject();
             try {
-                jsonObject_foco_off.put("dispositivo_id",1);
+                jsonObject_foco_off.put("dispositivo_id",number_switch);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -165,7 +165,7 @@ public class MamaActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            String url = "https://spiralweb.000webhostapp.com/solicitud.php"; //http://davinci999.xyz
+            String url = "https://davinci999.xyz/solicitud.php"; //http://davinci999.xyz
             String message = "Light off";
             try {
                 dataUsingVolley(jsonObject_foco_off, url, message);
@@ -251,6 +251,25 @@ public class MamaActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 intensity=i;
+                String url = "https://davinci999.xyz/solicitud_intensidad.php"; //http://davinci999.xyz
+                JSONObject jsonObject_intensidad_girl = new JSONObject();
+                try {
+                    jsonObject_intensidad_girl.put("dispositivo_id",7);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    jsonObject_intensidad_girl.put("Intensidad",intensity);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                String message = "Intensity modified";
+                try {
+                    dataUsingVolley(jsonObject_intensidad_girl, url, message);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
 
             @Override
@@ -273,6 +292,24 @@ public class MamaActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 intensity=i;
+                String url = "https://davinci999.xyz/solicitud_intensidad.php"; //http://davinci999.xyz
+                JSONObject jsonObject_intensidad_boy = new JSONObject();
+                try {
+                    jsonObject_intensidad_boy.put("dispositivo_id",8);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    jsonObject_intensidad_boy.put("Intensidad",intensity);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                String message = "Intensity modified";
+                try {
+                    dataUsingVolley(jsonObject_intensidad_boy, url, message);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

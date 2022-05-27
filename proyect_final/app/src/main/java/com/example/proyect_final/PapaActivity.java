@@ -15,11 +15,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class PapaActivity extends AppCompatActivity {
 
@@ -76,13 +83,34 @@ public class PapaActivity extends AppCompatActivity {
                     longitude = location.getLongitude();
 
                     // Aqui se envia la ubicacion (Latitud  y longitud)
-                    Toast.makeText(PapaActivity.this,
-                            "Latitud: " +String.valueOf(latitude) +
-                           "\n" + "Longitud: " +String.valueOf(longitude), Toast.LENGTH_SHORT).show();
+                    String url = "https://davinci999.xyz/Solicitud_ubicacion.php"; //http://davinci999.xyz
+                    JSONObject jsonObject_ubicacion  = new JSONObject();
+                    try {
+                        jsonObject_ubicacion.put("UBICACION_ID",1);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        jsonObject_ubicacion.put("LONGITUD",longitude);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        jsonObject_ubicacion.put("LATITUD",latitude);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    String message = "Latitud: " +String.valueOf(latitude) +
+                           "\n" + "Longitud: " +String.valueOf(longitude);
+                    try {
+                        dataUsingVolley(jsonObject_ubicacion, url, message);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     
 
                 } else {
-                    Log.d(TAG, "onSuccess: Location was null...");
+                    Toast.makeText(PapaActivity.this,"Your location is not active",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -94,6 +122,20 @@ public class PapaActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void dataUsingVolley(JSONObject jsonObject, String url, String message) throws JSONException {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
+                response -> {
+                    Toast response_toast = Toast.makeText(getApplicationContext(), "e " + response.toString(), Toast.LENGTH_LONG);
+                    response_toast.show();
+                }, error -> {
+            Toast response_toast = Toast.makeText(PapaActivity.this, message, Toast.LENGTH_LONG);
+            response_toast.show();
+        });
+
+        requestQueue.add(jsonObjectRequest);
     }
 
     
