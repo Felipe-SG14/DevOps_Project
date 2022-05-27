@@ -83,7 +83,7 @@ public class PapaActivity extends AppCompatActivity {
                     longitude = location.getLongitude();
 
                     // Aqui se envia la ubicacion (Latitud  y longitud)
-                    String url = "https://davinci999.xyz/Solicitud_ubicacion.php"; //http://davinci999.xyz
+                    String url = "https://davinci999.xyz/solicitud_ubicacion.php"; //http://davinci999.xyz
                     JSONObject jsonObject_ubicacion  = new JSONObject();
                     try {
                         jsonObject_ubicacion.put("UBICACION_ID",1);
