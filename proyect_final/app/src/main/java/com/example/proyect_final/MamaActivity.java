@@ -137,7 +137,7 @@ public class MamaActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             try {
-                jsonObject_foco_on.put("Intensidad",100);
+                jsonObject_foco_on.put("Intensidad",255);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -254,7 +254,7 @@ public class MamaActivity extends AppCompatActivity {
                 String url = "https://davinci999.xyz/solicitud_intensidad.php"; //http://davinci999.xyz
                 JSONObject jsonObject_intensidad_girl = new JSONObject();
                 try {
-                    jsonObject_intensidad_girl.put("dispositivo_id",7);
+                    jsonObject_intensidad_girl.put("dispositivo_id",4);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
