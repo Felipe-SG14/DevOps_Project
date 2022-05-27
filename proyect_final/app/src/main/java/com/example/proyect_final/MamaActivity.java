@@ -54,8 +54,8 @@ public class MamaActivity extends AppCompatActivity {
         switchHija = (Switch)findViewById(R.id.switch7);
         switchHijo = (Switch)findViewById(R.id.switch8);
 
-        sk_hija = (SeekBar)findViewById(R.id.seekBar1);
-        sk_hijo = (SeekBar)findViewById(R.id.seekBar2);
+        sk_hija();
+        sk_hijo();
 
         // Permisos de acceso a botones
         rol = getIntent().getStringExtra("dato");
@@ -240,6 +240,53 @@ public class MamaActivity extends AppCompatActivity {
             sk_hijo.setVisibility(View.INVISIBLE);
         }
     }
+
+    /////// Funciones de los sliders que controlan la intensidad de los focos de los hijos
+
+    public void sk_hija(){ //Foco de la hija
+        sk_hija = (SeekBar)findViewById(R.id.seekBar1);
+        sk_hija.setMax(256); //Valor maximo de intensidad
+        sk_hija.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int intensity;
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                intensity=i;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                Toast.makeText(MamaActivity.this,String.valueOf(intensity),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void sk_hijo(){ //Foco del hijo
+        sk_hijo = (SeekBar)findViewById(R.id.seekBar2);
+        sk_hijo.setMax(256); //Valor maximo de intensidad
+        sk_hijo.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int intensity;
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                intensity=i;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                Toast.makeText(MamaActivity.this,String.valueOf(intensity),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }
 
 
