@@ -1,29 +1,32 @@
 package com.example.proyect_final;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.annotation.Nullable;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.location.Location;
-
-import android.nfc.Tag;
-
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.CompoundButton;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,33 +38,72 @@ public class MainActivity extends AppCompatActivity {
 
     FusedLocationProviderClient fusedLocationProviderClient;
 
-    Switch switch1;
+    ///////// Variables roles
+    // public Button mama; NO NECESARIO POR EL MOMENTO
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        switch1 = (Switch) findViewById(R.id.switch1);
-        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
-                if (b) {
-                    Toast.makeText(MainActivity.this, "Light on", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MainActivity.this, "Light off", Toast.LENGTH_SHORT).show();
-                }
+        // mama = (Button)findViewById(R.id.mama); NO NECESARIO POR EL MOMENTO
 
 
-            }
-        });
+
     }
 
-    @Override
+    /////////  Código para hacer el cambio entre ventanas ///////////////////////////////////////////////////////////////////
+    public void rol_mama(View view)
+    {
+        String rolMama = "mama";
+        Intent i1 = new Intent(this, MamaActivity.class);
+        i1.putExtra("dato",rolMama);
+        startActivity(i1);
+    }
 
+    public void rol_papa(View view)
+    {
+        // String rolPapa = "papa"; NO ES NECESARIO POR AHORA
+        Intent i2 = new Intent(this, PapaActivity.class);
+        // i2.putExtra("dato",rolPapa);
+        startActivity(i2);
+    }
+
+    public void rol_hija(View view)
+    {
+        String rolHija = "hija";
+        Intent i3 = new Intent(this, MamaActivity.class);
+        i3.putExtra("dato",rolHija);
+        startActivity(i3);
+    }
+
+    public void rol_hijo(View view)
+    {
+        String rolHijo = "hijo";
+        Intent i4 = new Intent(this, MamaActivity.class);
+        i4.putExtra("dato",rolHijo);
+        startActivity(i4);
+    }
+
+    /////////  Código de PHP-JSON ////////////////////////////////////////////////////////////////////////////////////////////
+    public void dataUsingVolley(JSONObject jsonObject, String url, String message) throws JSONException {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
+                response -> {
+                    Toast response_toast = Toast.makeText(getApplicationContext(), "e " + response.toString(), Toast.LENGTH_LONG);
+                    response_toast.show();
+                }, error -> {
+            Toast response_toast = Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG);
+            response_toast.show();
+        });
+
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    /////////  Código de GPS y permisos //////////////////////////////////////////////////////////////////////////////////////
+
+    @Override
     protected void onStart() {
         super.onStart();
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -131,4 +173,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }

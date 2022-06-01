@@ -4,4 +4,6 @@
     <string name="longitude_label">Longitud</string>
     <string name="latitude_label">Latitud</string>
     <string name="activity_label">Actividad</string>
+    <string name="btn_regresar">Regresar</string>
+
 </resources>
