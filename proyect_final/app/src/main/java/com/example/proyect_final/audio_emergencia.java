@@ -39,40 +39,21 @@ public class audio_emergencia extends AppCompatActivity {
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             mediaRecorder.setOutputFile(getRecordingFilePath());
             mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            mediaRecorder.setMaxDuration(30000);
             mediaRecorder.prepare();
             mediaRecorder.start();
-
             Toast.makeText(this, "Recording is started",Toast.LENGTH_LONG).show();
 
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public void btnStopPress(View v){
-        mediaRecorder.stop();
-        mediaRecorder.release();
-        mediaRecorder=null;
-        Toast.makeText(this, "Recording is stopped",Toast.LENGTH_LONG).show();
-
-    }
-
-    public void btnPlayPress(View v){
-        try{
-            mediaPlayer=new MediaPlayer();
-            mediaPlayer.setDataSource(getRecordingFilePath());
-            mediaPlayer.prepare();
-            mediaPlayer.start();
-            Toast.makeText(this, "Recording is playing",Toast.LENGTH_LONG).show();
+            mediaRecorder.setOnInfoListener((mr, what, extra) -> {
+                if(what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED){
+                    Toast.makeText(this, "Recording has stopped",Toast.LENGTH_LONG).show();
+                }
+            });
 
         }
         catch (Exception e){
             e.printStackTrace();
         }
-
-
-
     }
 
     private boolean isMicrophonePresent() {
@@ -99,7 +80,7 @@ public class audio_emergencia extends AppCompatActivity {
     private String getRecordingFilePath(){
         ContextWrapper contextWrapper= new ContextWrapper(getApplicationContext());
         File musicDirectory =contextWrapper.getExternalFilesDir((Environment.DIRECTORY_MUSIC));
-        File file =new File(musicDirectory,"testRecordingFile"+".mp3");
-        return file.getPath();
+        File audio_e =new File(musicDirectory,"testRecordingFile"+".mp3");
+        return audio_e.getPath();
     }
 }
