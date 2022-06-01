@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Proyect_final">
         <activity
+            android:name=".audio_emergencia"
+            android:exported="false" />
+        <activity
             android:name=".PapaActivity"
             android:exported="false" />
         <activity
