@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         // mama = (Button)findViewById(R.id.mama); NO NECESARIO POR EL MOMENTO
 
 
-
     }
 
     /////////  Código para hacer el cambio entre ventanas ///////////////////////////////////////////////////////////////////
@@ -60,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
         Intent i1 = new Intent(this, MamaActivity.class);
         i1.putExtra("dato",rolMama);
         startActivity(i1);
+
+        /*Intent audio=new Intent(this,audio_emergencia.class);
+        audio.putExtra("dato","audio");
+        startActivity(audio);*/
     }
 
     public void rol_papa(View view)
