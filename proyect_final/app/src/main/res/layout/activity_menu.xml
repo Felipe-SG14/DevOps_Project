@@ -7,5 +7,37 @@
     tools:context=".MenuActivity">
 
 
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="273dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="208dp"
+        android:text="Luces"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="273dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="104dp"
+        android:backgroundTint="@color/colorAccent"
+        android:text="Dejar de reproducir música"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button8" />
+
+    <Button
+        android:id="@+id/button10"
+        android:layout_width="273dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="100dp"
+        android:backgroundTint="@color/red"
+        android:text="Dejar de compartir ubicación"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button9" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
