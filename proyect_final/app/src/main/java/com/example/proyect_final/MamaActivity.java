@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -56,6 +58,8 @@ public class MamaActivity extends AppCompatActivity {
 
         sk_hija();
         sk_hijo();
+
+        updateState();
 
         // Permisos de acceso a botones
         rol = getIntent().getStringExtra("dato");
@@ -319,6 +323,97 @@ public class MamaActivity extends AppCompatActivity {
         });
     }
 
+    /////////Funciones para la actualización de los switches y de lso seek bars
+
+    public void getState(String url, Switch sw){ // Lee y actualiza el estado de los switches
+        RequestQueue myQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try {
+                            int estado = response.getInt("Estado");
+                            if(estado==1)
+                            {
+                                sw.setChecked(true);
+                            }
+                            else
+                            {
+                                sw.setChecked(false);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        myQueue.add(request);
+    }
+
+    public void getIntensity(String url, SeekBar sb){ // Lee y actualiza el estado de los seekbars
+        RequestQueue myQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try {
+                            int intensidad = response.getInt("Intensidad");
+                            sb.setProgress(intensidad);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        myQueue.add(request);
+    }
+
+    public void updateState() // Función que actualiza todos los focos
+    {
+        String url1 = "https://davinci999.xyz/informacionAndroid.php?dispositivo_id=1";
+        String url2 = "https://davinci999.xyz/informacionAndroid.php?dispositivo_id=2";
+        String url3 = "https://davinci999.xyz/informacionAndroid.php?dispositivo_id=3";
+        String url4 = "https://davinci999.xyz/informacionAndroid.php?dispositivo_id=4";
+        String url5 = "https://davinci999.xyz/informacionAndroid.php?dispositivo_id=5";
+        String url6 = "https://davinci999.xyz/informacionAndroid.php?dispositivo_id=6";
+        String url7 = "https://davinci999.xyz/informacionAndroid.php?dispositivo_id=7";
+        String url8 = "https://davinci999.xyz/informacionAndroid.php?dispositivo_id=8";
+
+        getState(url1,switch1);
+        getState(url2,switch2);
+        getState(url3,switch3);
+        getState(url4,switch4);
+        getState(url5,switch5);
+        getState(url6,switch6);
+        getState(url7,switchHija);
+        getState(url8,switchHijo);
+
+        getIntensity(url7,sk_hija);
+        getIntensity(url8,sk_hijo);
+
+    }
 }
 
 
