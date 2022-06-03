@@ -2,6 +2,7 @@ package com.example.proyect_final;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -18,6 +19,32 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+//Thread Class
+class PrimeThread extends Thread {
+    long minPrime;
+    PrimeThread(long minPrime) {
+        this.minPrime = minPrime;
+    }
+
+    //PrimeThread p = new PrimeThread(143);
+    //p.start();
+
+    public void run() {
+        // compute primes larger than minPrime
+        // To do in process
+        String TAG = "MyActivity";
+        for (int i=0;i < 100; i++)
+        {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Log.d(TAG,"Ejecutando subproceso" + i);
+        }
+    }
+}
 
 public class MamaActivity extends AppCompatActivity {
 
