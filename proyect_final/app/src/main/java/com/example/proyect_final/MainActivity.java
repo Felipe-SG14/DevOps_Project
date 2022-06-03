@@ -57,23 +57,23 @@ public class MainActivity extends AppCompatActivity {
     public void rol_mama(View view)
     {
         String rolMama = "mama";
-        Intent i1 = new Intent(this, MamaActivity.class);
+        Intent i1 = new Intent(this, MenuActivity.class);
         i1.putExtra("dato",rolMama);
         startActivity(i1);
     }
 
     public void rol_papa(View view)
     {
-        // String rolPapa = "papa"; NO ES NECESARIO POR AHORA
-        Intent i2 = new Intent(this, PapaActivity.class);
-        // i2.putExtra("dato",rolPapa);
+        String rolPapa = "papa";
+        Intent i2 = new Intent(this, MenuActivity.class);
+        i2.putExtra("dato", rolPapa);
         startActivity(i2);
     }
 
     public void rol_hija(View view)
     {
         String rolHija = "hija";
-        Intent i3 = new Intent(this, MamaActivity.class);
+        Intent i3 = new Intent(this, MenuActivity.class);
         i3.putExtra("dato",rolHija);
         startActivity(i3);
     }
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     public void rol_hijo(View view)
     {
         String rolHijo = "hijo";
-        Intent i4 = new Intent(this, MamaActivity.class);
+        Intent i4 = new Intent(this, MenuActivity.class);
         i4.putExtra("dato",rolHijo);
         startActivity(i4);
     }

@@ -173,13 +173,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp" />
 
-            <Button
-                android:id="@+id/btnBack"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:onClick="Regresar"
-                android:text="@string/btn_regresar" />
-
 
         </LinearLayout>
     </ScrollView>

@@ -58,18 +58,19 @@
                 tools:layout_editor_absoluteY="476dp"
                 android:onClick="rol_hijo"/>
 
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="187dp"
+                android:layout_height="65dp"
+                android:backgroundTint="@color/red"
+                android:onClick="rol_hijo"
+                android:text="Emergencia"
+                tools:layout_editor_absoluteX="57dp"
+                tools:layout_editor_absoluteY="476dp" />
+
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="187dp"
-            android:layout_height="65dp"
-            android:backgroundTint="@color/red"
-            android:onClick="rol_hijo"
-            android:text="Emergencia"
-            tools:layout_editor_absoluteX="57dp"
-            tools:layout_editor_absoluteY="476dp" />
     </LinearLayout>
 
 

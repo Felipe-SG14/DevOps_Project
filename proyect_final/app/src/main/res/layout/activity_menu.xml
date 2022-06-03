@@ -8,36 +8,50 @@
 
 
     <Button
-        android:id="@+id/button8"
+        android:id="@+id/stopEmergency"
         android:layout_width="273dp"
         android:layout_height="55dp"
-        android:layout_marginTop="208dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/red"
+        android:text="Dejar de compartir ubicación"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ubicacionPadre" />
+
+    <Button
+        android:id="@+id/ubicacionPadre"
+        android:layout_width="273dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:onClick="abrirMenuUbicacion"
+        android:text="MANDAR UBICACIÓN"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/musica" />
+
+    <Button
+        android:id="@+id/luces"
+        android:layout_width="273dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="64dp"
+        android:onClick="abrirMenuLuces"
         android:text="Luces"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button9"
+        android:id="@+id/musica"
         android:layout_width="273dp"
         android:layout_height="55dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="44dp"
         android:backgroundTint="@color/colorAccent"
-        android:text="Dejar de reproducir música"
+        android:onClick="controlMusica"
+        android:text="MÚSICA"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button8" />
-
-    <Button
-        android:id="@+id/button10"
-        android:layout_width="273dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="100dp"
-        android:backgroundTint="@color/red"
-        android:text="Dejar de compartir ubicación"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button9" />
+        app:layout_constraintTop_toBottomOf="@+id/luces" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

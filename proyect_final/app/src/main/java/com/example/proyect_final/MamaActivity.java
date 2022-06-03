@@ -61,7 +61,7 @@ public class MamaActivity extends AppCompatActivity {
         rol = getIntent().getStringExtra("dato");
         PermisosRol(rol);
 
-        //Listeners para cada switch
+        // Listeners para cada switch
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -191,12 +191,7 @@ public class MamaActivity extends AppCompatActivity {
 
 
     /////////  Función para dar permisos de acceso a los botones //////////////////////////////////////////////////////////////
-    // Método para regresar a la ventana principal
-    public void Regresar(View view)
-    {
-        Intent regresarMain = new Intent(this, MainActivity.class);
-        startActivity(regresarMain);
-    }
+    // Método para regresar al menu de opciones
 
     public void PermisosRol(String input)
     {
