@@ -14,37 +14,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-//Thread Class
-class PrimeThread extends Thread {
-    long minPrime;
-    PrimeThread(long minPrime) {
-        this.minPrime = minPrime;
-    }
 
-    //PrimeThread p = new PrimeThread(143);
-    //p.start();
-
-    public void run() {
-        // compute primes larger than minPrime
-        // To do in process
-        String TAG = "MyActivity";
-        for (int i=0;i < 100; i++)
-        {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Log.d(TAG,"Ejecutando subproceso" + i);
-        }
-    }
-}
 
 public class MamaActivity extends AppCompatActivity {
 
@@ -214,6 +192,36 @@ public class MamaActivity extends AppCompatActivity {
         });
 
         requestQueue.add(jsonObjectRequest);
+    }
+
+    /* To run Data update
+                try {
+                    dataUsingVolley_GET_FULL_DATA("https://felipedevopsp2.000webhostapp.com/prueba.php");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+     */
+
+    public void dataUsingVolley_UPDATE_FULL_DATA(String url) throws JSONException {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JSONArray jsonArray = new JSONArray();
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, jsonArray,
+                response -> {
+                    try {
+                        updateViews(response);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }, error -> { });
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    private void updateViews(JSONArray response) throws JSONException {
+        String TAG = "TAG";
+        for (int i = 0; i < response.length(); i++) {
+            JSONObject jsonObject = response.getJSONObject(i);
+            //Accesing each element of the Array
+        }
     }
 
 
