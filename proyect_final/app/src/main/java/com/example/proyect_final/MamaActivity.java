@@ -24,6 +24,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MamaActivity extends AppCompatActivity {
@@ -40,6 +42,7 @@ public class MamaActivity extends AppCompatActivity {
     public Switch switchHijo;    // Switch 8 es para el hijo
     public SeekBar sk_hija;
     public SeekBar sk_hijo;
+    public Timer timerUpdate;
 
 
 
@@ -64,7 +67,21 @@ public class MamaActivity extends AppCompatActivity {
         sk_hija();
         sk_hijo();
 
-        updateState();
+        //Timer definition
+        timerUpdate = new Timer();
+        timerUpdate.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //Thread
+                runOnUiThread(new Runnable(){
+                    @Override
+                    public void run(){
+                        //Here we can modify views
+                        updateState();
+                    }
+                });
+            }
+        }, 0, 1500);
 
         // Permisos de acceso a botones
         rol = getIntent().getStringExtra("dato");
@@ -191,8 +208,8 @@ public class MamaActivity extends AppCompatActivity {
                     Toast response_toast = Toast.makeText(getApplicationContext(), "e " + response.toString(), Toast.LENGTH_LONG);
                     response_toast.show();
                 }, error -> {
-            Toast response_toast = Toast.makeText(MamaActivity.this, message, Toast.LENGTH_LONG);
-            response_toast.show();
+            //Toast response_toast = Toast.makeText(MamaActivity.this, message, Toast.LENGTH_LONG);
+            //response_toast.show();
         });
 
         requestQueue.add(jsonObjectRequest);
@@ -313,7 +330,7 @@ public class MamaActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(MamaActivity.this,String.valueOf(intensity),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MamaActivity.this,String.valueOf(intensity),Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -353,7 +370,7 @@ public class MamaActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(MamaActivity.this,String.valueOf(intensity),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MamaActivity.this,String.valueOf(intensity),Toast.LENGTH_SHORT).show();
             }
         });
     }
