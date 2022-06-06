@@ -87,7 +87,7 @@
                 android:layout_marginRight="1dp"
                 android:checked="false"
                 android:switchMinWidth="55dp"
-                android:text="LED 4"
+                android:text="LED 4 (Hija)"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -138,7 +138,7 @@
                 android:layout_marginRight="1dp"
                 android:checked="false"
                 android:switchMinWidth="55dp"
-                android:text="LED 7 (Hija)"
+                android:text="LED 7"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -172,13 +172,6 @@
                 android:id="@+id/seekBar2"
                 android:layout_width="match_parent"
                 android:layout_height="60dp" />
-
-            <Button
-                android:id="@+id/btnBack"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:onClick="Regresar"
-                android:text="@string/btn_regresar" />
 
 
         </LinearLayout>

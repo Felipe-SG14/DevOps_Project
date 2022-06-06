@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        tools:context=".MainActivity">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/linearlayout"
@@ -17,8 +17,8 @@
         tools:layout_editor_absoluteY="16dp">>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="500dp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -58,9 +58,20 @@
                 tools:layout_editor_absoluteY="476dp"
                 android:onClick="rol_hijo"/>
 
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="187dp"
+                android:layout_height="65dp"
+                android:backgroundTint="@color/red"
+                android:onClick="rol_hijo"
+                android:text="Emergencia"
+                tools:layout_editor_absoluteX="57dp"
+                tools:layout_editor_absoluteY="476dp" />
+
 
         </LinearLayout>
+
     </LinearLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
