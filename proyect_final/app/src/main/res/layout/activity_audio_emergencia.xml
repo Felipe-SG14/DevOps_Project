@@ -18,5 +18,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onStopPress"
+        android:text="Stop"
+        tools:layout_editor_absoluteX="171dp"
+        tools:layout_editor_absoluteY="436dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

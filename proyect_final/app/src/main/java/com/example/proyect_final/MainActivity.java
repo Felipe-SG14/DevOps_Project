@@ -1,10 +1,18 @@
 package com.example.proyect_final;
 
+
 import android.Manifest;
+
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
+
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.LocationRequest;
+
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +28,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -31,15 +44,18 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    int LOCATION_REQUEST_CODE = 1001;
+    int LOCATION_REQUEST_CODE = 10001;
 
     private double latitude;
     private double longitude;
 
     FusedLocationProviderClient fusedLocationProviderClient;
+    LocationRequest locationRequest;
+
 
     ///////// Variables roles
     // public Button mama; NO NECESARIO POR EL MOMENTO
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,43 +65,38 @@ public class MainActivity extends AppCompatActivity {
 
         // mama = (Button)findViewById(R.id.mama); NO NECESARIO POR EL MOMENTO
 
-
     }
 
     /////////  Código para hacer el cambio entre ventanas ///////////////////////////////////////////////////////////////////
-    public void rol_mama(View view)
-    {
-        String rolMama = "mama";
+    public void rol_mama(View view) {
+        /*String rolMama = "mama";
         Intent i1 = new Intent(this, MamaActivity.class);
         i1.putExtra("dato",rolMama);
-        startActivity(i1);
+        startActivity(i1);*/
 
-        /*Intent audio=new Intent(this,audio_emergencia.class);
-        audio.putExtra("dato","audio");
-        startActivity(audio);*/
+        Intent audio = new Intent(this, audio_emergencia.class);
+        audio.putExtra("dato", "audio");
+        startActivity(audio);
     }
 
-    public void rol_papa(View view)
-    {
+    public void rol_papa(View view) {
         // String rolPapa = "papa"; NO ES NECESARIO POR AHORA
         Intent i2 = new Intent(this, PapaActivity.class);
         // i2.putExtra("dato",rolPapa);
         startActivity(i2);
     }
 
-    public void rol_hija(View view)
-    {
+    public void rol_hija(View view) {
         String rolHija = "hija";
         Intent i3 = new Intent(this, MamaActivity.class);
-        i3.putExtra("dato",rolHija);
+        i3.putExtra("dato", rolHija);
         startActivity(i3);
     }
 
-    public void rol_hijo(View view)
-    {
+    public void rol_hijo(View view) {
         String rolHijo = "hijo";
         Intent i4 = new Intent(this, MamaActivity.class);
-        i4.putExtra("dato",rolHijo);
+        i4.putExtra("dato", rolHijo);
         startActivity(i4);
     }
 
@@ -123,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
-
         locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
@@ -132,9 +142,9 @@ public class MainActivity extends AppCompatActivity {
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
 
-                    Log.d(TAG, "onSuccess" + location.toString());
-                    Log.d(TAG, "onSuccess" + latitude);
-                    Log.d(TAG, "onSuccess" + longitude);
+                    Log.d(TAG, "onSuccess " + location.toString());
+                    Log.d(TAG, "onSuccess " + latitude);
+                    Log.d(TAG, "onSuccess " + longitude);
 
                 } else {
                     Log.d(TAG, "onSuccess: Location was null...");
@@ -176,6 +186,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-
 }
