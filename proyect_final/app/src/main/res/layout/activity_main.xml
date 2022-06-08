@@ -18,7 +18,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="479dp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -35,31 +35,38 @@
                 android:id="@+id/button7"
                 android:layout_width="114dp"
                 android:layout_height="65dp"
+                android:onClick="rol_papa"
                 android:text="PAPÁ"
                 tools:layout_editor_absoluteX="258dp"
-                tools:layout_editor_absoluteY="194dp"
-                android:onClick="rol_papa"/>
+                tools:layout_editor_absoluteY="194dp" />
 
             <Button
                 android:id="@+id/button4"
                 android:layout_width="114dp"
                 android:layout_height="65dp"
+                android:onClick="rol_hija"
                 android:text="HIJA"
                 tools:layout_editor_absoluteX="258dp"
-                tools:layout_editor_absoluteY="476dp"
-                android:onClick="rol_hija"/>
+                tools:layout_editor_absoluteY="476dp" />
 
             <Button
                 android:id="@+id/button5"
                 android:layout_width="114dp"
                 android:layout_height="65dp"
+                android:onClick="rol_hijo"
                 android:text="HIJO"
                 tools:layout_editor_absoluteX="57dp"
-                tools:layout_editor_absoluteY="476dp"
-                android:onClick="rol_hijo"/>
+                tools:layout_editor_absoluteY="476dp" />
+
+            <Button
+                android:id="@+id/button_emg"
+                android:layout_width="244dp"
+                android:layout_height="wrap_content"
+                android:text="Emergencia" />
 
 
         </LinearLayout>
+
     </LinearLayout>
 
 

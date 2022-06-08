@@ -13,6 +13,7 @@ import com.google.android.gms.location.LocationRequest;
 
 import android.os.Bundle;
 import android.os.Looper;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -37,6 +38,7 @@ import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
     private double latitude;
     private double longitude;
+
+    Button btnEnviar;
 
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationRequest locationRequest;
@@ -64,6 +68,23 @@ public class MainActivity extends AppCompatActivity {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         // mama = (Button)findViewById(R.id.mama); NO NECESARIO POR EL MOMENTO
+
+        btnEnviar = findViewById(R.id.button_emg);
+
+        if(ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.SEND_SMS}, 1);
+        }
+
+        btnEnviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage("+52 5550685663",null, "Prueba mensaje",null, null);
+
+                Toast.makeText(MainActivity.this, "MSJ Enviado", Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 
