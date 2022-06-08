@@ -15,8 +15,10 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Looper;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -43,6 +45,8 @@ public class audio_emergencia extends AppCompatActivity {
     int LOCATION_REQUEST_CODE = 10001;
     private double latitude;
     private double longitude;
+
+    Button btnEnviar;
 
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationRequest locationRequest;
@@ -85,9 +89,19 @@ public class audio_emergencia extends AppCompatActivity {
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         //---------------------------------------------
 
+        //-----------------ENVIO SMS -------------//
+
+        if(ActivityCompat.checkSelfPermission(audio_emergencia.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(audio_emergencia.this, new String[]{Manifest.permission.SEND_SMS}, 1);
+        }
+
+        //---------------------------------------------
+
     }
 
     public void btnRecordPress(View v){
+        //btnEnviar = findViewById(R.id.button3);
+
         try {
             checkSettingsAndStartLocationUpdates();
             mediaRecorder = new MediaRecorder();
@@ -99,6 +113,11 @@ public class audio_emergencia extends AppCompatActivity {
             mediaRecorder.prepare();
             mediaRecorder.start();
             Toast.makeText(this, "Recording is started",Toast.LENGTH_LONG).show();
+
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage("+52 5567876545",null, "Prueba 2",null, null);
+
+            Toast.makeText(audio_emergencia.this, "MSJ Enviado", Toast.LENGTH_LONG).show();
 
             mediaRecorder.setOnInfoListener((mr, what, extra) -> {
                 if(what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED){

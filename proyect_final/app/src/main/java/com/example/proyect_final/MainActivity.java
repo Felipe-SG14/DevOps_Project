@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
     private double latitude;
     private double longitude;
 
-    Button btnEnviar;
-
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationRequest locationRequest;
 
@@ -68,24 +66,6 @@ public class MainActivity extends AppCompatActivity {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         // mama = (Button)findViewById(R.id.mama); NO NECESARIO POR EL MOMENTO
-
-        btnEnviar = findViewById(R.id.button_emg);
-
-        if(ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.SEND_SMS}, 1);
-        }
-
-        btnEnviar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage("+52 5550685663",null, "Prueba mensaje",null, null);
-
-                Toast.makeText(MainActivity.this, "MSJ Enviado", Toast.LENGTH_LONG).show();
-            }
-        });
-
     }
 
     /////////  Código para hacer el cambio entre ventanas ///////////////////////////////////////////////////////////////////

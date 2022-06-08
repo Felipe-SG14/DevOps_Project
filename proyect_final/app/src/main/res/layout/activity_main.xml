@@ -58,12 +58,6 @@
                 tools:layout_editor_absoluteX="57dp"
                 tools:layout_editor_absoluteY="476dp" />
 
-            <Button
-                android:id="@+id/button_emg"
-                android:layout_width="244dp"
-                android:layout_height="wrap_content"
-                android:text="Emergencia" />
-
 
         </LinearLayout>
 
