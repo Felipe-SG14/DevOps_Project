@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     FusedLocationProviderClient fusedLocationProviderClient;
 
+
     ///////// Variables roles
     // public Button mama; NO NECESARIO POR EL MOMENTO
 

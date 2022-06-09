@@ -9,13 +9,17 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationRequest;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 public class MenuActivity extends AppCompatActivity {
@@ -26,20 +30,25 @@ public class MenuActivity extends AppCompatActivity {
     public Button ubicacionPadre;
     public Button stopEmergency;
 
-    // Para calcular las distancias
-    // Ubicación origen es la ubicación del celular/hijo/usuario
+    // Variables ara calcular distancia
     private double latitudOrigen;
     private double longitudOrigen;
-
-    // Ubicación destino es la ubicación de la casa/destino
     private double latitudDestino;
     private double longitudDestino;
+    private double latitude;
+    private double longitude;
+    public boolean DistanciaMenor5m;
 
-    private boolean DistanciaMenor5m;
 
     // Constantes para calcular la distancia a la casa
     // Radio Ecuatorial
     public static final float RadioTierraKm = 6378;
+
+    private static final String TAG = "MainActivity";
+    int LOCATION_REQUEST_CODE = 10001;
+
+    FusedLocationProviderClient fusedLocationProviderClient;
+    LocationRequest locationRequest;
 
     // Variables para asignar roles
     private String rol;
@@ -48,6 +57,7 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         // Configuración botones
         luces = (Button)findViewById(R.id.luces);
@@ -58,29 +68,37 @@ public class MenuActivity extends AppCompatActivity {
         // Permisos de acceso a botones
         rol = getIntent().getStringExtra("dato");
         PermisosRol(rol);
+    }
 
-        if (rol.equals("hijo"))
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if(rol.equals("hijo"))
         {
-            DistanciaAcasa();
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                getLastLocation();
+            } else
+            {
+                askLocationPermission();
+            }
         }
-
 
     }
 
     // Función que calcula la distancia de la casa a la ubicación del usuario (hijo)
-    public void DistanciaAcasa()
+    public boolean DistanciaAcasa( double latitudOrigen, double longitudOrigen)
     {
+        boolean close;
         // Ubicación Destino (en Km)
         // CASA DEL USUARIO DE RASPBERRY
-        // ACTUALMENTE UBICACIÓN DE LA FACULTAD DE INGENIERÍA
-        latitudDestino = 19.33144;
-        longitudDestino = -99.18408;
+        latitudDestino = 19.69281;
+        longitudDestino = -99.21592;
 
-        // Ubicación Origen (en Km)
-        // CELULAR DEL USUARIO
-        // ACTUALMENTE UBICACIÓN DE LAS BICIS CERCA DE LA FACULTAD DE INGENIERÍA
-        latitudOrigen = 19.33211;
-        longitudOrigen = -99.18438;
+        // Ubicación Origen
+        // USUARIO MÓVIL Ó HIJO
+        Toast.makeText(MenuActivity.this, String.valueOf(latitudOrigen), Toast.LENGTH_SHORT).show();
+        Toast.makeText(MenuActivity.this, String.valueOf(longitudOrigen), Toast.LENGTH_SHORT).show();
 
         // Diferencia de latitudes y longitudes (En radianes)
         double DifLatitud = (latitudDestino-latitudOrigen)*(Math.PI/180);
@@ -93,23 +111,21 @@ public class MenuActivity extends AppCompatActivity {
         double c = 2*(Math.atan2(Math.sqrt(a),Math.sqrt(1-a)));
 
         // d = R · c
-        // En metros
-        double distancia = (RadioTierraKm*c)*1000;
-        String mensajeD = String.valueOf(distancia);
-        Toast.makeText(this, mensajeD, Toast.LENGTH_SHORT).show();
+        double distancia = (RadioTierraKm*c)*1000;      // Distancia en metros
+
+        if(distancia <= 5)
+        {
+            close = true;
+        }
+        else
+        {
+            close = false;
+        }
+        Toast.makeText(MenuActivity.this, String.valueOf(distancia), Toast.LENGTH_SHORT).show();
+        return close;
     }
 
     /////////  Código de GPS y permisos //////////////////////////////////////////////////////////////////////////////////////
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            getLastLocation();
-        } else {
-            askLocationPermission();
-        }
-    }
-
     private void getLastLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
@@ -125,12 +141,15 @@ public class MenuActivity extends AppCompatActivity {
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
 
-                    Log.d(TAG, "onSuccess " + location.toString());
-                    Log.d(TAG, "onSuccess " + latitude);
-                    Log.d(TAG, "onSuccess " + longitude);
+                    // Se comparan distancias
+                    DistanciaMenor5m = DistanciaAcasa(latitude,longitude);
+
+                    // Aquí se hace la siguiente parte de mandar el php
+                    Toast.makeText(MenuActivity.this,String.valueOf(DistanciaMenor5m), Toast.LENGTH_SHORT).show();
 
                 } else {
                     Log.d(TAG, "onSuccess: Location was null...");
+                    Toast.makeText(MenuActivity.this, "Error", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -141,7 +160,6 @@ public class MenuActivity extends AppCompatActivity {
                 Log.e(TAG, "onFaiure: " + e.getLocalizedMessage());
             }
         });
-
     }
 
     private void askLocationPermission() {
