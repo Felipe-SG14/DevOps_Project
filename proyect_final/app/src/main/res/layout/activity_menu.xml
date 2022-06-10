@@ -11,7 +11,7 @@
         android:id="@+id/stopEmergency"
         android:layout_width="273dp"
         android:layout_height="55dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="120dp"
         android:backgroundTint="@color/red"
         android:text="Dejar de compartir ubicación"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,6 +52,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/luces" />
+
+    <TextView
+        android:id="@+id/Distancia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="TextView"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/stopEmergency"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ubicacionPadre"
+        app:layout_constraintVertical_bias="0.103" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
