@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.os.AsyncTask;
 import android.Manifest;
 import android.content.ContextWrapper;
 import android.content.IntentSender;
@@ -18,7 +19,6 @@ import android.os.Looper;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -34,19 +34,25 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import org.apache.commons.net.ftp.FTPClient;
+
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class audio_emergencia extends AppCompatActivity {
 
-    //------------------Ubicación------------------
+    //------------------------------UBICACIÓN-------------------------------
     private static final String TAG = "MainActivity";
     public static final int DEFAULT_UPDATE_INTERVAL = 10;
     public static final int FAST_UPDATE_INTERVAL = 5;
     int LOCATION_REQUEST_CODE = 10001;
     private double latitude;
     private double longitude;
-
-    Button btnEnviar;
 
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationRequest locationRequest;
@@ -64,79 +70,90 @@ public class audio_emergencia extends AppCompatActivity {
 
         }
     };
-    //---------------------------------------------
-
+    //------------------------------------------------------------------------
+    
+    //--------------GRABACIÓN AUDIO-------------------
     private static int MICROPHONE_PERMISSION_CODE=200;
     MediaRecorder mediaRecorder;
-    MediaPlayer mediaPlayer;
-        
+    //------------------------------------------------
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //--------------Grabación Audio--------------
+        //--------------GRABACIÓN AUDIO--------------
         setContentView(R.layout.activity_audio_emergencia);
         if(isMicrophonePresent()){
             getMicrophonePermission();
         }
         //--------------------------------------------
 
-        //-------------Ubicación-----------------------
+        //--------------------------------UBICACIÓN-----------------------------------------------
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         locationRequest = LocationRequest.create();
         locationRequest.setInterval(1000 * DEFAULT_UPDATE_INTERVAL);
         locationRequest.setFastestInterval(1000 * FAST_UPDATE_INTERVAL);
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        //---------------------------------------------
+        //----------------------------------------------------------------------------------------
 
-        //-----------------ENVIO SMS -------------//
+        //----------------------------------------------ENVÍO SMS ------------------------------------------------------------------------------
 
         if(ActivityCompat.checkSelfPermission(audio_emergencia.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(audio_emergencia.this, new String[]{Manifest.permission.SEND_SMS}, 1);
         }
 
-        //---------------------------------------------
+        //------------------------------------------------------------------------------------------------------------------------------------
 
     }
 
     public void btnRecordPress(View v){
-        //btnEnviar = findViewById(R.id.button3);
-
         try {
-            checkSettingsAndStartLocationUpdates();
+            //-------------UBICACIÓN-----------------------
+            //checkSettingsAndStartLocationUpdates();
+            //---------------------------------------------
+
+            //--------------GRABACIÓN AUDIO------------------------------------------------------
             mediaRecorder = new MediaRecorder();
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            mediaRecorder.setOutputFile(getRecordingFilePath());
+            mediaRecorder.setOutputFile(getRecordingFile().getPath());
             mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-            mediaRecorder.setMaxDuration(30000);
+            mediaRecorder.setMaxDuration(10000);
             mediaRecorder.prepare();
             mediaRecorder.start();
             Toast.makeText(this, "Recording is started",Toast.LENGTH_LONG).show();
+            //-----------------------------------------------------------------------------------
 
+            //----------------------------------------------------------------ENVÍO SMS--------------------------------------------
             SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage("+52 5567876545",null, "Prueba 2",null, null);
+            smsManager.sendTextMessage("+52 5534532007",null, "Prueba 2",null, null);
 
             Toast.makeText(audio_emergencia.this, "MSJ Enviado", Toast.LENGTH_LONG).show();
+            //----------------------------------------------------------------------------------------------------------------------
 
+            //----------------------------------------------GRABACIÓN AUDIO-------------------------------------------------------------------------
             mediaRecorder.setOnInfoListener((mr, what, extra) -> {
                 if(what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED){
                     Toast.makeText(this, "Recording has stopped",Toast.LENGTH_LONG).show();
+                    //-------------------ENVíO ARCHIVO A SERVIDOR FTP------------------------
+                    new sendFiletFTP().execute();
+                    //-----------------------------------------------------------------------
                 }
             });
-            //------------------------Ubiacación--------------------------------
+            //--------------------------------------------------UBICACIÓN--------------------------------------------------------------------------
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 checkSettingsAndStartLocationUpdates();
             } else {
                 askLocationPermission();
             }
-            //-------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------------------------------------------------------
         }
         catch (Exception e){
             e.printStackTrace();
         }
     }
 
+    //----------------------------------------------GRABACIÓN AUDIO-------------------------------------------------------------------------
     private boolean isMicrophonePresent() {
         if (this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_MICROPHONE))
         {
@@ -148,7 +165,7 @@ public class audio_emergencia extends AppCompatActivity {
         }
     }
 
-    private void    getMicrophonePermission(){
+    private void getMicrophonePermission(){
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
             ==PackageManager.PERMISSION_DENIED)
         {
@@ -158,17 +175,27 @@ public class audio_emergencia extends AppCompatActivity {
 
     }
 
-    private String getRecordingFilePath(){
+    public File getRecordingFile(){
         ContextWrapper contextWrapper= new ContextWrapper(getApplicationContext());
         File musicDirectory =contextWrapper.getExternalFilesDir((Environment.DIRECTORY_MUSIC));
-        File audio_e =new File(musicDirectory,"testRecordingFile"+".mp3");
-        return audio_e.getPath();
+        File audio_e =new File(musicDirectory, "2_audio_emergencia.mp3");
+        return audio_e;
     }
 
-    //---------------------------------------------------UBICACIÓN------------------------------------------------------------------------------
+    public String getDate() {
+        SimpleDateFormat simpleDateFormat =new SimpleDateFormat("ddMMyyyy_HHmmss");
+        Date now = new Date();
+        String timestamp=simpleDateFormat.format(now);
+        return  timestamp;
 
+    }
+    //--------------------------------------------------------------------------------------------------------------------------------------
+
+    //---------------------------------------------------UBICACIÓN------------------------------------------------------------------------------
+    
     public void onStopPress(View view) {
         stopLocationUpdates();
+        Log.d(TAG,getRecordingFile().getPath());
     }
 
     private void checkSettingsAndStartLocationUpdates() {
@@ -239,6 +266,53 @@ public class audio_emergencia extends AppCompatActivity {
         }
     }
 
+    public class sendFiletFTP extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            String server="davinci999.xyz";
+            String username="u447795502.pedro_tsm";
+            String password="holasoypedro123TSM";
+            String dirPath="/audio_dir";
+
+            FTPClient ftpClient = new FTPClient();
+            try
+            {
+                ftpClient.connect(server);
+                ftpClient.login(username,password);
+                ftpClient.enterLocalPassiveMode();
+
+                Log.d(TAG, "CONNECTED");
+
+                InputStream inputStream =new FileInputStream(getRecordingFile());
+                try{
+                    ftpClient.storeFile(dirPath +"/2_audio_emergencia.mp3",inputStream);
+                }catch ( Exception e){
+                    e.printStackTrace();
+                    if (e.getCause() != null)
+                    {
+                        e.getCause().printStackTrace();
+                    }
+                }
+
+                inputStream.close();
+
+                //boolean stored =ftpClient.storeFile(dirPath+"/audio_emergencia.mp3",inputStream);
+
+                ftpClient.logout();
+                ftpClient.disconnect();
+
+                Log.d(TAG,"DISCONNECTED" );
+
+
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }
