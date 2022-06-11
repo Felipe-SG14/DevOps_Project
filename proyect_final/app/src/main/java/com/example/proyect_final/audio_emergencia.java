@@ -52,8 +52,8 @@ public class audio_emergencia extends AppCompatActivity {
     public static final int FAST_UPDATE_INTERVAL = 5;
     public static final int MAX_DURATION_MS = 5000;
     int LOCATION_REQUEST_CODE = 10001;
-    private double latitude;
-    private double longitude;
+    public double latitude;
+    public double longitude;
     static public String nameAudioFile;
 
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -123,6 +123,12 @@ public class audio_emergencia extends AppCompatActivity {
             Toast.makeText(this, "Recording is started",Toast.LENGTH_LONG).show();
             //-----------------------------------------------------------------------------------
 
+            //----------------------------------------------------------------ENVÍO SMS--------------------------------------------
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage("+52 5534532007",null, "Audio de emergencia: https://davinci999.xyz/audio_dir/"+nameAudioFile,null, null);
+
+            //----------------------------------------------------------------------------------------------------------------------
+
             //----------------------------------------------GRABACIÓN AUDIO-------------------------------------------------------------------------
             mediaRecorder.setOnInfoListener((mr, what, extra) -> {
                 if(what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED){
@@ -131,16 +137,9 @@ public class audio_emergencia extends AppCompatActivity {
 
                     //-------------------ENVíO ARCHIVO A SERVIDOR FTP------------------------
                     new sendFileFTP().execute();
-
                     //-----------------------------------------------------------------------
 
-                    //----------------------------------------------------------------ENVÍO SMS--------------------------------------------
-                    SmsManager smsManager = SmsManager.getDefault();
-                    smsManager.sendTextMessage("+52 5534532007",null, "Audio de emergencia: https://davinci999.xyz/audio_dir/"+nameAudioFile +" Última ubicación en latitud: "+latitude+", longitud: "+longitude,null, null);
                     Toast.makeText(audio_emergencia.this, "MSJ Enviado", Toast.LENGTH_LONG).show();
-                    //----------------------------------------------------------------------------------------------------------------------
-
-
                 }
             });
 
