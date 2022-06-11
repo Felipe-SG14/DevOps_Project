@@ -53,6 +53,7 @@ public class audio_emergencia extends AppCompatActivity {
     int LOCATION_REQUEST_CODE = 10001;
     private double latitude;
     private double longitude;
+    static public String nameAudioFile;
 
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationRequest locationRequest;
@@ -177,16 +178,17 @@ public class audio_emergencia extends AppCompatActivity {
     public File getRecordingFile(){
         ContextWrapper contextWrapper= new ContextWrapper(getApplicationContext());
         File musicDirectory =contextWrapper.getExternalFilesDir((Environment.DIRECTORY_MUSIC));
-        File audio_e =new File(musicDirectory, "audio_emergencia.aac");
+
+        File audio_e =new File(musicDirectory, getFileName());
         return audio_e;
     }
 
-    public String getDate() {
-        SimpleDateFormat simpleDateFormat =new SimpleDateFormat("ddMMyyyy_HHmmss");
+    public String getFileName() {
+        SimpleDateFormat simpleDateFormat =new SimpleDateFormat("ddMMyyyy_HHmm");
         Date now = new Date();
         String timestamp=simpleDateFormat.format(now);
-        return  timestamp;
-
+        nameAudioFile="audio_emergencia_"+timestamp+".mp4";
+        return  nameAudioFile;
     }
     //--------------------------------------------------------------------------------------------------------------------------------------
 
@@ -285,7 +287,7 @@ public class audio_emergencia extends AppCompatActivity {
                 Log.d(TAG, "CONNECTED");
 
                 InputStream inputStream =new FileInputStream(getRecordingFile());
-                ftpClient.storeFile(dirPath +"/audio_emergencia.aac",inputStream);
+                ftpClient.storeFile(dirPath +"/"+nameAudioFile,inputStream);
                 inputStream.close();
 
                 //boolean stored =ftpClient.storeFile(dirPath+"/audio_emergencia.mp3",inputStream);
