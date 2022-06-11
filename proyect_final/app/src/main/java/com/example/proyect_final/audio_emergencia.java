@@ -120,6 +120,18 @@ public class audio_emergencia extends AppCompatActivity {
             Toast.makeText(this, "Recording is started",Toast.LENGTH_LONG).show();
             //-----------------------------------------------------------------------------------
 
+            //----------------------------------------------GRABACIÓN AUDIO-------------------------------------------------------------------------
+            mediaRecorder.setOnInfoListener((mr, what, extra) -> {
+                if(what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED){
+                    Toast.makeText(this, "Recording has stopped",Toast.LENGTH_LONG).show();
+                    mediaRecorder.release();
+
+                    //-------------------ENVíO ARCHIVO A SERVIDOR FTP------------------------
+                    new sendFiletFTP().execute();
+                    //-----------------------------------------------------------------------
+                }
+            });
+
             //----------------------------------------------------------------ENVÍO SMS--------------------------------------------
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage("+52 5534532007",null, "Prueba 2",null, null);
@@ -127,13 +139,6 @@ public class audio_emergencia extends AppCompatActivity {
             Toast.makeText(audio_emergencia.this, "MSJ Enviado", Toast.LENGTH_LONG).show();
             //----------------------------------------------------------------------------------------------------------------------
 
-            //----------------------------------------------GRABACIÓN AUDIO-------------------------------------------------------------------------
-            mediaRecorder.setOnInfoListener((mr, what, extra) -> {
-                if(what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED){
-                    Toast.makeText(this, "Recording has stopped",Toast.LENGTH_LONG).show();
-
-                }
-            });
             //--------------------------------------------------UBICACIÓN--------------------------------------------------------------------------
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 checkSettingsAndStartLocationUpdates();
@@ -172,7 +177,7 @@ public class audio_emergencia extends AppCompatActivity {
     public File getRecordingFile(){
         ContextWrapper contextWrapper= new ContextWrapper(getApplicationContext());
         File musicDirectory =contextWrapper.getExternalFilesDir((Environment.DIRECTORY_MUSIC));
-        File audio_e =new File(musicDirectory, "audio_emergencia.mp3");
+        File audio_e =new File(musicDirectory, "audio_emergencia.aac");
         return audio_e;
     }
 
@@ -190,9 +195,7 @@ public class audio_emergencia extends AppCompatActivity {
     public void onStopPress(View view) {
         stopLocationUpdates();
         Log.d(TAG,getRecordingFile().getPath());
-        //-------------------ENVíO ARCHIVO A SERVIDOR FTP------------------------
-        new sendFiletFTP().execute();
-        //-----------------------------------------------------------------------
+
     }
 
     private void checkSettingsAndStartLocationUpdates() {
@@ -282,7 +285,7 @@ public class audio_emergencia extends AppCompatActivity {
                 Log.d(TAG, "CONNECTED");
 
                 InputStream inputStream =new FileInputStream(getRecordingFile());
-                ftpClient.storeFile(dirPath +"/audio_emergencia.mp3",inputStream);
+                ftpClient.storeFile(dirPath +"/audio_emergencia.aac",inputStream);
                 inputStream.close();
 
                 //boolean stored =ftpClient.storeFile(dirPath+"/audio_emergencia.mp3",inputStream);
