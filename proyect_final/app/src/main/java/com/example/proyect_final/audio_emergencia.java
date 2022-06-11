@@ -114,7 +114,7 @@ public class audio_emergencia extends AppCompatActivity {
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             mediaRecorder.setOutputFile(getRecordingFile().getPath());
             mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-            mediaRecorder.setMaxDuration(10000);
+            mediaRecorder.setMaxDuration(5000);
             mediaRecorder.prepare();
             mediaRecorder.start();
             Toast.makeText(this, "Recording is started",Toast.LENGTH_LONG).show();
@@ -131,9 +131,7 @@ public class audio_emergencia extends AppCompatActivity {
             mediaRecorder.setOnInfoListener((mr, what, extra) -> {
                 if(what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED){
                     Toast.makeText(this, "Recording has stopped",Toast.LENGTH_LONG).show();
-                    //-------------------ENVíO ARCHIVO A SERVIDOR FTP------------------------
-                   // new sendFiletFTP().execute();
-                    //-----------------------------------------------------------------------
+
                 }
             });
             //--------------------------------------------------UBICACIÓN--------------------------------------------------------------------------
@@ -174,7 +172,7 @@ public class audio_emergencia extends AppCompatActivity {
     public File getRecordingFile(){
         ContextWrapper contextWrapper= new ContextWrapper(getApplicationContext());
         File musicDirectory =contextWrapper.getExternalFilesDir((Environment.DIRECTORY_MUSIC));
-        File audio_e =new File(musicDirectory, "2_audio_emergencia.mp3");
+        File audio_e =new File(musicDirectory, "audio_emergencia.mp3");
         return audio_e;
     }
 
@@ -192,6 +190,9 @@ public class audio_emergencia extends AppCompatActivity {
     public void onStopPress(View view) {
         stopLocationUpdates();
         Log.d(TAG,getRecordingFile().getPath());
+        //-------------------ENVíO ARCHIVO A SERVIDOR FTP------------------------
+        new sendFiletFTP().execute();
+        //-----------------------------------------------------------------------
     }
 
     private void checkSettingsAndStartLocationUpdates() {
@@ -281,7 +282,7 @@ public class audio_emergencia extends AppCompatActivity {
                 Log.d(TAG, "CONNECTED");
 
                 InputStream inputStream =new FileInputStream(getRecordingFile());
-                ftpClient.storeFile(dirPath +"/2_audio_emergencia.mp3",inputStream);
+                ftpClient.storeFile(dirPath +"/audio_emergencia.mp3",inputStream);
                 inputStream.close();
 
                 //boolean stored =ftpClient.storeFile(dirPath+"/audio_emergencia.mp3",inputStream);
