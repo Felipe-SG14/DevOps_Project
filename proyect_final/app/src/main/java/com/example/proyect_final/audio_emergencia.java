@@ -108,10 +108,6 @@ public class audio_emergencia extends AppCompatActivity {
 
     public void btnRecordPress(View v){
         try {
-            //-------------UBICACIÓN-----------------------
-            //checkSettingsAndStartLocationUpdates();
-            //---------------------------------------------
-
             //--------------GRABACIÓN AUDIO------------------------------------------------------
             mediaRecorder = new MediaRecorder();
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -136,7 +132,7 @@ public class audio_emergencia extends AppCompatActivity {
                 if(what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED){
                     Toast.makeText(this, "Recording has stopped",Toast.LENGTH_LONG).show();
                     //-------------------ENVíO ARCHIVO A SERVIDOR FTP------------------------
-                    new sendFiletFTP().execute();
+                   // new sendFiletFTP().execute();
                     //-----------------------------------------------------------------------
                 }
             });
@@ -285,16 +281,7 @@ public class audio_emergencia extends AppCompatActivity {
                 Log.d(TAG, "CONNECTED");
 
                 InputStream inputStream =new FileInputStream(getRecordingFile());
-                try{
-                    ftpClient.storeFile(dirPath +"/2_audio_emergencia.mp3",inputStream);
-                }catch ( Exception e){
-                    e.printStackTrace();
-                    if (e.getCause() != null)
-                    {
-                        e.getCause().printStackTrace();
-                    }
-                }
-
+                ftpClient.storeFile(dirPath +"/2_audio_emergencia.mp3",inputStream);
                 inputStream.close();
 
                 //boolean stored =ftpClient.storeFile(dirPath+"/audio_emergencia.mp3",inputStream);
