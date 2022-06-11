@@ -50,6 +50,7 @@ public class audio_emergencia extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     public static final int DEFAULT_UPDATE_INTERVAL = 10;
     public static final int FAST_UPDATE_INTERVAL = 5;
+    public static final int MAX_DURATION_MS = 5000;
     int LOCATION_REQUEST_CODE = 10001;
     private double latitude;
     private double longitude;
@@ -101,6 +102,7 @@ public class audio_emergencia extends AppCompatActivity {
 
         if(ActivityCompat.checkSelfPermission(audio_emergencia.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(audio_emergencia.this, new String[]{Manifest.permission.SEND_SMS}, 1);
+
         }
 
         //------------------------------------------------------------------------------------------------------------------------------------
@@ -115,7 +117,7 @@ public class audio_emergencia extends AppCompatActivity {
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             mediaRecorder.setOutputFile(getRecordingFile().getPath());
             mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-            mediaRecorder.setMaxDuration(5000);
+            mediaRecorder.setMaxDuration(MAX_DURATION_MS);
             mediaRecorder.prepare();
             mediaRecorder.start();
             Toast.makeText(this, "Recording is started",Toast.LENGTH_LONG).show();
@@ -128,17 +130,20 @@ public class audio_emergencia extends AppCompatActivity {
                     mediaRecorder.release();
 
                     //-------------------ENVíO ARCHIVO A SERVIDOR FTP------------------------
-                    new sendFiletFTP().execute();
+                    new sendFileFTP().execute();
+
                     //-----------------------------------------------------------------------
+
+                    //----------------------------------------------------------------ENVÍO SMS--------------------------------------------
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage("+52 5534532007",null, "Audio de emergencia: https://davinci999.xyz/audio_dir/"+nameAudioFile +" Última ubicación en latitud: "+latitude+", longitud: "+longitude,null, null);
+                    Toast.makeText(audio_emergencia.this, "MSJ Enviado", Toast.LENGTH_LONG).show();
+                    //----------------------------------------------------------------------------------------------------------------------
+
+
                 }
             });
 
-            //----------------------------------------------------------------ENVÍO SMS--------------------------------------------
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage("+52 5534532007",null, "Prueba 2",null, null);
-
-            Toast.makeText(audio_emergencia.this, "MSJ Enviado", Toast.LENGTH_LONG).show();
-            //----------------------------------------------------------------------------------------------------------------------
 
             //--------------------------------------------------UBICACIÓN--------------------------------------------------------------------------
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -187,7 +192,7 @@ public class audio_emergencia extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat =new SimpleDateFormat("ddMMyyyy_HHmm");
         Date now = new Date();
         String timestamp=simpleDateFormat.format(now);
-        nameAudioFile="audio_emergencia_"+timestamp+".mp4";
+        nameAudioFile="audio_emergencia_"+timestamp+".wav";
         return  nameAudioFile;
     }
     //--------------------------------------------------------------------------------------------------------------------------------------
@@ -196,7 +201,7 @@ public class audio_emergencia extends AppCompatActivity {
     
     public void onStopPress(View view) {
         stopLocationUpdates();
-        Log.d(TAG,getRecordingFile().getPath());
+        Log.d(TAG, nameAudioFile);
 
     }
 
@@ -268,7 +273,7 @@ public class audio_emergencia extends AppCompatActivity {
         }
     }
 
-    public class sendFiletFTP extends AsyncTask<Void,Void,Void>{
+    public class sendFileFTP extends AsyncTask<Void,Void,Void>{
 
         @Override
         protected Void doInBackground(Void... voids) {
