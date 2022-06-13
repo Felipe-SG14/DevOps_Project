@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,10 +28,12 @@ import com.google.android.gms.tasks.Task;
 public class MenuActivity extends AppCompatActivity {
 
     // Configuración botones
-    public Button luces;
-    public Button musica;
-    public Button ubicacionPadre;
-    public Button stopEmergency;
+
+    public ImageButton musica;
+    public ImageButton ubicacionPadre;
+    public ImageButton stopEmergency;
+    public ImageButton luces;
+
 
     public TextView distanciaH;
 
@@ -64,10 +67,10 @@ public class MenuActivity extends AppCompatActivity {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         // Configuración botones
-        luces = (Button) findViewById(R.id.luces);
-        musica = (Button) findViewById(R.id.musica);
-        ubicacionPadre = (Button) findViewById(R.id.ubicacionPadre);
-        stopEmergency = (Button) findViewById(R.id.stopEmergency);
+        luces = (ImageButton) findViewById(R.id.luces);
+        musica = (ImageButton) findViewById(R.id.musica);
+        ubicacionPadre = (ImageButton) findViewById(R.id.ubicacionPadre);
+        stopEmergency = (ImageButton) findViewById(R.id.stopEmergency);
         distanciaH = (TextView) findViewById(R.id.Distancia);
 
         // Permisos de acceso a botones

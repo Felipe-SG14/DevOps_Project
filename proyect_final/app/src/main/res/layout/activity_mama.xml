@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MamaActivity">
+    tools:context=".MamaActivity"
+    android:background="@drawable/sala">
 
     <ScrollView
         android:id="@+id/linearlayout"
@@ -12,13 +13,12 @@
         android:layout_height="763dp"
         android:layout_marginEnd="14dp"
         android:layout_marginRight="14dp"
-        android:layout_marginBottom="4dp"
-        android:paddingTop="100dp"
         android:gravity="center"
         android:orientation="vertical"
+        android:paddingTop="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.846"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
@@ -27,16 +27,18 @@
             android:gravity="center"
             android:orientation="vertical">
 
+
             <Switch
                 android:id="@+id/switch1"
-                android:layout_width="355dp"
+                android:layout_width="300dp"
                 android:layout_height="42dp"
                 android:layout_marginTop="92dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginRight="1dp"
                 android:checked="false"
                 android:switchMinWidth="55dp"
-                android:text="LED 1"
+                android:text="@string/living_room"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -46,14 +48,15 @@
 
             <Switch
                 android:id="@+id/switch2"
-                android:layout_width="355dp"
+                android:layout_width="300dp"
                 android:layout_height="42dp"
                 android:layout_marginTop="92dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginRight="1dp"
                 android:checked="false"
                 android:switchMinWidth="55dp"
-                android:text="LED 2"
+                android:text="@string/dining_room"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -63,14 +66,15 @@
 
             <Switch
                 android:id="@+id/switch3"
-                android:layout_width="355dp"
+                android:layout_width="300dp"
                 android:layout_height="42dp"
                 android:layout_marginTop="92dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginRight="1dp"
                 android:checked="false"
                 android:switchMinWidth="55dp"
-                android:text="LED 3"
+                android:text="@string/kitchen"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -80,14 +84,15 @@
 
             <Switch
                 android:id="@+id/switch4"
-                android:layout_width="355dp"
+                android:layout_width="300dp"
                 android:layout_height="42dp"
                 android:layout_marginTop="92dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginRight="1dp"
                 android:checked="false"
                 android:switchMinWidth="55dp"
-                android:text="LED 4"
+                android:text="@string/main_Bedroom"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -97,14 +102,15 @@
 
             <Switch
                 android:id="@+id/switch5"
-                android:layout_width="355dp"
+                android:layout_width="300dp"
                 android:layout_height="42dp"
                 android:layout_marginTop="92dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginRight="1dp"
                 android:checked="false"
                 android:switchMinWidth="55dp"
-                android:text="LED 5"
+                android:text="@string/main_bathroom"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -114,14 +120,15 @@
 
             <Switch
                 android:id="@+id/switch6"
-                android:layout_width="355dp"
+                android:layout_width="300dp"
                 android:layout_height="42dp"
                 android:layout_marginTop="92dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginRight="1dp"
                 android:checked="false"
                 android:switchMinWidth="55dp"
-                android:text="LED 6"
+                android:text="@string/general_bathroom"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -131,14 +138,15 @@
 
             <Switch
                 android:id="@+id/switch7"
-                android:layout_width="355dp"
+                android:layout_width="300dp"
                 android:layout_height="42dp"
                 android:layout_marginTop="92dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginRight="1dp"
                 android:checked="false"
                 android:switchMinWidth="55dp"
-                android:text="LED 7 (Hija)"
+                android:text="@string/daughtbed"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -148,14 +156,15 @@
 
             <Switch
                 android:id="@+id/switch8"
-                android:layout_width="355dp"
+                android:layout_width="300dp"
                 android:layout_height="42dp"
                 android:layout_marginTop="92dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginRight="1dp"
                 android:checked="false"
                 android:switchMinWidth="55dp"
-                android:text="LED 8 (Hijo)"
+                android:text="@string/sonsbed"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -175,5 +184,8 @@
 
 
         </LinearLayout>
+
     </ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
