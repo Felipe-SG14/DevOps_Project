@@ -42,7 +42,9 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class audio_emergencia extends AppCompatActivity {
 
@@ -55,6 +57,8 @@ public class audio_emergencia extends AppCompatActivity {
     public double latitude;
     public double longitude;
     static public String nameAudioFile;
+    public int contador=0;
+    static public String google_url;
 
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationRequest locationRequest;
@@ -68,7 +72,17 @@ public class audio_emergencia extends AppCompatActivity {
                 Log.d(TAG,"onLocationResult: " + location.toString());
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
+                contador=contador+1;
+                if(contador==1){
+                    google_url = "https://www.google.com/maps/?q="+latitude+","+longitude;
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage("+52 5534532007",null, "Audio de emergencia: https://davinci999.xyz/audio_dir/"+nameAudioFile,null, null);
+                    smsManager.sendTextMessage("+52 5534532007",null, "Última ubicación "+google_url,null, null);
+                    Log.d(TAG, "onSuccess " + google_url);
+                }
             }
+
+
 
         }
     };
@@ -110,6 +124,7 @@ public class audio_emergencia extends AppCompatActivity {
     }
 
     public void btnRecordPress(View v){
+        Log.d(TAG, "onSuccess " + google_url);
         try {
             //--------------GRABACIÓN AUDIO------------------------------------------------------
             mediaRecorder = new MediaRecorder();
@@ -123,9 +138,15 @@ public class audio_emergencia extends AppCompatActivity {
             Toast.makeText(this, "Recording is started",Toast.LENGTH_LONG).show();
             //-----------------------------------------------------------------------------------
 
-            //----------------------------------------------------------------ENVÍO SMS--------------------------------------------
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage("+52 5534532007",null, "Audio de emergencia: https://davinci999.xyz/audio_dir/"+nameAudioFile,null, null);
+            //----------------------------------------------------------------ENVÍO SMS-------------------------------------------
+
+            //ArrayList<String> supplierNames = new ArrayList<String>();
+            /*supplierNames.add("Audio de emergencia: https://davinci999.xyz/audio_dir/"+nameAudioFile);
+            supplierNames.add(" Última ubicación "+google_url);*/
+            /*String message="Audio de emergencia: https://davinci999.xyz/audio_dir/"+nameAudioFile+" Última ubicación "+google_url;
+            //ArrayList<String> parts = smsManager.divideMessage(message);
+            smsManager.sendMultipartTextMessage("+52 5550685663",null,parts ,null, null);*/
+
 
             //----------------------------------------------------------------------------------------------------------------------
 
