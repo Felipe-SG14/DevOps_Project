@@ -24,6 +24,7 @@
     <string name="daughtbed">Daughter´s Bedroom</string>
     <string name="menu_lights">Select which lights you want to turn On/Off</string>
     <string name="logo_login">Logo Smart Home</string>
+    <string name="menu_title">Choose an option</string>
 
 
 </resources>

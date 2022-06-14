@@ -12,42 +12,68 @@
         android:id="@+id/luces"
         android:layout_width="87dp"
         android:layout_height="92dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="260dp"
-        android:layout_marginRight="260dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="284dp"
+        android:layout_marginRight="284dp"
         android:background="@drawable/button_rounded"
         android:backgroundTint="@color/yellow"
         android:contentDescription="@string/btn_luces"
         android:onClick="abrirMenuLuces"
         android:scaleType="centerCrop"
-        app:tint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:srcCompat="@drawable/luces" />
+        app:srcCompat="@drawable/luces"
+        app:tint="@color/black" />
 
-    <ImageButton
-        android:id="@+id/stopEmergency"
-        android:layout_width="87dp"
-        android:layout_height="92dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginRight="60dp"
-        android:background="@drawable/button_rounded"
-        android:backgroundTint="@color/red"
-        android:contentDescription="@string/btn_dejcompubi"
-        android:scaleType="centerCrop"
-        android:tint="@color/black"
+    <TextView
+        android:id="@+id/txt_lights"
+        android:layout_width="60dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="292dp"
+        android:layout_marginRight="292dp"
+        android:text="@string/btn_luces"
+        android:textColor="@color/black"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/luces"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/txt_location"
+        android:layout_width="131dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="140dp"
+        android:layout_marginRight="140dp"
+        android:text="@string/btn_mandarubi"
+        android:textColor="@color/black"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ubicacionPadre"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/txt_music"
+        android:layout_width="96dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:text="@string/btn_musica"
+        android:textColor="@color/black"
+        app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/musica"
-        app:srcCompat="@drawable/dejarubi" />
+        tools:visibility="visible" />
 
     <ImageButton
         android:id="@+id/ubicacionPadre"
         android:layout_width="87dp"
         android:layout_height="92dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="260dp"
-        android:layout_marginRight="260dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="160dp"
+        android:layout_marginRight="160dp"
         android:background="@drawable/button_rounded"
         android:backgroundTint="@color/green_light"
         android:contentDescription="@string/btn_mandarubi"
@@ -58,41 +84,13 @@
         app:layout_constraintTop_toBottomOf="@+id/luces"
         app:srcCompat="@drawable/ubi" />
 
-    <TextView
-        android:id="@+id/txt_location"
-        android:layout_width="131dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="236dp"
-        android:layout_marginRight="236dp"
-        android:text="@string/btn_mandarubi"
-        android:textColor="@color/black"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ubicacionPadre"
-        tools:visibility="visible" />
-
-    <TextView
-        android:id="@+id/txt_stopsl"
-        android:layout_width="180dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:text="@string/btn_dejcompubi"
-        android:textColor="@color/black"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stopEmergency"
-        tools:visibility="visible" />
-
     <ImageButton
         android:id="@+id/musica"
         android:layout_width="87dp"
         android:layout_height="92dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="68dp"
-        android:layout_marginRight="68dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
         android:background="@drawable/button_rounded"
         android:backgroundTint="@color/purple"
         android:contentDescription="@string/btn_musica"
@@ -102,19 +100,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
         app:srcCompat="@drawable/musica" />
-
-    <TextView
-        android:id="@+id/txt_music"
-        android:layout_width="96dp"
-        android:layout_height="25dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginRight="60dp"
-        android:text="@string/btn_musica"
-        android:textColor="@color/black"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/musica"
-        tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -128,17 +113,17 @@
         app:srcCompat="@drawable/casa" />
 
     <TextView
-        android:id="@+id/txt_lights"
-        android:layout_width="60dp"
-        android:layout_height="25dp"
-        android:layout_marginEnd="268dp"
-        android:layout_marginRight="268dp"
-        android:text="@string/btn_luces"
+        android:id="@+id/textView2"
+        android:layout_width="182dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="112dp"
+        android:layout_marginRight="112dp"
+        android:text="@string/menu_title"
         android:textColor="@color/black"
         app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/luces"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
