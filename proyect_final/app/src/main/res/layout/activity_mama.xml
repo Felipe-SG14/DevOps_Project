@@ -17,83 +17,66 @@
         tools:context=".MamaActivity">
 
 
-        <Switch
-            android:id="@+id/switch1"
-            android:layout_width="300dp"
-            android:layout_height="42dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginRight="1dp"
-            android:checked="false"
-            android:switchMinWidth="55dp"
-            android:text="@string/living_room"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
+        <ImageView
+            android:id="@+id/imageView30"
+            android:layout_width="190dp"
+            android:layout_height="108dp"
+            android:layout_marginTop="164dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.361"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/linea" />
 
-        <Switch
-            android:id="@+id/switch2"
-            android:layout_width="300dp"
-            android:layout_height="42dp"
-            android:layout_marginTop="148dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginRight="1dp"
-            android:checked="false"
-            android:switchMinWidth="55dp"
-            android:text="@string/dining_room"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
+        <ImageView
+            android:id="@+id/imageView31"
+            android:layout_width="190dp"
+            android:layout_height="108dp"
+            android:layout_marginTop="224dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.361"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/linea" />
 
-        <Switch
-            android:id="@+id/switch3"
-            android:layout_width="300dp"
-            android:layout_height="42dp"
-            android:layout_marginTop="220dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginRight="1dp"
-            android:checked="false"
-            android:switchMinWidth="55dp"
-            android:text="@string/kitchen"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
+        <ImageView
+            android:id="@+id/imageView32"
+            android:layout_width="190dp"
+            android:layout_height="108dp"
+            android:layout_marginTop="276dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.361"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/linea" />
 
-        <Switch
-            android:id="@+id/switch4"
-            android:layout_width="300dp"
-            android:layout_height="42dp"
-            android:layout_marginTop="484dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginRight="1dp"
-            android:checked="false"
-            android:switchMinWidth="55dp"
-            android:text="@string/main_Bedroom"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
+        <ImageView
+            android:id="@+id/imageView33"
+            android:layout_width="190dp"
+            android:layout_height="108dp"
+            android:layout_marginTop="332dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.361"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/linea" />
+
+        <ImageView
+            android:id="@+id/linea_hijo_2"
+            android:layout_width="190dp"
+            android:layout_height="108dp"
+            android:layout_marginTop="388dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/linea" />
 
         <Switch
             android:id="@+id/switch5"
             android:layout_width="300dp"
             android:layout_height="42dp"
-            android:layout_marginTop="384dp"
+            android:layout_marginTop="14dp"
             android:layout_marginEnd="1dp"
             android:layout_marginRight="1dp"
             android:checked="false"
@@ -103,15 +86,100 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.361"
+            app:layout_constraintHorizontal_bias="0.731"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/switch6"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+
+
+        <Switch
+            android:id="@+id/switch2"
+            android:layout_width="300dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginRight="1dp"
+            android:checked="false"
+            android:switchMinWidth="55dp"
+            android:text="@string/dining_room"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.731"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch1"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <Switch
+            android:id="@+id/switch8"
+            android:layout_width="300dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="14dp"
+            android:checked="false"
+            android:switchMinWidth="55dp"
+            android:text="@string/sonsbed"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.724"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch4"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <ImageView
+            android:id="@+id/foco_hijo"
+            android:layout_width="40dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="4dp"
+            android:contentDescription="@string/ligth_bulb"
+            app:layout_constraintEnd_toStartOf="@+id/switch8"
+            app:layout_constraintTop_toBottomOf="@+id/imageView5"
+            app:srcCompat="@drawable/bulb" />
+
+        <ImageView
+            android:id="@+id/imageView14"
+            android:layout_width="40dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="52dp"
+            app:layout_constraintEnd_toStartOf="@+id/switch1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/bulb" />
+
+        <SeekBar
+            android:id="@+id/seekBar2"
+            android:layout_width="300dp"
+            android:layout_height="42dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.724"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch8" />
+
+        <Switch
+            android:id="@+id/switch4"
+            android:layout_width="300dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginRight="1dp"
+            android:checked="false"
+            android:switchMinWidth="55dp"
+            android:text="@string/main_Bedroom"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.731"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch5" />
 
         <Switch
             android:id="@+id/switch6"
             android:layout_width="300dp"
             android:layout_height="42dp"
-            android:layout_marginTop="300dp"
+            android:layout_marginTop="14dp"
             android:layout_marginEnd="1dp"
             android:layout_marginRight="1dp"
             android:checked="false"
@@ -121,15 +189,60 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.361"
+            app:layout_constraintHorizontal_bias="0.731"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch3" />
+
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="300dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginRight="1dp"
+            android:checked="false"
+            android:switchMinWidth="55dp"
+            android:text="@string/living_room"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.731"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Switch
+            android:id="@+id/switch3"
+            android:layout_width="300dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginRight="1dp"
+            android:checked="false"
+            android:switchMinWidth="55dp"
+            android:text="@string/kitchen"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.731"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch2" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="40dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="3dp"
+            app:layout_constraintEnd_toStartOf="@+id/switch4"
+            app:layout_constraintTop_toBottomOf="@+id/imageView6"
+            app:srcCompat="@drawable/bulb" />
 
         <Switch
             android:id="@+id/switch7"
             android:layout_width="300dp"
             android:layout_height="42dp"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="32dp"
             android:checked="false"
             android:switchMinWidth="55dp"
             android:text="@string/daughtbed"
@@ -137,43 +250,206 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.376"
+            app:layout_constraintHorizontal_bias="0.724"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/switch8" />
+            app:layout_constraintTop_toBottomOf="@+id/seekBar2" />
 
-        <Switch
-            android:id="@+id/switch8"
-            android:layout_width="300dp"
-            android:layout_height="42dp"
-            android:layout_marginTop="72dp"
-            android:checked="false"
-            android:switchMinWidth="55dp"
-            android:text="@string/sonsbed"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.357"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/switch4" />
+        <ImageView
+            android:id="@+id/foco_hija"
+            android:layout_width="40dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="64dp"
+            app:layout_constraintEnd_toStartOf="@+id/switch7"
+            app:layout_constraintTop_toBottomOf="@+id/foco_hijo"
+            app:srcCompat="@drawable/bulb" />
 
         <SeekBar
             android:id="@+id/seekBar1"
             android:layout_width="300dp"
             android:layout_height="42dp"
-            android:layout_marginEnd="52dp"
-            android:layout_marginRight="52dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/switch7" />
+            app:layout_constraintHorizontal_bias="0.724"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch7"
+            app:layout_constraintVertical_bias="0.0" />
 
-        <SeekBar
-            android:id="@+id/seekBar2"
-            android:layout_width="300dp"
-            android:layout_height="42dp"
-            android:layout_marginEnd="68dp"
-            android:layout_marginRight="68dp"
+        <ImageView
+            android:id="@+id/linea_hija_1"
+            android:layout_width="190dp"
+            android:layout_height="108dp"
+            android:layout_marginTop="504dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/switch8" />
+            app:layout_constraintHorizontal_bias="0.301"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/linea" />
+
+        <ImageView
+            android:id="@+id/linea_hija_2"
+            android:layout_width="190dp"
+            android:layout_height="108dp"
+            android:layout_marginTop="504dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/linea" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="40dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toStartOf="@+id/switch6"
+            app:layout_constraintTop_toBottomOf="@+id/imageView8"
+            app:srcCompat="@drawable/bulb" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="40dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toStartOf="@+id/switch2"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView14"
+            app:srcCompat="@drawable/bulb" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="40dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toStartOf="@+id/switch5"
+            app:layout_constraintTop_toBottomOf="@+id/imageView7"
+            app:srcCompat="@drawable/bulb" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="40dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toStartOf="@+id/switch3"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView9"
+            app:srcCompat="@drawable/bulb" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="380dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/menu_lights"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.551"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView19"
+            android:layout_width="190dp"
+            android:layout_height="108dp"
+            android:layout_marginTop="276dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.301"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/linea" />
+
+        <ImageView
+            android:id="@+id/imageView21"
+            android:layout_width="190dp"
+            android:layout_height="108dp"
+            android:layout_marginTop="332dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.301"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/linea" />
+
+        <ImageView
+            android:id="@+id/linea_hijo_1"
+            android:layout_width="190dp"
+            android:layout_height="108dp"
+            android:layout_marginTop="388dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.301"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/linea" />
+
+        <ImageView
+            android:id="@+id/imageView24"
+            android:layout_width="190dp"
+            android:layout_height="108dp"
+            android:layout_marginTop="224dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.301"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/linea" />
+
+        <ImageView
+            android:id="@+id/imageView25"
+            android:layout_width="190dp"
+            android:layout_height="108dp"
+            android:layout_marginTop="164dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.301"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/linea" />
+
+        <ImageView
+            android:id="@+id/imageView26"
+            android:layout_width="190dp"
+            android:layout_height="108dp"
+            android:layout_marginTop="108dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.301"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/linea" />
+
+        <ImageView
+            android:id="@+id/imageView27"
+            android:layout_width="190dp"
+            android:layout_height="108dp"
+            android:layout_marginTop="52dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.301"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/linea" />
+
+        <ImageView
+            android:id="@+id/imageView28"
+            android:layout_width="190dp"
+            android:layout_height="108dp"
+            android:layout_marginTop="52dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/linea" />
+
+        <ImageView
+            android:id="@+id/imageView29"
+            android:layout_width="190dp"
+            android:layout_height="108dp"
+            android:layout_marginTop="108dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/linea" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
