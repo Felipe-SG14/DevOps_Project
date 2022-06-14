@@ -20,7 +20,7 @@
             android:id="@+id/switch1"
             android:layout_width="300dp"
             android:layout_height="42dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="60dp"
             android:layout_marginEnd="1dp"
             android:layout_marginRight="1dp"
             android:checked="false"
@@ -160,21 +160,15 @@
             android:id="@+id/seekBar1"
             android:layout_width="300dp"
             android:layout_height="42dp"
-            android:layout_marginTop="72dp"
-            android:layout_marginEnd="68dp"
-            android:layout_marginRight="68dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/seekBar2" />
+            app:layout_constraintTop_toBottomOf="@+id/switch7"
+            tools:layout_editor_absoluteX="41dp" />
 
         <SeekBar
             android:id="@+id/seekBar2"
             android:layout_width="300dp"
             android:layout_height="42dp"
-            android:layout_marginTop="68dp"
-            android:layout_marginEnd="68dp"
-            android:layout_marginRight="68dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/switch7" />
+            app:layout_constraintTop_toBottomOf="@+id/switch8"
+            tools:layout_editor_absoluteX="41dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
