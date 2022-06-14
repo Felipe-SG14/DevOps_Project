@@ -15,7 +15,7 @@ $conn = mysqli_connect('localhost', 'u447795502_pedro_tsm','WB>CFYs+3u', 'u44779
 
 //$conn = mysqli_connect('localhost', 'id17880857_rotjeot','n8O\%t%sI}ImZy<q', 'id17880857_tsmdevops');
 
-$sql = "SELECT Estado, Intensidad FROM FOCO WHERE dispositivo_id ='{$_GET["dispositivo_id"]}' ";
+$sql = "SELECT Estado, Intensidad FROM FOCO WHERE DISPOSITIVO_ID ='{$_GET["dispositivo_id"]}' ";
 
 $query = $conn->query($sql);
 

@@ -29,7 +29,7 @@ else
 $conn = mysqli_connect('localhost', 'u447795502_pedro_tsm','WB>CFYs+3u', 'u447795502_2022_tsm');
 //$sql = "INSERT INTO `pokemones` (`Nombre`, `Tipo`) VALUES ('{$datos["nombre"]}', '{$datos["tipo"]}')";
 
-$sql = "UPDATE FOCO SET Estado = '{$datos["Estado"]}', Intensidad = '{$datos["Intensidad"]}' WHERE dispositivo_id = '{$datos["dispositivo_id"]}' ";
+$sql = "UPDATE FOCO SET Estado = '{$datos["Estado"]}', Intensidad = '{$datos["Intensidad"]}' WHERE DISPOSITIVO_ID = '{$datos["dispositivo_id"]}' ";
 
 if(mysqli_connect_errno())
 {
