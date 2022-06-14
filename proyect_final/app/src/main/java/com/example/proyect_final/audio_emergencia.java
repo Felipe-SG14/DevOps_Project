@@ -1,5 +1,7 @@
 package com.example.proyect_final;
 
+import static java.lang.Integer.parseInt;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -11,16 +13,22 @@ import android.content.ContextWrapper;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Looper;
+import android.provider.Settings;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -35,16 +43,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import org.apache.commons.net.ftp.FTPClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class audio_emergencia extends AppCompatActivity {
 
@@ -59,15 +65,20 @@ public class audio_emergencia extends AppCompatActivity {
     static public String nameAudioFile;
     public int contador=0;
     static public String google_url;
+    static public String deviceId;
+    static public int user;
+
 
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationRequest locationRequest;
+    SmsManager smsManager = SmsManager.getDefault();
     LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             if(locationResult==null){
                 return;
             }
+
             for(Location location: locationResult.getLocations()){
                 Log.d(TAG,"onLocationResult: " + location.toString());
                 latitude = location.getLatitude();
@@ -75,17 +86,69 @@ public class audio_emergencia extends AppCompatActivity {
                 contador=contador+1;
                 if(contador==1){
                     google_url = "https://www.google.com/maps/?q="+latitude+","+longitude;
-                    SmsManager smsManager = SmsManager.getDefault();
+                    getUserID();
+                    sendMessage();
+
+                    /*SmsManager smsManager = SmsManager.getDefault();
                     smsManager.sendTextMessage("+52 5534532007",null, "Audio de emergencia: https://davinci999.xyz/audio_dir/"+nameAudioFile,null, null);
-                    smsManager.sendTextMessage("+52 5534532007",null, "Última ubicación "+google_url,null, null);
-                    Log.d(TAG, "onSuccess " + google_url);
+                    smsManager.sendTextMessage( "+52 5534532007",null, "Última ubicación "+google_url,null, null);
+                    Log.d(TAG, "onSuccess " + google_url);*/
                 }
             }
 
 
-
         }
     };
+    //------------------------------------PHP REQUEST--------------------------------------
+    public void getUserIDRequest(String url){ // Lee los números de telefono
+        RequestQueue myQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            user = response.getInt("user_id");
+                            Log.d(TAG, "UserTRY "+user);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        myQueue.add(request);
+    }
+    //------------------------------------------------------------------------------------
+
+
+    public void getUserID()
+    {
+        String url = "https://davinci999.xyz/deviceID.php?dispositivo_id="+deviceId;
+       getUserIDRequest(url);
+    }
+
+    public void sendMessage(){
+        Log.d(TAG, "Dispositivo= "+deviceId);
+        Log.d(TAG, "User "+user);
+
+            if(user==0) {
+                smsManager.sendTextMessage("+52 5534532007", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
+                smsManager.sendTextMessage("+52 5534532007", null, "Última ubicación " + google_url, null, null);
+                Log.d(TAG, "onSuccess " + google_url);
+            }
+        /*}else if (user==1){*/
+            smsManager.sendTextMessage("+52 5550685663",null, "Audio de emergencia: https://davinci999.xyz/audio_dir/"+nameAudioFile,null, null);
+            smsManager.sendTextMessage( "+52 5550685663",null, "Última ubicación "+google_url,null, null);
+            Log.d(TAG, "onSuccess " + google_url);
+
+        //}
+    }
     //------------------------------------------------------------------------
     
     //--------------GRABACIÓN AUDIO-------------------
@@ -124,7 +187,8 @@ public class audio_emergencia extends AppCompatActivity {
     }
 
     public void btnRecordPress(View v){
-        Log.d(TAG, "onSuccess " + google_url);
+        deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        Log.d(TAG,"ID del teléfono: "+deviceId);
         try {
             //--------------GRABACIÓN AUDIO------------------------------------------------------
             mediaRecorder = new MediaRecorder();
@@ -155,11 +219,10 @@ public class audio_emergencia extends AppCompatActivity {
                 if(what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED){
                     Toast.makeText(this, "Recording has stopped",Toast.LENGTH_LONG).show();
                     mediaRecorder.release();
-
                     //-------------------ENVíO ARCHIVO A SERVIDOR FTP------------------------
                     new sendFileFTP().execute();
                     //-----------------------------------------------------------------------
-
+                    //sendMessage();
                     Toast.makeText(audio_emergencia.this, "MSJ Enviado", Toast.LENGTH_LONG).show();
                 }
             });
