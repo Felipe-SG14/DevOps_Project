@@ -5,12 +5,12 @@
     <string name="latitude_label">Latitud</string>
     <string name="activity_label">Actividad</string>
     <string name="btn_regresar">Back</string>
-    <string name="btn_login">Login</string>
+    <string name="btn_login">LOGIN</string>
     <string name="btn_luces">Lights</string>
     <string name="btn_musica">Music</string>
     <string name="btn_dejcompubi">Stop sharing location</string>
     <string name="btn_mandarubi">Share Location</string>
-    <string name="btn_emergencia">Emergency</string>
+    <string name="btn_emergencia">EMERGENCY</string>
     <string name="casa">casa</string>
     <string name="Location">Location</string>
     <string name="main_Bedroom">Main Bedroom</string>
