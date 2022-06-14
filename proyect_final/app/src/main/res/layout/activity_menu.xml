@@ -96,7 +96,7 @@
         android:background="@drawable/button_rounded"
         android:backgroundTint="@color/purple"
         android:contentDescription="@string/btn_musica"
-        android:onClick="abrirMenuLuces"
+        android:onClick="controlMusica"
         android:scaleType="centerCrop"
         android:tint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
