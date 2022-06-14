@@ -197,7 +197,7 @@ public class MenuActivity extends AppCompatActivity {
             if(rol.equals("hija"))
             {
                 // Destino ESP
-                double d= DistanciaAcasa(latitude,longitude,37.4219958,-122.0840005);
+                double d= DistanciaAcasa(latitude,longitude,19.4515,-99.0891);
                 if(d <= 10 && !Detener_actualizacion)
                 {
                     Detener_actualizacion = true;

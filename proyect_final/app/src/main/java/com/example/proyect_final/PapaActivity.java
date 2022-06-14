@@ -87,7 +87,7 @@ public class PapaActivity extends AppCompatActivity {
                     String url = "https://davinci999.xyz/solicitud_ubicacion.php"; //http://davinci999.xyz
                     JSONObject jsonObject_ubicacion  = new JSONObject();
                     try {
-                        jsonObject_ubicacion.put("UBICACION_ID",1);
+                        jsonObject_ubicacion.put("UBICACION_ID",3);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
