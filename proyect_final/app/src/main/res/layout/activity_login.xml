@@ -34,8 +34,8 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="88dp"
-                android:layout_height="80dp"
+                android:layout_width="73dp"
+                android:layout_height="57dp"
                 android:layout_marginTop="64dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
@@ -45,8 +45,8 @@
 
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="81dp"
-                android:layout_height="68dp"
+                android:layout_width="67dp"
+                android:layout_height="46dp"
                 app:srcCompat="@drawable/logo" />
 
             <EditText
@@ -75,18 +75,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
 
-            <Button
-                android:id="@+id/button5"
-                android:layout_width="204dp"
-                android:layout_height="59dp"
-                android:layout_marginTop="128dp"
-                android:background="@drawable/button_rounded"
-                android:text="@string/btn_emergencia"
-                android:textAllCaps="false"
-                android:onClick="btnRecordPress"
-                app:backgroundTint="@color/red"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button3" />
 
             <Button
                 android:id="@+id/button3"
@@ -94,6 +82,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="52dp"
                 android:background="@drawable/button_rounded"
+                android:onClick="loginButton"
                 android:text="@string/btn_login"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
@@ -102,6 +91,19 @@
                 app:layout_constraintHorizontal_bias="0.507"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="204dp"
+                android:layout_height="59dp"
+                android:layout_marginTop="128dp"
+                android:background="@drawable/button_rounded"
+                android:onClick="btnRecordPress"
+                android:text="@string/btn_emergencia"
+                android:textAllCaps="false"
+                app:backgroundTint="@color/red"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button3" />
 
 
         </LinearLayout>
