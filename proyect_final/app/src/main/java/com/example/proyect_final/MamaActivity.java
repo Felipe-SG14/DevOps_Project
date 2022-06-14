@@ -2,6 +2,7 @@ package com.example.proyect_final;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -13,13 +14,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class MamaActivity extends AppCompatActivity {
 
@@ -28,13 +35,14 @@ public class MamaActivity extends AppCompatActivity {
     public Switch switch1;
     public Switch switch2;
     public Switch switch3;
-    public Switch switch4;
     public Switch switch5;
     public Switch switch6;
+    public Switch switch7;
     public Switch switchHija;    // Switch 7 es para la hija
     public Switch switchHijo;    // Switch 8 es para el hijo
     public SeekBar sk_hija;
     public SeekBar sk_hijo;
+    public Timer timerUpdate;
 
 
 
@@ -50,16 +58,30 @@ public class MamaActivity extends AppCompatActivity {
         switch1 = (Switch)findViewById(R.id.switch1);
         switch2 = (Switch)findViewById(R.id.switch2);
         switch3 = (Switch)findViewById(R.id.switch3);
-        switch4 = (Switch)findViewById(R.id.switch4);
         switch5 = (Switch)findViewById(R.id.switch5);
         switch6 = (Switch)findViewById(R.id.switch6);
-        switchHija = (Switch)findViewById(R.id.switch7);
+        switch7 = (Switch)findViewById(R.id.switch7);
+        switchHija = (Switch)findViewById(R.id.switch4);
         switchHijo = (Switch)findViewById(R.id.switch8);
 
         sk_hija();
         sk_hijo();
 
-        updateState();
+        //Timer definition
+        timerUpdate = new Timer();
+        timerUpdate.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //Thread
+                runOnUiThread(new Runnable(){
+                    @Override
+                    public void run(){
+                        //Here we can modify views
+                        updateState();
+                    }
+                });
+            }
+        }, 0, 1500);
 
         // Permisos de acceso a botones
         rol = getIntent().getStringExtra("dato");
@@ -87,13 +109,6 @@ public class MamaActivity extends AppCompatActivity {
             }
         });
 
-        switch4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                switchAccion(b,4);
-            }
-        });
-
         switch5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -108,10 +123,17 @@ public class MamaActivity extends AppCompatActivity {
             }
         });
 
-        switchHija.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        switch7.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 switchAccion(b,7);
+            }
+        });
+
+        switchHija.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                switchAccion(b,4);
             }
         });
 
@@ -186,11 +208,41 @@ public class MamaActivity extends AppCompatActivity {
                     Toast response_toast = Toast.makeText(getApplicationContext(), "e " + response.toString(), Toast.LENGTH_LONG);
                     response_toast.show();
                 }, error -> {
-            Toast response_toast = Toast.makeText(MamaActivity.this, message, Toast.LENGTH_LONG);
-            response_toast.show();
+            //Toast response_toast = Toast.makeText(MamaActivity.this, message, Toast.LENGTH_LONG);
+            //response_toast.show();
         });
 
         requestQueue.add(jsonObjectRequest);
+    }
+
+    /* To run Data update
+                try {
+                    dataUsingVolley_GET_FULL_DATA("https://felipedevopsp2.000webhostapp.com/prueba.php");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+     */
+
+    public void dataUsingVolley_UPDATE_FULL_DATA(String url) throws JSONException {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JSONArray jsonArray = new JSONArray();
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, jsonArray,
+                response -> {
+                    try {
+                        updateViews(response);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }, error -> { });
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    private void updateViews(JSONArray response) throws JSONException {
+        String TAG = "TAG";
+        for (int i = 0; i < response.length(); i++) {
+            JSONObject jsonObject = response.getJSONObject(i);
+            //Accesing each element of the Array
+        }
     }
 
 
@@ -204,9 +256,9 @@ public class MamaActivity extends AppCompatActivity {
             switch1.setVisibility(View.VISIBLE);
             switch2.setVisibility(View.VISIBLE);
             switch3.setVisibility(View.VISIBLE);
-            switch4.setVisibility(View.VISIBLE);
             switch5.setVisibility(View.VISIBLE);
             switch6.setVisibility(View.VISIBLE);
+            switch7.setVisibility(View.VISIBLE);
             switchHija.setVisibility(View.VISIBLE);
             switchHijo.setVisibility(View.VISIBLE);
             sk_hija.setVisibility(View.VISIBLE);
@@ -217,9 +269,9 @@ public class MamaActivity extends AppCompatActivity {
             switch1.setVisibility(View.VISIBLE);
             switch2.setVisibility(View.VISIBLE);
             switch3.setVisibility(View.VISIBLE);
-            switch4.setVisibility(View.VISIBLE);
             switch5.setVisibility(View.VISIBLE);
             switch6.setVisibility(View.VISIBLE);
+            switch7.setVisibility(View.VISIBLE);
             switchHija.setVisibility(View.INVISIBLE);
             switchHijo.setVisibility(View.VISIBLE);
             sk_hija.setVisibility(View.INVISIBLE);
@@ -230,9 +282,9 @@ public class MamaActivity extends AppCompatActivity {
             switch1.setVisibility(View.VISIBLE);
             switch2.setVisibility(View.VISIBLE);
             switch3.setVisibility(View.VISIBLE);
-            switch4.setVisibility(View.VISIBLE);
             switch5.setVisibility(View.VISIBLE);
             switch6.setVisibility(View.VISIBLE);
+            switch7.setVisibility(View.VISIBLE);
             switchHija.setVisibility(View.VISIBLE);
             switchHijo.setVisibility(View.INVISIBLE);
             sk_hija.setVisibility(View.VISIBLE);
@@ -244,7 +296,7 @@ public class MamaActivity extends AppCompatActivity {
 
     public void sk_hija(){ //Foco de la hija
         sk_hija = (SeekBar)findViewById(R.id.seekBar1);
-        sk_hija.setMax(256); //Valor maximo de intensidad
+        sk_hija.setMax(255); //Valor maximo de intensidad
         sk_hija.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int intensity;
             @Override
@@ -278,14 +330,14 @@ public class MamaActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(MamaActivity.this,String.valueOf(intensity),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MamaActivity.this,String.valueOf(intensity),Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public void sk_hijo(){ //Foco del hijo
         sk_hijo = (SeekBar)findViewById(R.id.seekBar2);
-        sk_hijo.setMax(256); //Valor maximo de intensidad
+        sk_hijo.setMax(255); //Valor maximo de intensidad
         sk_hijo.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int intensity;
             @Override
@@ -318,7 +370,7 @@ public class MamaActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(MamaActivity.this,String.valueOf(intensity),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MamaActivity.this,String.valueOf(intensity),Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -404,13 +456,13 @@ public class MamaActivity extends AppCompatActivity {
         getState(url1,switch1);
         getState(url2,switch2);
         getState(url3,switch3);
-        getState(url4,switch4);
         getState(url5,switch5);
         getState(url6,switch6);
-        getState(url7,switchHija);
+        getState(url7,switch7);
+        getState(url4,switchHija);
         getState(url8,switchHijo);
 
-        getIntensity(url7,sk_hija);
+        getIntensity(url4,sk_hija);
         getIntensity(url8,sk_hijo);
 
     }

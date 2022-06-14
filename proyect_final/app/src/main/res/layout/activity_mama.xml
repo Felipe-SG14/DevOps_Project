@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="409dp"
     android:layout_height="729dp"
     tools:layout_editor_absoluteX="1dp"
@@ -160,15 +161,19 @@
             android:id="@+id/seekBar1"
             android:layout_width="300dp"
             android:layout_height="42dp"
-            app:layout_constraintTop_toBottomOf="@+id/switch7"
-            tools:layout_editor_absoluteX="41dp" />
+            android:layout_marginEnd="52dp"
+            android:layout_marginRight="52dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch7" />
 
         <SeekBar
             android:id="@+id/seekBar2"
             android:layout_width="300dp"
             android:layout_height="42dp"
-            app:layout_constraintTop_toBottomOf="@+id/switch8"
-            tools:layout_editor_absoluteX="41dp" />
+            android:layout_marginEnd="68dp"
+            android:layout_marginRight="68dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch8" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -176,3 +181,4 @@
 
 
 </ScrollView>
+

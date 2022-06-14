@@ -367,11 +367,12 @@ public class MenuActivity extends AppCompatActivity {
 }
 
     // Funcion para dejar de compartir ubicación
-    public void onStopPress(View view) {
+
+   /* public void onStopPress(View view) {
         stopLocationUpdates();
         Log.d(TAG, nameAudioFile);
 
     }
     private void stopLocationUpdates(){
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
-    }
+    }*/

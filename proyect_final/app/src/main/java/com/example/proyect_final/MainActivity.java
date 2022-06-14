@@ -4,7 +4,9 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -85,6 +87,20 @@ public class MainActivity extends AppCompatActivity {
         Intent i4 = new Intent(this, MenuActivity.class);
         i4.putExtra("dato",rolHijo);
         startActivity(i4);
+    }
+
+    public void emergencia (View view){
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+
+            if(checkSelfPermission(Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED){
+                sendSMS();
+            }else
+            {
+                requestPermissions(new String[]{Manifest.permission.SEND_SMS},1);
+            }
+        }
+
     }
 
     /////////  Código de PHP-JSON ////////////////////////////////////////////////////////////////////////////////////////////
@@ -173,7 +189,32 @@ public class MainActivity extends AppCompatActivity {
                 //Permission not granted
             }
         }
+
+        if (requestCode == 1) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Permission granted
+
+            } else {
+                //Permission not granted
+            }
+        }
+
     }
 
+    //////////////////Código SMS
+    private void sendSMS(){
+        String number = "teléfono_de_10_dígitos";
+        String message = "Test message";
+
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(number,null,message,null,null);
+            Toast.makeText(this,"Message sent",Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(this,"Failed to send the message",Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
 }
