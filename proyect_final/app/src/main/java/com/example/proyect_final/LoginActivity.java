@@ -97,20 +97,25 @@ public class LoginActivity extends AppCompatActivity {
                     google_url = "https://www.google.com/maps/?q=" + latitude + "," + longitude;
                     getUserID();
                     //sendMessage();
-
                     /*SmsManager smsManager = SmsManager.getDefault();
                     smsManager.sendTextMessage("+52 5534532007",null, "Audio de emergencia: https://davinci999.xyz/audio_dir/"+nameAudioFile,null, null);
                     smsManager.sendTextMessage( "+52 5534532007",null, "Última ubicación "+google_url,null, null);
                     Log.d(TAG, "onSuccess " + google_url);*/
                 }
-                // locationUpdateBD();
+                locationUpdateBD();
             }
         }
     };
 
     public void locationUpdateBD() {
-        String url = "https://davinci999.xyz/solicitud_actualizacion_ubicaciones.php?USUARIO_ID=" + user; //http://davinci999.xyz
+        String url = "https://davinci999.xyz/solicitud_actualizacion_ubicaciones.php"; //http://davinci999.xyz
         JSONObject jsonObject_ubicacion = new JSONObject();
+        Log.d(TAG,"UserBD = "+user);
+        try {
+            jsonObject_ubicacion.put("USUARIO_ID",user);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         try {
             jsonObject_ubicacion.put("LONGITUD", longitude);
         } catch (JSONException e) {
@@ -121,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         String message = "Latitud: " + String.valueOf(latitude) +
                 "\n" + "Longitud: " + String.valueOf(longitude);
         try {
@@ -158,7 +164,6 @@ public class LoginActivity extends AppCompatActivity {
                             user = response.getInt("user_id");
                             Log.d(TAG, "UserTRY " + user);
                             sendMessage();
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -202,7 +207,7 @@ public class LoginActivity extends AppCompatActivity {
             smsManager.sendTextMessage("+52 5527685016", null, "Última ubicación " + google_url, null, null);
 
             //Contacto 3
-            
+
 
             Log.d(TAG, "onSuccess " + google_url);
         } else if (user == 3) {
@@ -332,7 +337,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     public void btnRecordPress(View v) {
-        deviceId ="2"; //Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        deviceId =Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         Log.d(TAG, "ID del teléfono: " + deviceId);
         try {
             //--------------GRABACIÓN AUDIO------------------------------------------------------
