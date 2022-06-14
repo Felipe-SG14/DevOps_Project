@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     public double latitude;
     public double longitude;
     static public String nameAudioFile;
-    public int contador=0;
+    public int contador = 0;
     static public String google_url;
     static public String deviceId;
     static public int user;
@@ -73,17 +73,17 @@ public class LoginActivity extends AppCompatActivity {
     LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
-            if(locationResult==null){
+            if (locationResult == null) {
                 return;
             }
 
-            for(Location location: locationResult.getLocations()){
-                Log.d(TAG,"onLocationResult: " + location.toString());
+            for (Location location : locationResult.getLocations()) {
+                Log.d(TAG, "onLocationResult: " + location.toString());
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
-                contador=contador+1;
-                if(contador==1){
-                    google_url = "https://www.google.com/maps/?q="+latitude+","+longitude;
+                contador = contador + 1;
+                if (contador == 1) {
+                    google_url = "https://www.google.com/maps/?q=" + latitude + "," + longitude;
                     getUserID();
                     sendMessage();
 
@@ -97,8 +97,9 @@ public class LoginActivity extends AppCompatActivity {
 
         }
     };
+
     //------------------------------------PHP REQUEST--------------------------------------
-    public void getUserIDRequest(String url){ // Lee los números de telefono
+    public void getUserIDRequest(String url) { // Lee los números de telefono
         RequestQueue myQueue = Volley.newRequestQueue(this);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -107,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             user = response.getInt("user_id");
-                            Log.d(TAG, "UserTRY "+user);
+                            Log.d(TAG, "UserTRY " + user);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -122,30 +123,27 @@ public class LoginActivity extends AppCompatActivity {
 
         myQueue.add(request);
         myQueue.start();
-        Log.d(TAG, "UserDefinite "+user);
+        Log.d(TAG, "UserDefinite " + user);
     }
     //------------------------------------------------------------------------------------
 
 
-    public void getUserID()
-    {
-        String url = "https://davinci999.xyz/deviceID.php?dispositivo_id="+deviceId;
+    public void getUserID() {
+        String url = "https://davinci999.xyz/deviceID.php?dispositivo_id=" + deviceId;
         getUserIDRequest(url);
     }
 
-    public void sendMessage(){
-        Log.d(TAG, "Dispositivo= "+deviceId);
-        Log.d(TAG, "User "+user);
+    public void sendMessage() {
+        Log.d(TAG, "Dispositivo= " + deviceId);
+        Log.d(TAG, "User " + user);
 
-        if(user==3) {
+        if (user == 3) {
             smsManager.sendTextMessage("+52 5534532007", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
             smsManager.sendTextMessage("+52 5534532007", null, "Última ubicación " + google_url, null, null);
-            Log.d(TAG, "onSuccess " + google_url+" "+user);
-        }
-        else if (user==1)
-        {
-            smsManager.sendTextMessage("+52 5550685663",null, "Audio de emergencia: https://davinci999.xyz/audio_dir/"+nameAudioFile,null, null);
-            smsManager.sendTextMessage( "+52 5550685663",null, "Última ubicación "+google_url,null, null);
+            Log.d(TAG, "onSuccess " + google_url + " " + user);
+        } else if (user == 1) {
+            smsManager.sendTextMessage("+52 5550685663", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
+            smsManager.sendTextMessage("+52 5550685663", null, "Última ubicación " + google_url, null, null);
             Log.d(TAG, "onSuccess " + google_url);
 
         }
@@ -153,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
     //------------------------------------------------------------------------
 
     //--------------GRABACIÓN AUDIO-------------------
-    private static int MICROPHONE_PERMISSION_CODE=200;
+    private static int MICROPHONE_PERMISSION_CODE = 200;
     MediaRecorder mediaRecorder;
     //------------------------------------------------
 
@@ -163,7 +161,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //--------------GRABACIÓN AUDIO--------------
         setContentView(R.layout.activity_login);
-        if(isMicrophonePresent()){
+        if (isMicrophonePresent()) {
             getMicrophonePermission();
         }
         //--------------------------------------------
@@ -178,7 +176,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //----------------------------------------------ENVÍO SMS ------------------------------------------------------------------------------
 
-        if(ActivityCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(LoginActivity.this, new String[]{Manifest.permission.SEND_SMS}, 1);
 
         }
@@ -187,9 +185,9 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void btnRecordPress(View v){
+    public void btnRecordPress(View v) {
         deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-        Log.d(TAG,"ID del teléfono: "+deviceId);
+        Log.d(TAG, "ID del teléfono: " + deviceId);
         try {
             //--------------GRABACIÓN AUDIO------------------------------------------------------
             mediaRecorder = new MediaRecorder();
@@ -200,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
             mediaRecorder.setMaxDuration(MAX_DURATION_MS);
             mediaRecorder.prepare();
             mediaRecorder.start();
-            Toast.makeText(this, "Recording is started",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Recording is started", Toast.LENGTH_LONG).show();
             //-----------------------------------------------------------------------------------
 
             //----------------------------------------------------------------ENVÍO SMS-------------------------------------------
@@ -217,8 +215,8 @@ public class LoginActivity extends AppCompatActivity {
 
             //----------------------------------------------GRABACIÓN AUDIO-------------------------------------------------------------------------
             mediaRecorder.setOnInfoListener((mr, what, extra) -> {
-                if(what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED){
-                    Toast.makeText(this, "Recording has stopped",Toast.LENGTH_LONG).show();
+                if (what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED) {
+                    Toast.makeText(this, "Recording has stopped", Toast.LENGTH_LONG).show();
                     mediaRecorder.release();
                     //-------------------ENVíO ARCHIVO A SERVIDOR FTP------------------------
                     new sendFileFTP().execute();
@@ -236,48 +234,43 @@ public class LoginActivity extends AppCompatActivity {
                 askLocationPermission();
             }
             //--------------------------------------------------------------------------------------------------------------------------------------
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     //----------------------------------------------GRABACIÓN AUDIO-------------------------------------------------------------------------
     private boolean isMicrophonePresent() {
-        if (this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_MICROPHONE))
-        {
+        if (this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_MICROPHONE)) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 
-    private void getMicrophonePermission(){
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-                ==PackageManager.PERMISSION_DENIED)
-        {
+    private void getMicrophonePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[]
-                    {Manifest.permission.RECORD_AUDIO},MICROPHONE_PERMISSION_CODE);
+                    {Manifest.permission.RECORD_AUDIO}, MICROPHONE_PERMISSION_CODE);
         }
 
     }
 
-    public File getRecordingFile(){
-        ContextWrapper contextWrapper= new ContextWrapper(getApplicationContext());
-        File musicDirectory =contextWrapper.getExternalFilesDir((Environment.DIRECTORY_MUSIC));
+    public File getRecordingFile() {
+        ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
+        File musicDirectory = contextWrapper.getExternalFilesDir((Environment.DIRECTORY_MUSIC));
 
-        File audio_e =new File(musicDirectory, getFileName());
+        File audio_e = new File(musicDirectory, getFileName());
         return audio_e;
     }
 
     public String getFileName() {
-        SimpleDateFormat simpleDateFormat =new SimpleDateFormat("ddMMyyyy_HHmm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyy_HHmm");
         Date now = new Date();
-        String timestamp=simpleDateFormat.format(now);
-        nameAudioFile="audio_emergencia_"+timestamp+".wav";
-        return  nameAudioFile;
+        String timestamp = simpleDateFormat.format(now);
+        nameAudioFile = "audio_emergencia_" + timestamp + ".wav";
+        return nameAudioFile;
     }
     //--------------------------------------------------------------------------------------------------------------------------------------
 
@@ -326,7 +319,7 @@ public class LoginActivity extends AppCompatActivity {
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
     }
 
-    private void stopLocationUpdates(){
+    private void stopLocationUpdates() {
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
     }
 
@@ -357,26 +350,25 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public class sendFileFTP extends AsyncTask<Void,Void,Void>{
+    public class sendFileFTP extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            String server="davinci999.xyz";
-            String username="u447795502.pedro_tsm";
-            String password="holasoypedro123TSM";
-            String dirPath="/audio_dir";
+            String server = "davinci999.xyz";
+            String username = "u447795502.pedro_tsm";
+            String password = "holasoypedro123TSM";
+            String dirPath = "/audio_dir";
 
             FTPClient ftpClient = new FTPClient();
-            try
-            {
+            try {
                 ftpClient.connect(server);
-                ftpClient.login(username,password);
+                ftpClient.login(username, password);
                 ftpClient.enterLocalPassiveMode();
 
                 Log.d(TAG, "CONNECTED");
 
-                InputStream inputStream =new FileInputStream(getRecordingFile());
-                ftpClient.storeFile(dirPath +"/"+nameAudioFile,inputStream);
+                InputStream inputStream = new FileInputStream(getRecordingFile());
+                ftpClient.storeFile(dirPath + "/" + nameAudioFile, inputStream);
                 inputStream.close();
 
                 //boolean stored =ftpClient.storeFile(dirPath+"/audio_emergencia.mp3",inputStream);
@@ -384,12 +376,10 @@ public class LoginActivity extends AppCompatActivity {
                 ftpClient.logout();
                 ftpClient.disconnect();
 
-                Log.d(TAG,"DISCONNECTED" );
+                Log.d(TAG, "DISCONNECTED");
 
 
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;

@@ -32,6 +32,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -359,3 +365,13 @@ public class MenuActivity extends AppCompatActivity {
         dataUsingVolley(jsonObject,"https://davinci999.xyz/solicitud_musica.php","Music Off");
     }
 }
+
+    // Funcion para dejar de compartir ubicación
+    public void onStopPress(View view) {
+        stopLocationUpdates();
+        Log.d(TAG, nameAudioFile);
+
+    }
+    private void stopLocationUpdates(){
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+    }
