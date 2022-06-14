@@ -85,7 +85,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.507"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+                    app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
+                    android:onClick="loginButton"/>
 
                 <Button
                     android:id="@+id/button5"
