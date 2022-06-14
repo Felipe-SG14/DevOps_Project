@@ -34,7 +34,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'com.google.android.gms:play-services-location:19.0.1'
-    implementation files('C:\\Users\\dfb98\\Desktop\\proyecto_dev\\DevOps_Project\\proyect_final\\app\\libs\\apache-commons-net.jar')
+    implementation files('C:\\Users\\juanz\\AndroidStudioProjects\\DevOps_Project\\proyect_final\\app\\libs\\apache-commons-net.jar')
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

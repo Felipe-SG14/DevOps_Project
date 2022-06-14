@@ -69,16 +69,17 @@ public class LoginActivity extends AppCompatActivity {
     int LOCATION_REQUEST_CODE = 10001;
     public double latitude;
     public double longitude;
+    FusedLocationProviderClient fusedLocationProviderClient;
+    LocationRequest locationRequest;
+    //-----------------------GRABACIÓN AUDIO-------------------------------
     static public String nameAudioFile;
     public int contador = 0;
     static public String google_url;
     static public String deviceId;
     static public int user;
-
-
-    FusedLocationProviderClient fusedLocationProviderClient;
-    LocationRequest locationRequest;
+    //----------ENVÍO SMS --------
     SmsManager smsManager = SmsManager.getDefault();
+    //------------------------------UBICACIÓN-------------------------------
     LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
@@ -91,21 +92,59 @@ public class LoginActivity extends AppCompatActivity {
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
                 contador = contador + 1;
+
                 if (contador == 1) {
                     google_url = "https://www.google.com/maps/?q=" + latitude + "," + longitude;
                     getUserID();
-                    sendMessage();
+                    //sendMessage();
 
                     /*SmsManager smsManager = SmsManager.getDefault();
                     smsManager.sendTextMessage("+52 5534532007",null, "Audio de emergencia: https://davinci999.xyz/audio_dir/"+nameAudioFile,null, null);
                     smsManager.sendTextMessage( "+52 5534532007",null, "Última ubicación "+google_url,null, null);
                     Log.d(TAG, "onSuccess " + google_url);*/
                 }
+                // locationUpdateBD();
             }
-
-
         }
     };
+
+    public void locationUpdateBD() {
+        String url = "https://davinci999.xyz/solicitud_actualizacion_ubicaciones.php?USUARIO_ID=" + user; //http://davinci999.xyz
+        JSONObject jsonObject_ubicacion = new JSONObject();
+        try {
+            jsonObject_ubicacion.put("LONGITUD", longitude);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            jsonObject_ubicacion.put("LATITUD", latitude);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String message = "Latitud: " + String.valueOf(latitude) +
+                "\n" + "Longitud: " + String.valueOf(longitude);
+        try {
+            dataUsingVolley(jsonObject_ubicacion, url, message);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(LoginActivity.this, "Your location is not active", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void dataUsingVolley(JSONObject jsonObject, String url, String message) throws JSONException {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
+                response -> {
+                    Toast response_toast = Toast.makeText(getApplicationContext(), "e " + response.toString(), Toast.LENGTH_LONG);
+                    response_toast.show();
+                }, error -> {
+            Toast response_toast = Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG);
+            response_toast.show();
+        });
+
+        requestQueue.add(jsonObjectRequest);
+    }
+
 
     //------------------------------------PHP REQUEST--------------------------------------
     public void getUserIDRequest(String url) { // Lee los números de telefono
@@ -118,6 +157,7 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             user = response.getInt("user_id");
                             Log.d(TAG, "UserTRY " + user);
+                            sendMessage();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -146,17 +186,35 @@ public class LoginActivity extends AppCompatActivity {
         Log.d(TAG, "Dispositivo= " + deviceId);
         Log.d(TAG, "User " + user);
 
-        if (user == 3) {
+        if (user == 2) {
             smsManager.sendTextMessage("+52 5534532007", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
             smsManager.sendTextMessage("+52 5534532007", null, "Última ubicación " + google_url, null, null);
+
             Log.d(TAG, "onSuccess " + google_url + " " + user);
+
         } else if (user == 1) {
+            //Contacto 1
             smsManager.sendTextMessage("+52 5550685663", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
             smsManager.sendTextMessage("+52 5550685663", null, "Última ubicación " + google_url, null, null);
+
+            //Contacto 2
+            smsManager.sendTextMessage("+52 5527685016", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
+            smsManager.sendTextMessage("+52 5527685016", null, "Última ubicación " + google_url, null, null);
+
+            //Contacto 3
+            
+
             Log.d(TAG, "onSuccess " + google_url);
+        } else if (user == 3) {
+
+        } else if (user ==4)
+
+        {
 
         }
     }
+
+
     //------------------------------------------------------------------------
 
     //--------------GRABACIÓN AUDIO-------------------
@@ -274,7 +332,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     public void btnRecordPress(View v) {
-        deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        deviceId ="2"; //Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         Log.d(TAG, "ID del teléfono: " + deviceId);
         try {
             //--------------GRABACIÓN AUDIO------------------------------------------------------
@@ -474,10 +532,5 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }}
-
-
-
-
-
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }
