@@ -1,191 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MamaActivity"
+    android:layout_width="409dp"
+    android:layout_height="729dp"
+    tools:layout_editor_absoluteX="1dp"
+    tools:layout_editor_absoluteY="1dp"
+    android:fillViewport="true"
     android:background="@drawable/sala">
 
-    <ScrollView
-        android:id="@+id/linearlayout"
-        android:layout_width="384dp"
-        android:layout_height="763dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginRight="14dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingTop="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".MamaActivity">
 
 
-            <Switch
-                android:id="@+id/switch1"
-                android:layout_width="300dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="92dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginRight="1dp"
-                android:checked="false"
-                android:switchMinWidth="55dp"
-                android:text="@string/living_room"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.509"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="300dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginRight="1dp"
+            android:checked="false"
+            android:switchMinWidth="55dp"
+            android:text="@string/living_room"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.361"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <Switch
-                android:id="@+id/switch2"
-                android:layout_width="300dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="92dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginRight="1dp"
-                android:checked="false"
-                android:switchMinWidth="55dp"
-                android:text="@string/dining_room"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.509"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <Switch
+            android:id="@+id/switch2"
+            android:layout_width="300dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="148dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginRight="1dp"
+            android:checked="false"
+            android:switchMinWidth="55dp"
+            android:text="@string/dining_room"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.361"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <Switch
-                android:id="@+id/switch3"
-                android:layout_width="300dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="92dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginRight="1dp"
-                android:checked="false"
-                android:switchMinWidth="55dp"
-                android:text="@string/kitchen"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.509"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <Switch
+            android:id="@+id/switch3"
+            android:layout_width="300dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="220dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginRight="1dp"
+            android:checked="false"
+            android:switchMinWidth="55dp"
+            android:text="@string/kitchen"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.361"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <Switch
-                android:id="@+id/switch4"
-                android:layout_width="300dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="92dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginRight="1dp"
-                android:checked="false"
-                android:switchMinWidth="55dp"
-                android:text="@string/main_Bedroom"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.509"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <Switch
+            android:id="@+id/switch4"
+            android:layout_width="300dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="484dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginRight="1dp"
+            android:checked="false"
+            android:switchMinWidth="55dp"
+            android:text="@string/main_Bedroom"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.361"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <Switch
-                android:id="@+id/switch5"
-                android:layout_width="300dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="92dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginRight="1dp"
-                android:checked="false"
-                android:switchMinWidth="55dp"
-                android:text="@string/main_bathroom"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.509"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <Switch
+            android:id="@+id/switch5"
+            android:layout_width="300dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="384dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginRight="1dp"
+            android:checked="false"
+            android:switchMinWidth="55dp"
+            android:text="@string/main_bathroom"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.361"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <Switch
-                android:id="@+id/switch6"
-                android:layout_width="300dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="92dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginRight="1dp"
-                android:checked="false"
-                android:switchMinWidth="55dp"
-                android:text="@string/general_bathroom"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.509"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <Switch
+            android:id="@+id/switch6"
+            android:layout_width="300dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="300dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginRight="1dp"
+            android:checked="false"
+            android:switchMinWidth="55dp"
+            android:text="@string/general_bathroom"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.361"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <Switch
-                android:id="@+id/switch7"
-                android:layout_width="300dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="92dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginRight="1dp"
-                android:checked="false"
-                android:switchMinWidth="55dp"
-                android:text="@string/daughtbed"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.509"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <Switch
+            android:id="@+id/switch7"
+            android:layout_width="300dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="72dp"
+            android:checked="false"
+            android:switchMinWidth="55dp"
+            android:text="@string/daughtbed"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.376"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch8" />
 
-            <Switch
-                android:id="@+id/switch8"
-                android:layout_width="300dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="92dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginRight="1dp"
-                android:checked="false"
-                android:switchMinWidth="55dp"
-                android:text="@string/sonsbed"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.509"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <Switch
+            android:id="@+id/switch8"
+            android:layout_width="300dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="72dp"
+            android:checked="false"
+            android:switchMinWidth="55dp"
+            android:text="@string/sonsbed"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.357"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch4" />
 
-            <SeekBar
-                android:id="@+id/seekBar1"
-                android:layout_width="match_parent"
-                android:layout_height="60dp" />
+        <SeekBar
+            android:id="@+id/seekBar1"
+            android:layout_width="300dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="72dp"
+            android:layout_marginEnd="68dp"
+            android:layout_marginRight="68dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/seekBar2" />
 
-            <SeekBar
-                android:id="@+id/seekBar2"
-                android:layout_width="match_parent"
-                android:layout_height="60dp" />
+        <SeekBar
+            android:id="@+id/seekBar2"
+            android:layout_width="300dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="68dp"
+            android:layout_marginEnd="68dp"
+            android:layout_marginRight="68dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch7" />
 
 
-        </LinearLayout>
-
-    </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

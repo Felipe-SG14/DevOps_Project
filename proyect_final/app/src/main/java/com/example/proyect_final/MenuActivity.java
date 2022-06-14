@@ -34,8 +34,10 @@ public class MenuActivity extends AppCompatActivity {
     public ImageButton stopEmergency;
     public ImageButton luces;
 
+    public TextView txt_music;
+    public TextView txt_location;
+    public TextView txt_lights;
 
-    public TextView distanciaH;
 
     // Variables ara calcular distancia
     private double latitudOrigen;
@@ -71,7 +73,10 @@ public class MenuActivity extends AppCompatActivity {
         musica = (ImageButton) findViewById(R.id.musica);
         ubicacionPadre = (ImageButton) findViewById(R.id.ubicacionPadre);
         stopEmergency = (ImageButton) findViewById(R.id.stopEmergency);
-        distanciaH = (TextView) findViewById(R.id.Distancia);
+        txt_music = (TextView) findViewById(R.id.txt_music);
+        txt_location = (TextView) findViewById(R.id.txt_location);
+        txt_lights = (TextView) findViewById(R.id.txt_lights);
+
 
         // Permisos de acceso a botones
         rol = getIntent().getStringExtra("dato");
@@ -128,7 +133,7 @@ public class MenuActivity extends AppCompatActivity {
         {
             close = false;
         }
-        distanciaH.setText(String.valueOf(distancia));
+
         // Toast.makeText(MenuActivity.this, String.valueOf(distancia), Toast.LENGTH_SHORT).show();
         return close;
     }
@@ -220,7 +225,8 @@ public class MenuActivity extends AppCompatActivity {
             musica.setVisibility(View.INVISIBLE);
             ubicacionPadre.setVisibility(View.INVISIBLE);
             stopEmergency.setVisibility(View.VISIBLE);
-
+            txt_music.setVisibility(View.INVISIBLE);
+            txt_location.setVisibility(View.INVISIBLE);
         }
         if(input.equals("hijo"))
         {
@@ -228,6 +234,7 @@ public class MenuActivity extends AppCompatActivity {
             musica.setVisibility(View.VISIBLE);
             ubicacionPadre.setVisibility(View.INVISIBLE);
             stopEmergency.setVisibility(View.VISIBLE);
+            txt_location.setVisibility(View.INVISIBLE);
         }
         if(input.equals("hija"))
         {
@@ -235,6 +242,8 @@ public class MenuActivity extends AppCompatActivity {
             musica.setVisibility(View.INVISIBLE);
             ubicacionPadre.setVisibility(View.INVISIBLE);
             stopEmergency.setVisibility(View.VISIBLE);
+            txt_music.setVisibility(View.INVISIBLE);
+            txt_location.setVisibility(View.INVISIBLE);
         }
         if(input.equals("papa"))
         {
@@ -242,6 +251,8 @@ public class MenuActivity extends AppCompatActivity {
             musica.setVisibility(View.INVISIBLE);
             ubicacionPadre.setVisibility(View.VISIBLE);
             stopEmergency.setVisibility(View.VISIBLE);
+            txt_music.setVisibility(View.INVISIBLE);
+            txt_lights.setVisibility(View.INVISIBLE);
         }
     }
 

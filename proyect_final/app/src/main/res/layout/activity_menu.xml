@@ -60,7 +60,7 @@
         app:srcCompat="@drawable/ubi" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txt_location"
         android:layout_width="131dp"
         android:layout_height="30dp"
         android:layout_marginTop="4dp"
@@ -74,7 +74,7 @@
         tools:visibility="visible" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txt_stopsl"
         android:layout_width="180dp"
         android:layout_height="30dp"
         android:layout_marginTop="4dp"
@@ -105,7 +105,7 @@
         app:srcCompat="@drawable/musica" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txt_music"
         android:layout_width="58dp"
         android:layout_height="26dp"
         android:layout_marginEnd="80dp"
@@ -116,18 +116,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/musica"
         tools:visibility="visible" />
-
-    <TextView
-        android:id="@+id/Distancia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:text="@string/Location"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/stopEmergency"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.792"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -141,7 +129,7 @@
         app:srcCompat="@drawable/casa" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/txt_lights"
         android:layout_width="60dp"
         android:layout_height="25dp"
         android:layout_marginEnd="268dp"
