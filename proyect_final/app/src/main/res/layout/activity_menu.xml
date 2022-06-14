@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondogris"
+    tools:context=".MenuActivity">
+
+
+    <ImageButton
+        android:id="@+id/luces"
+        android:layout_width="87dp"
+        android:layout_height="92dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="260dp"
+        android:layout_marginRight="260dp"
+        android:background="@drawable/button_rounded"
+        android:backgroundTint="@color/yellow"
+        android:contentDescription="@string/btn_luces"
+        android:onClick="abrirMenuLuces"
+        android:scaleType="centerCrop"
+        app:tint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:srcCompat="@drawable/luces" />
+
+    <ImageButton
+        android:id="@+id/stopEmergency"
+        android:layout_width="87dp"
+        android:layout_height="92dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:background="@drawable/button_rounded"
+        android:backgroundTint="@color/red"
+        android:contentDescription="@string/btn_dejcompubi"
+        android:scaleType="centerCrop"
+        android:tint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/musica"
+        app:srcCompat="@drawable/dejarubi" />
+
+    <ImageButton
+        android:id="@+id/ubicacionPadre"
+        android:layout_width="87dp"
+        android:layout_height="92dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="260dp"
+        android:layout_marginRight="260dp"
+        android:background="@drawable/button_rounded"
+        android:backgroundTint="@color/green_light"
+        android:contentDescription="@string/btn_mandarubi"
+        android:onClick="abrirMenuUbicacion"
+        android:scaleType="centerCrop"
+        android:tint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/luces"
+        app:srcCompat="@drawable/ubi" />
+
+    <TextView
+        android:id="@+id/txt_location"
+        android:layout_width="131dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="236dp"
+        android:layout_marginRight="236dp"
+        android:text="@string/btn_mandarubi"
+        android:textColor="@color/black"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ubicacionPadre"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/txt_stopsl"
+        android:layout_width="180dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/btn_dejcompubi"
+        android:textColor="@color/black"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stopEmergency"
+        tools:visibility="visible" />
+
+    <ImageButton
+        android:id="@+id/musica"
+        android:layout_width="87dp"
+        android:layout_height="92dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginRight="68dp"
+        android:background="@drawable/button_rounded"
+        android:backgroundTint="@color/purple"
+        android:contentDescription="@string/btn_musica"
+        android:onClick="abrirMenuLuces"
+        android:scaleType="centerCrop"
+        android:tint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:srcCompat="@drawable/musica" />
+
+    <TextView
+        android:id="@+id/txt_music"
+        android:layout_width="58dp"
+        android:layout_height="26dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginRight="80dp"
+        android:text="@string/btn_musica"
+        android:textColor="@color/black"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/musica"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="412dp"
+        android:layout_height="277dp"
+        android:contentDescription="@string/casa"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/casa" />
+
+    <TextView
+        android:id="@+id/txt_lights"
+        android:layout_width="60dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="268dp"
+        android:layout_marginRight="268dp"
+        android:text="@string/btn_luces"
+        android:textColor="@color/black"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/luces"
+        tools:visibility="visible" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

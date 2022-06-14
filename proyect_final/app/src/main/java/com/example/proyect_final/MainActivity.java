@@ -4,7 +4,9 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     FusedLocationProviderClient fusedLocationProviderClient;
 
+
     ///////// Variables roles
     // public Button mama; NO NECESARIO POR EL MOMENTO
 
@@ -57,23 +60,23 @@ public class MainActivity extends AppCompatActivity {
     public void rol_mama(View view)
     {
         String rolMama = "mama";
-        Intent i1 = new Intent(this, MamaActivity.class);
+        Intent i1 = new Intent(this, MenuActivity.class);
         i1.putExtra("dato",rolMama);
         startActivity(i1);
     }
 
     public void rol_papa(View view)
     {
-        // String rolPapa = "papa"; NO ES NECESARIO POR AHORA
-        Intent i2 = new Intent(this, PapaActivity.class);
-        // i2.putExtra("dato",rolPapa);
+        String rolPapa = "papa";
+        Intent i2 = new Intent(this, MenuActivity.class);
+        i2.putExtra("dato", rolPapa);
         startActivity(i2);
     }
 
     public void rol_hija(View view)
     {
         String rolHija = "hija";
-        Intent i3 = new Intent(this, MamaActivity.class);
+        Intent i3 = new Intent(this, MenuActivity.class);
         i3.putExtra("dato",rolHija);
         startActivity(i3);
     }
@@ -81,9 +84,23 @@ public class MainActivity extends AppCompatActivity {
     public void rol_hijo(View view)
     {
         String rolHijo = "hijo";
-        Intent i4 = new Intent(this, MamaActivity.class);
+        Intent i4 = new Intent(this, MenuActivity.class);
         i4.putExtra("dato",rolHijo);
         startActivity(i4);
+    }
+
+    public void emergencia (View view){
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+
+            if(checkSelfPermission(Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED){
+                sendSMS();
+            }else
+            {
+                requestPermissions(new String[]{Manifest.permission.SEND_SMS},1);
+            }
+        }
+
     }
 
     /////////  Código de PHP-JSON ////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,7 +189,32 @@ public class MainActivity extends AppCompatActivity {
                 //Permission not granted
             }
         }
+
+        if (requestCode == 1) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Permission granted
+
+            } else {
+                //Permission not granted
+            }
+        }
+
     }
 
+    //////////////////Código SMS
+    private void sendSMS(){
+        String number = "teléfono_de_10_dígitos";
+        String message = "Test message";
+
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(number,null,message,null,null);
+            Toast.makeText(this,"Message sent",Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(this,"Failed to send the message",Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
 }
