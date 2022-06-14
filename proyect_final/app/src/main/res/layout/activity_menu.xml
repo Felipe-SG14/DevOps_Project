@@ -105,10 +105,10 @@
 
     <TextView
         android:id="@+id/txt_music"
-        android:layout_width="58dp"
-        android:layout_height="26dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginRight="80dp"
+        android:layout_width="96dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
         android:text="@string/btn_musica"
         android:textColor="@color/black"
         app:autoSizeTextType="uniform"

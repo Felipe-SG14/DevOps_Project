@@ -8,7 +8,7 @@
     <string name="btn_login">LOGIN</string>
     <string name="btn_luces">Lights</string>
     <string name="ligth_bulb">Light bulb</string>
-    <string name="btn_musica">Music</string>
+    <string name="btn_musica">Stop Music</string>
     <string name="btn_dejcompubi">Stop sharing location</string>
     <string name="btn_mandarubi">Share Location</string>
     <string name="btn_emergencia">EMERGENCY</string>

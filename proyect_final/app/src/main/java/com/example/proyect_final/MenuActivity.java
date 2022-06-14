@@ -69,7 +69,7 @@ public class MenuActivity extends AppCompatActivity {
     public boolean DistanciaMenor5m = false;
     public boolean DistanciaMenor10m = false;
 
-    public double alien;        // BORRAR
+    public boolean detener_musica=false;
 
 
     // Constantes para calcular la distancia a la casa
@@ -113,10 +113,13 @@ public class MenuActivity extends AppCompatActivity {
         super.onStart();
         if(rol.equals("hijo"))
         {
-            if(!DistanciaMenor5m)
+
+            Toast.makeText(this,String.valueOf(detener_musica),Toast.LENGTH_SHORT).show();
+
+            if(!detener_musica)
             {
                 miUbicacion();
-                Toast.makeText(this,"MUSIC ON",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"MUSIC ON",Toast.LENGTH_SHORT).show();
             }else
             {
                 Toast.makeText(this,"Fuera de rango",Toast.LENGTH_SHORT).show();
@@ -174,10 +177,10 @@ public class MenuActivity extends AppCompatActivity {
             if(rol.equals("hijo"))
             {
                 // Destino RASP
-                double d = DistanciaAcasa(latitude,longitude,19.69287,-99.21598);
+                double d = DistanciaAcasa(latitude,longitude,37.4219958,-122.0840005);
                 if(d <= 5)
                 {
-                    DistanciaMenor5m = true;
+                    detener_musica = true;
                     iniciarMusica(DistanciaMenor5m);
                 }else
                 {
@@ -220,7 +223,7 @@ public class MenuActivity extends AppCompatActivity {
             JSONObject jsonObject_musica_on = new JSONObject();
             try
             {
-                jsonObject_musica_on.put("usuario_id",1);
+                jsonObject_musica_on.put("USUARIO_ID",1);
                 jsonObject_musica_on.put("CLOSEHOME",1);
             }catch(JSONException e)
             {
@@ -359,8 +362,9 @@ public class MenuActivity extends AppCompatActivity {
 
     // Listener para el control de la música, para parar la música
     public void controlMusica(View view) throws JSONException {
+            detener_musica=true;
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("usuario_id",2);
+            jsonObject.put("USUARIO_ID",1);
             jsonObject.put("CLOSEHOME",0);
         dataUsingVolley(jsonObject,"https://davinci999.xyz/solicitud_musica.php","Music Off");
     }
