@@ -6,9 +6,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.location.LocationRequest;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,11 +22,18 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -40,13 +50,20 @@ public class MenuActivity extends AppCompatActivity {
 
 
     // Variables ara calcular distancia
+    ///////// Variables ara calcular distancia
+    // Ubicación Origen (USUARIO MÓVIL Ó HIJO Ó HIJA)
     private double latitudOrigen;
     private double longitudOrigen;
+    // Ubicación Destino (CASA DEL USUARIO DE RASPBERRY o CASA DEL USUARIO DE ESP)
     private double latitudDestino;
     private double longitudDestino;
+    // Auxiliar
     private double latitude;
     private double longitude;
-    public boolean DistanciaMenor5m;
+    public boolean DistanciaMenor5m = false;
+    public boolean DistanciaMenor10m = false;
+
+    public double alien;        // BORRAR
 
 
     // Constantes para calcular la distancia a la casa
@@ -73,9 +90,11 @@ public class MenuActivity extends AppCompatActivity {
         musica = (ImageButton) findViewById(R.id.musica);
         ubicacionPadre = (ImageButton) findViewById(R.id.ubicacionPadre);
         stopEmergency = (ImageButton) findViewById(R.id.stopEmergency);
+
         txt_music = (TextView) findViewById(R.id.txt_music);
         txt_location = (TextView) findViewById(R.id.txt_location);
         txt_lights = (TextView) findViewById(R.id.txt_lights);
+
 
 
         // Permisos de acceso a botones
@@ -86,32 +105,31 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         if(rol.equals("hijo"))
         {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            getLastLocation();
-        } else
+            if(!DistanciaMenor5m)
+            {
+                miUbicacion();
+                Toast.makeText(this,"MUSIC ON",Toast.LENGTH_SHORT).show();
+            }else
+            {
+                Toast.makeText(this,"Fuera de rango",Toast.LENGTH_SHORT).show();
+            }
+        }else if(rol.equals("hija"))
         {
-            askLocationPermission();
-        }
+            if(!DistanciaMenor10m)
+            {
+                miUbicacion();
+                Toast.makeText(this,"Lights ON",Toast.LENGTH_SHORT).show();
+            }else
+            {
+                Toast.makeText(this,"Fuera de rango",Toast.LENGTH_SHORT).show();
+            }
         }
     }
-    
+
     // Función que calcula la distancia de la casa a la ubicación del usuario (hijo)
-    public boolean DistanciaAcasa( double latitudOrigen, double longitudOrigen)
-    {
-        boolean close;
-        // Ubicación Destino (en Km)
-        // CASA DEL USUARIO DE RASPBERRY
-        latitudDestino = 19.69281;
-        longitudDestino = -99.21592;
-
-        // Ubicación Origen
-        // USUARIO MÓVIL Ó HIJO
-        //Toast.makeText(MenuActivity.this, String.valueOf(latitudOrigen), Toast.LENGTH_SHORT).show();
-        //Toast.makeText(MenuActivity.this, String.valueOf(longitudOrigen), Toast.LENGTH_SHORT).show();
-
+    public double DistanciaAcasa( double latitudOrigen, double longitudOrigen, double latitudDestino, double longitudDestino) {
         // Diferencia de latitudes y longitudes (En radianes)
         double DifLatitud = (latitudDestino-latitudOrigen)*(Math.PI/180);
         double DifLongitud = (longitudDestino-longitudOrigen)*(Math.PI/180);
@@ -125,80 +143,157 @@ public class MenuActivity extends AppCompatActivity {
         // d = R · c
         double distancia = (RadioTierraKm*c)*1000;      // Distancia en metros
 
-        if(distancia <= 5)
-        {
-            close = true;
-        }
-        else
-        {
-            close = false;
-        }
 
-        // Toast.makeText(MenuActivity.this, String.valueOf(distancia), Toast.LENGTH_SHORT).show();
-        return close;
+
+        return distancia;
+
     }
 
-    /////////  Código de GPS y permisos //////////////////////////////////////////////////////////////////////////////////////
-    private void getLastLocation() {
+    /////////  Para actualización de la ubicación
+    private void miUbicacion(){
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    LOCATION_REQUEST_CODE);
             return;
         }
-        Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
-        locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    //We have a location
-                    latitude = location.getLatitude();
-                    longitude = location.getLongitude();
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        ActualizarUbicacion(location);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,0,locListener);
+    }
 
-                    // Se comparan distancias
-                    DistanciaMenor5m = DistanciaAcasa(latitude,longitude);
+    private void ActualizarUbicacion(Location location) {
+        if (location != null) {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
 
-                    // Aquí se hace la siguiente parte de mandar el php
-                    // Toast.makeText(MenuActivity.this,String.valueOf(DistanciaMenor5m), Toast.LENGTH_SHORT).show();
+            if(rol.equals("hijo"))
+            {
+                // Destino RASP
+                double d = DistanciaAcasa(latitude,longitude,19.69287,-99.21598);
+                if(d <= 5)
+                {
+                    DistanciaMenor5m = true;
+                    iniciarMusica(DistanciaMenor5m);
+                }else
+                {
+                    DistanciaMenor5m = false;
 
-                } else {
-                    Log.d(TAG, "onSuccess: Location was null...");
-                    Toast.makeText(MenuActivity.this, "Error", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
+                if(d <= 10)
+                {
+                    DistanciaMenor10m = true;
+                    encenderFoco(true,4);
+                    encenderFoco(true,8);
 
-        locationTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e(TAG, "onFaiure: " + e.getLocalizedMessage());
-            }
-        });
-    }
+                }else
+                {
+                    DistanciaMenor10m = false;
+                }
+                //setLights();
 
-    private void askLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                Log.d(TAG, "askLocationPermission: you should show an alert dialog");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        LOCATION_REQUEST_CODE);
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        LOCATION_REQUEST_CODE);
+            }
+            if(rol.equals("hija"))
+            {
+                // Destino ESP
+                DistanciaAcasa(latitude,longitude,19.69270,-99.21570);
             }
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == LOCATION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //Permission granted
-                getLastLocation();
-            } else {
-                //Permission not granted
+    LocationListener locListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(@NonNull Location location) {
+            ActualizarUbicacion(location);
+        }
+    };
+
+    /////////  Función para iniciar Música
+    public void iniciarMusica(boolean a) {
+        if(a)
+        {
+            String url = "https://davinci999.xyz/solicitud_musica.php";            // Falta completar URL
+            JSONObject jsonObject_musica_on = new JSONObject();
+            try
+            {
+                jsonObject_musica_on.put("usuario_id",1);
+                jsonObject_musica_on.put("CLOSEHOME",1);
+            }catch(JSONException e)
+            {
+                e.printStackTrace();
+            }
+            String message = "Music On";
+            try
+            {
+                dataUsingVolley(jsonObject_musica_on,url,message);
+            }catch (JSONException e)
+            {
+                e.printStackTrace();
             }
         }
+    }
+
+    /////////  Función para encender focos automático
+    public void encenderFoco(boolean b, int number_switch) {
+        if(b){
+            String url = "https://davinci999.xyz/solicitud.php"; //http://davinci999.xyz
+            JSONObject jsonObject_foco_on = new JSONObject();
+            try {
+                jsonObject_foco_on.put("dispositivo_id",number_switch);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                jsonObject_foco_on.put("Estado",1);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                jsonObject_foco_on.put("Intensidad",255);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            String message = "Light on";
+            try {
+                dataUsingVolley(jsonObject_foco_on, url, message);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            JSONObject jsonObject_foco_off = new JSONObject();
+            try {
+                jsonObject_foco_off.put("dispositivo_id",number_switch);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                jsonObject_foco_off.put("Estado",0);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                jsonObject_foco_off.put("Intensidad",0);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            String url = "https://davinci999.xyz/solicitud.php"; //http://davinci999.xyz
+            String message = "Light off";
+            try {
+                dataUsingVolley(jsonObject_foco_off, url, message);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void dataUsingVolley(JSONObject jsonObject, String url, String message) throws JSONException {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
+                response -> {
+                    //Toast response_toast = Toast.makeText(getApplicationContext(), "e " + response.toString(), Toast.LENGTH_LONG);
+                    //response_toast.show();
+                }, error -> {
+        });
+        requestQueue.add(jsonObjectRequest);
     }
 
     // Función que cambia de la ventana de menú de opciones a la ventana de luces
@@ -257,9 +352,10 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     // Listener para el control de la música, para parar la música
-    public void controlMusica(View view) {
-
+    public void controlMusica(View view) throws JSONException {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("usuario_id",2);
+            jsonObject.put("CLOSEHOME",0);
+        dataUsingVolley(jsonObject,"https://davinci999.xyz/solicitud_musica.php","Music Off");
     }
-
-
 }
