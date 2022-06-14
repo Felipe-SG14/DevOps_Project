@@ -7,6 +7,7 @@
     <string name="btn_regresar">Back</string>
     <string name="btn_login">LOGIN</string>
     <string name="btn_luces">Lights</string>
+    <string name="ligth_bulb">Light bulb</string>
     <string name="btn_musica">Music</string>
     <string name="btn_dejcompubi">Stop sharing location</string>
     <string name="btn_mandarubi">Share Location</string>
@@ -21,10 +22,8 @@
     <string name="general_bathroom">General Bathroom</string>
     <string name="sonsbed">Son´s Bedroom</string>
     <string name="daughtbed">Daughter´s Bedroom</string>
-
-
-
-
+    <string name="menu_lights">Select which lights you want to turn On/Off</string>
+    <string name="logo_login">Logo Smart Home</string>
 
 
 </resources>

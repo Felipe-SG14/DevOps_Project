@@ -10,8 +10,8 @@
 
     <ScrollView
         android:id="@+id/linearlayout"
-        android:layout_width="374dp"
-        android:layout_height="731dp"
+        android:layout_width="370dp"
+        android:layout_height="576dp"
         android:layout_marginStart="14dp"
         android:layout_marginLeft="14dp"
         android:layout_marginEnd="14dp"
@@ -26,10 +26,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="16dp">
+            tools:layout_editor_absoluteY="0dp">
 
 
             <ImageView
@@ -37,14 +37,12 @@
                 android:layout_width="234dp"
                 android:layout_height="239dp"
                 android:layout_marginTop="20dp"
+                android:contentDescription="@string/logo_login"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/loginlogo" />
-
-
-
 
 
             <EditText
@@ -97,8 +95,8 @@
             <Button
                 android:id="@+id/button5"
                 android:layout_width="204dp"
-                android:layout_height="59dp"
-                android:layout_marginTop="50dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/button_rounded"
                 android:onClick="btnRecordPress"
                 android:text="@string/btn_emergencia"

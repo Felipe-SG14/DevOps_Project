@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -44,6 +45,13 @@ public class MamaActivity extends AppCompatActivity {
     public SeekBar sk_hijo;
     public Timer timerUpdate;
 
+    public ImageView foco_hijo;
+    public ImageView foco_hija;
+    public ImageView linea_hija_1;
+    public ImageView linea_hija_2;
+    public ImageView linea_hijo_1;
+    public ImageView linea_hijo_2;
+
 
 
     // Variables para asignar roles
@@ -54,15 +62,24 @@ public class MamaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mama);
 
-        // Configuración switch y seekbar
+        // Configuración switch, seekbar y focos
         switch1 = (Switch)findViewById(R.id.switch1);
         switch2 = (Switch)findViewById(R.id.switch2);
         switch3 = (Switch)findViewById(R.id.switch3);
         switch5 = (Switch)findViewById(R.id.switch5);
         switch6 = (Switch)findViewById(R.id.switch6);
-        switch7 = (Switch)findViewById(R.id.switch7);
-        switchHija = (Switch)findViewById(R.id.switch4);
+        switch7 = (Switch)findViewById(R.id.switch4);
+        switchHija = (Switch)findViewById(R.id.switch7);
         switchHijo = (Switch)findViewById(R.id.switch8);
+        foco_hijo =  (ImageView) findViewById(R.id.foco_hijo);
+        foco_hija =  (ImageView) findViewById(R.id.foco_hija);
+        linea_hija_1 =  (ImageView) findViewById(R.id.linea_hija_1);
+        linea_hija_2 =  (ImageView) findViewById(R.id.linea_hija_2);
+        linea_hijo_1 =  (ImageView) findViewById(R.id.linea_hijo_1);
+        linea_hijo_2 =  (ImageView) findViewById(R.id.linea_hijo_2);
+
+
+
 
         sk_hija();
         sk_hijo();
@@ -263,6 +280,12 @@ public class MamaActivity extends AppCompatActivity {
             switchHijo.setVisibility(View.VISIBLE);
             sk_hija.setVisibility(View.VISIBLE);
             sk_hijo.setVisibility(View.VISIBLE);
+            foco_hijo.setVisibility(View.VISIBLE);
+            foco_hija.setVisibility(View.VISIBLE);
+            linea_hija_1.setVisibility(View.VISIBLE);
+            linea_hija_2.setVisibility(View.VISIBLE);
+            linea_hijo_1.setVisibility(View.VISIBLE);
+            linea_hijo_2.setVisibility(View.VISIBLE);
         }
         if(input.equals("hijo"))
         {
@@ -276,6 +299,13 @@ public class MamaActivity extends AppCompatActivity {
             switchHijo.setVisibility(View.VISIBLE);
             sk_hija.setVisibility(View.INVISIBLE);
             sk_hijo.setVisibility(View.VISIBLE);
+            foco_hijo.setVisibility(View.VISIBLE);
+            foco_hija.setVisibility(View.INVISIBLE);
+            linea_hija_1.setVisibility(View.INVISIBLE);
+            linea_hija_2.setVisibility(View.INVISIBLE);
+            linea_hijo_1.setVisibility(View.VISIBLE);
+            linea_hijo_2.setVisibility(View.VISIBLE);
+
         }
         if(input.equals("hija"))
         {
@@ -289,6 +319,12 @@ public class MamaActivity extends AppCompatActivity {
             switchHijo.setVisibility(View.INVISIBLE);
             sk_hija.setVisibility(View.VISIBLE);
             sk_hijo.setVisibility(View.INVISIBLE);
+            foco_hijo.setVisibility(View.INVISIBLE);
+            foco_hija.setVisibility(View.VISIBLE);
+            linea_hija_1.setVisibility(View.VISIBLE);
+            linea_hija_2.setVisibility(View.VISIBLE);
+            linea_hijo_1.setVisibility(View.INVISIBLE);
+            linea_hijo_2.setVisibility(View.INVISIBLE);
         }
     }
 
