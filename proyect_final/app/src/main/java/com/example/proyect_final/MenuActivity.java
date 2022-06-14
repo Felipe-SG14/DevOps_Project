@@ -47,9 +47,7 @@ public class MenuActivity extends AppCompatActivity {
 
     public ImageButton musica;
     public ImageButton ubicacionPadre;
-    public ImageButton stopEmergency;
     public ImageButton luces;
-
     public TextView txt_music;
     public TextView txt_location;
     public TextView txt_lights;
@@ -68,7 +66,7 @@ public class MenuActivity extends AppCompatActivity {
     private double longitude;
     public boolean DistanciaMenor5m = false;
     public boolean DistanciaMenor10m = false;
-
+    public boolean Detener_actualizacion=false;
     public boolean detener_musica=false;
 
 
@@ -95,7 +93,7 @@ public class MenuActivity extends AppCompatActivity {
         luces = (ImageButton) findViewById(R.id.luces);
         musica = (ImageButton) findViewById(R.id.musica);
         ubicacionPadre = (ImageButton) findViewById(R.id.ubicacionPadre);
-        stopEmergency = (ImageButton) findViewById(R.id.stopEmergency);
+
 
         txt_music = (TextView) findViewById(R.id.txt_music);
         txt_location = (TextView) findViewById(R.id.txt_location);
@@ -114,7 +112,7 @@ public class MenuActivity extends AppCompatActivity {
         if(rol.equals("hijo"))
         {
 
-            Toast.makeText(this,String.valueOf(detener_musica),Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this,String.valueOf(DistanciaMenor10m),Toast.LENGTH_SHORT).show();
 
             if(!detener_musica)
             {
@@ -122,17 +120,17 @@ public class MenuActivity extends AppCompatActivity {
                 //Toast.makeText(this,"MUSIC ON",Toast.LENGTH_SHORT).show();
             }else
             {
-                Toast.makeText(this,"Fuera de rango",Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(this,"Fuera de rango",Toast.LENGTH_SHORT).show();
             }
         }else if(rol.equals("hija"))
         {
-            if(!DistanciaMenor10m)
+            if(!Detener_actualizacion)
             {
                 miUbicacion();
-                Toast.makeText(this,"Lights ON",Toast.LENGTH_SHORT).show();
+               // Toast.makeText(this,"Lights ON",Toast.LENGTH_SHORT).show();
             }else
             {
-                Toast.makeText(this,"Fuera de rango",Toast.LENGTH_SHORT).show();
+               // Toast.makeText(this,"Fuera de rango",Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -187,23 +185,26 @@ public class MenuActivity extends AppCompatActivity {
                     DistanciaMenor5m = false;
 
                 }
-                if(d <= 10)
+                if(d <= 10 && !Detener_actualizacion)
                 {
-                    DistanciaMenor10m = true;
-                    encenderFoco(true,4);
+                    Detener_actualizacion=true;
                     encenderFoco(true,8);
 
-                }else
-                {
-                    DistanciaMenor10m = false;
                 }
-                //setLights();
+
 
             }
             if(rol.equals("hija"))
             {
                 // Destino ESP
-                DistanciaAcasa(latitude,longitude,19.69270,-99.21570);
+                double d= DistanciaAcasa(latitude,longitude,37.4219958,-122.0840005);
+                if(d <= 10 && !Detener_actualizacion)
+                {
+                    Detener_actualizacion = true;
+
+                    encenderFoco(true,4);
+
+                }
             }
         }
     }
@@ -308,6 +309,7 @@ public class MenuActivity extends AppCompatActivity {
     // Función que cambia de la ventana de menú de opciones a la ventana de luces
     // Para la madre, hijo e hija
     public void abrirMenuLuces(View view) {
+        Detener_actualizacion=true;
         String rolFamilia = rol;
         Intent i1 = new Intent(this, MamaActivity.class);
         i1.putExtra("dato",rolFamilia);
@@ -328,7 +330,7 @@ public class MenuActivity extends AppCompatActivity {
             luces.setVisibility(View.VISIBLE);
             musica.setVisibility(View.INVISIBLE);
             ubicacionPadre.setVisibility(View.INVISIBLE);
-            stopEmergency.setVisibility(View.VISIBLE);
+
             txt_music.setVisibility(View.INVISIBLE);
             txt_location.setVisibility(View.INVISIBLE);
         }
@@ -337,7 +339,7 @@ public class MenuActivity extends AppCompatActivity {
             luces.setVisibility(View.VISIBLE);
             musica.setVisibility(View.VISIBLE);
             ubicacionPadre.setVisibility(View.INVISIBLE);
-            stopEmergency.setVisibility(View.VISIBLE);
+
             txt_location.setVisibility(View.INVISIBLE);
         }
         if(input.equals("hija"))
@@ -345,7 +347,7 @@ public class MenuActivity extends AppCompatActivity {
             luces.setVisibility(View.VISIBLE);
             musica.setVisibility(View.INVISIBLE);
             ubicacionPadre.setVisibility(View.INVISIBLE);
-            stopEmergency.setVisibility(View.VISIBLE);
+
             txt_music.setVisibility(View.INVISIBLE);
             txt_location.setVisibility(View.INVISIBLE);
         }
@@ -354,7 +356,7 @@ public class MenuActivity extends AppCompatActivity {
             luces.setVisibility(View.INVISIBLE);
             musica.setVisibility(View.INVISIBLE);
             ubicacionPadre.setVisibility(View.VISIBLE);
-            stopEmergency.setVisibility(View.VISIBLE);
+
             txt_music.setVisibility(View.INVISIBLE);
             txt_lights.setVisibility(View.INVISIBLE);
         }
@@ -370,13 +372,3 @@ public class MenuActivity extends AppCompatActivity {
     }
 }
 
-    // Funcion para dejar de compartir ubicación
-
-   /* public void onStopPress(View view) {
-        stopLocationUpdates();
-        Log.d(TAG, nameAudioFile);
-
-    }
-    private void stopLocationUpdates(){
-        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
-    }*/

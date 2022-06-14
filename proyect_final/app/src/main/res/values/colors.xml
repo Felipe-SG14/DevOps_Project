@@ -20,5 +20,10 @@
     <color name="green_light">#A5D6A7</color>
     <color name="blue">#52A1FF</color>
     <color name="blue_dark">#005B9F</color>
+    <color name="transparent">#00ffffff</color>
+    <color name="semitransparent">#88000000</color>
+    <color name="orange">#ffff8800</color>
+    <color name="light_orange">#ffe27d18</color>
+    <color name="light_blue">#ff00a2e8</color>
 
 </resources>
