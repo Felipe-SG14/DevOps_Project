@@ -59,26 +59,28 @@ import java.util.Date;
 
 
 public class LoginActivity extends AppCompatActivity {
+    //----------------LOG IN---------------------
     public EditText email;
     public EditText password;
     //------------------------------UBICACIÓN-------------------------------
     private static final String TAG = "MainActivity";
     public static final int DEFAULT_UPDATE_INTERVAL = 10;
     public static final int FAST_UPDATE_INTERVAL = 5;
-    public static final int MAX_DURATION_MS = 5000;
+    public static final int MAX_DURATION_MS = 30*1000;
     int LOCATION_REQUEST_CODE = 10001;
     public double latitude;
     public double longitude;
+    FusedLocationProviderClient fusedLocationProviderClient;
+    LocationRequest locationRequest;
+    //-----------------------GRABACIÓN AUDIO-------------------------------
     static public String nameAudioFile;
     public int contador = 0;
     static public String google_url;
     static public String deviceId;
     static public int user;
-
-
-    FusedLocationProviderClient fusedLocationProviderClient;
-    LocationRequest locationRequest;
+    //----------ENVÍO SMS --------
     SmsManager smsManager = SmsManager.getDefault();
+    //------------------------------UBICACIÓN-------------------------------
     LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
@@ -91,21 +93,60 @@ public class LoginActivity extends AppCompatActivity {
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
                 contador = contador + 1;
+
                 if (contador == 1) {
                     google_url = "https://www.google.com/maps/?q=" + latitude + "," + longitude;
                     getUserID();
-                    sendMessage();
-
-                    /*SmsManager smsManager = SmsManager.getDefault();
-                    smsManager.sendTextMessage("+52 5534532007",null, "Audio de emergencia: https://davinci999.xyz/audio_dir/"+nameAudioFile,null, null);
-                    smsManager.sendTextMessage( "+52 5534532007",null, "Última ubicación "+google_url,null, null);
-                    Log.d(TAG, "onSuccess " + google_url);*/
                 }
+                locationUpdateBD();
             }
-
-
         }
     };
+
+    public void locationUpdateBD() {
+        String url = "https://davinci999.xyz/solicitud_actualizacion_ubicaciones.php"; //http://davinci999.xyz
+        JSONObject jsonObject_ubicacion = new JSONObject();
+        Log.d(TAG,"UserBD = "+user);
+        try {
+            jsonObject_ubicacion.put("USUARIO_ID",user);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            jsonObject_ubicacion.put("LONGITUD", longitude);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            jsonObject_ubicacion.put("LATITUD", latitude);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String message = "Latitud: " + String.valueOf(latitude) +
+                "\n" + "Longitud: " + String.valueOf(longitude);
+        try {
+            dataUsingVolley(jsonObject_ubicacion, url, message);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(LoginActivity.this, "Your location is not active", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void dataUsingVolley(JSONObject jsonObject, String url, String message) throws JSONException {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
+                response -> {
+                    Toast response_toast = Toast.makeText(getApplicationContext(), "e " + response.toString(), Toast.LENGTH_LONG);
+                    response_toast.show();
+                }, error -> {
+            Toast response_toast = Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG);
+            response_toast.show();
+        });
+
+        requestQueue.add(jsonObjectRequest);
+    }
+
 
     //------------------------------------PHP REQUEST--------------------------------------
     public void getUserIDRequest(String url) { // Lee los números de telefono
@@ -118,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             user = response.getInt("user_id");
                             Log.d(TAG, "UserTRY " + user);
-
+                            sendMessage();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -134,29 +175,77 @@ public class LoginActivity extends AppCompatActivity {
         myQueue.start();
         Log.d(TAG, "UserDefinite " + user);
     }
-    //------------------------------------------------------------------------------------
-
-
     public void getUserID() {
         String url = "https://davinci999.xyz/deviceID.php?dispositivo_id=" + deviceId;
         getUserIDRequest(url);
     }
+    //------------------------------------------------------------------------------------
 
     public void sendMessage() {
         Log.d(TAG, "Dispositivo= " + deviceId);
         Log.d(TAG, "User " + user);
 
-        if (user == 3) {
-            smsManager.sendTextMessage("+52 5534532007", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
-            smsManager.sendTextMessage("+52 5534532007", null, "Última ubicación " + google_url, null, null);
+        if (user == 2) //HIJA
+        {
+            // PAPÁ
+            smsManager.sendTextMessage("+52 7331556395", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
+            smsManager.sendTextMessage("+52 7331556395", null, "Última ubicación " + google_url, null, null);
+            // MAMÁ
+            smsManager.sendTextMessage("+52 5515045179", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
+            smsManager.sendTextMessage("+52 5515045179", null, "Última ubicación " + google_url, null, null);
+            //HIJO --TENTATIVO
+            smsManager.sendTextMessage("+52 5547691329", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
+            smsManager.sendTextMessage("+52 5547691329", null, "Última ubicación " + google_url, null, null);
+
+
+
             Log.d(TAG, "onSuccess " + google_url + " " + user);
-        } else if (user == 1) {
-            smsManager.sendTextMessage("+52 5550685663", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
-            smsManager.sendTextMessage("+52 5550685663", null, "Última ubicación " + google_url, null, null);
-            Log.d(TAG, "onSuccess " + google_url);
 
         }
+        else if (user == 1) //HIJO
+        {
+            // HIJA
+            smsManager.sendTextMessage("+52 5516286613", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
+            smsManager.sendTextMessage("+52 5516286613", null, "Última ubicación " + google_url, null, null);
+            // PAPÁ
+            smsManager.sendTextMessage("+52 7331556395", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
+            smsManager.sendTextMessage("+52 7331556395", null, "Última ubicación " + google_url, null, null);
+            // MAMÁ
+            smsManager.sendTextMessage("+52 5515045179", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
+            smsManager.sendTextMessage("+52 5515045179", null, "Última ubicación " + google_url, null, null);
+
+            Log.d(TAG, "onSuccess " + google_url);
+        }
+        else if (user == 3) //PAPÁ
+        {
+            // MAMÁ
+            smsManager.sendTextMessage("+52 5515045179", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
+            smsManager.sendTextMessage("+52 5515045179", null, "Última ubicación " + google_url, null, null);
+            // HIJA
+            smsManager.sendTextMessage("+52 5516286613", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
+            smsManager.sendTextMessage("+52 5516286613", null, "Última ubicación " + google_url, null, null);
+            //HIJO --TENTATIVO
+            smsManager.sendTextMessage("+52 5547691329", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
+            smsManager.sendTextMessage("+52 5547691329", null, "Última ubicación " + google_url, null, null);
+
+
+
+
+        }
+        else if (user ==4) //MAMÁ
+        {
+            // PAPÁ
+            smsManager.sendTextMessage("+52 7331556395", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
+            smsManager.sendTextMessage("+52 7331556395", null, "Última ubicación " + google_url, null, null);
+            // HIJA
+            smsManager.sendTextMessage("+52 5516286613", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
+            smsManager.sendTextMessage("+52 5516286613", null, "Última ubicación " + google_url, null, null);
+            //HIJO --TENTATIVO
+            smsManager.sendTextMessage("+52 5547691329", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
+            smsManager.sendTextMessage("+52 5547691329", null, "Última ubicación " + google_url, null, null);
+        }
     }
+
     //------------------------------------------------------------------------
 
     //--------------GRABACIÓN AUDIO-------------------
@@ -246,6 +335,8 @@ public class LoginActivity extends AppCompatActivity {
                 i4.putExtra("dato",rolHijo);
                 startActivity(i4);
                 Toast.makeText(LoginActivity.this,"Hola Gabriel",Toast.LENGTH_SHORT).show();
+                stopLocationUpdates();
+                Log.d(TAG, nameAudioFile);
                 break;
             case 2:
                 String rolHija = "hija";
@@ -253,6 +344,8 @@ public class LoginActivity extends AppCompatActivity {
                 i3.putExtra("dato",rolHija);
                 startActivity(i3);
                 Toast.makeText(LoginActivity.this,"Hola Diana",Toast.LENGTH_SHORT).show();
+                stopLocationUpdates();
+                Log.d(TAG, nameAudioFile);
                 break;
             case 3:
                 String rolPapa = "papa";
@@ -260,6 +353,8 @@ public class LoginActivity extends AppCompatActivity {
                 i2.putExtra("dato", rolPapa);
                 startActivity(i2);
                 Toast.makeText(LoginActivity.this,"Hola Juan",Toast.LENGTH_SHORT).show();
+                stopLocationUpdates();
+                Log.d(TAG, nameAudioFile);
                 break;
             case 4:
                 String rolMama = "mama";
@@ -267,6 +362,7 @@ public class LoginActivity extends AppCompatActivity {
                 i1.putExtra("dato",rolMama);
                 startActivity(i1);
                 Toast.makeText(LoginActivity.this,"Hola Carmen",Toast.LENGTH_SHORT).show();
+                Log.d(TAG, nameAudioFile);
                 break;
 
 
@@ -274,7 +370,8 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     public void btnRecordPress(View v) {
-        deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        getFileName();
+        deviceId =Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         Log.d(TAG, "ID del teléfono: " + deviceId);
         try {
             //--------------GRABACIÓN AUDIO------------------------------------------------------
@@ -286,7 +383,7 @@ public class LoginActivity extends AppCompatActivity {
             mediaRecorder.setMaxDuration(MAX_DURATION_MS);
             mediaRecorder.prepare();
             mediaRecorder.start();
-            Toast.makeText(this, "Recording is started", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Grabación de audio iniciada", Toast.LENGTH_LONG).show();
             //-----------------------------------------------------------------------------------
 
             //----------------------------------------------------------------ENVÍO SMS-------------------------------------------
@@ -304,13 +401,13 @@ public class LoginActivity extends AppCompatActivity {
             //----------------------------------------------GRABACIÓN AUDIO-------------------------------------------------------------------------
             mediaRecorder.setOnInfoListener((mr, what, extra) -> {
                 if (what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED) {
-                    Toast.makeText(this, "Recording has stopped", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Grabación de audio detenida", Toast.LENGTH_LONG).show();
                     mediaRecorder.release();
                     //-------------------ENVíO ARCHIVO A SERVIDOR FTP------------------------
                     new sendFileFTP().execute();
                     //-----------------------------------------------------------------------
                     //sendMessage();
-                    Toast.makeText(LoginActivity.this, "MSJ Enviado", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "SMS Enviado", Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -349,12 +446,12 @@ public class LoginActivity extends AppCompatActivity {
         ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
         File musicDirectory = contextWrapper.getExternalFilesDir((Environment.DIRECTORY_MUSIC));
 
-        File audio_e = new File(musicDirectory, getFileName());
+        File audio_e = new File(musicDirectory, nameAudioFile);
         return audio_e;
     }
 
     public String getFileName() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyy_HHmm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyy_HHmmss");
         Date now = new Date();
         String timestamp = simpleDateFormat.format(now);
         nameAudioFile = "audio_emergencia_" + timestamp + ".wav";
@@ -363,13 +460,6 @@ public class LoginActivity extends AppCompatActivity {
     //--------------------------------------------------------------------------------------------------------------------------------------
 
     //---------------------------------------------------UBICACIÓN------------------------------------------------------------------------------
-
-    public void onStopPress(View view) {
-        stopLocationUpdates();
-        Log.d(TAG, nameAudioFile);
-
-    }
-
     private void checkSettingsAndStartLocationUpdates() {
         LocationSettingsRequest request = new LocationSettingsRequest.Builder()
                 .addLocationRequest(locationRequest).build();
@@ -474,10 +564,5 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }}
-
-
-
-
-
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }
