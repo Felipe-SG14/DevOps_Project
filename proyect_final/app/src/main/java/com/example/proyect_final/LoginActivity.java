@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                 contador = contador + 1;
 
                 if (contador == 1) {
-                    google_url = "https://www.google.com/maps/?q=" + latitude + "," + longitude;
+                    google_url = "https://www.google.com/maps/search/?api=1&query="+latitude+"%2C"+longitude;
                     getUserID();
                 }
                 locationUpdateBD();
@@ -187,16 +187,18 @@ public class LoginActivity extends AppCompatActivity {
 
         if (user == 2) //HIJA
         {
+            smsManager.sendTextMessage("+52 5534532007", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
+            smsManager.sendTextMessage("+52 5534532007", null,  google_url, null, null);
+
             // PAPÁ
-            smsManager.sendTextMessage("+52 7331556395", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
+            /*smsManager.sendTextMessage("+52 7331556395", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
             smsManager.sendTextMessage("+52 7331556395", null, "Última ubicación " + google_url, null, null);
             // MAMÁ
             smsManager.sendTextMessage("+52 5515045179", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
             smsManager.sendTextMessage("+52 5515045179", null, "Última ubicación " + google_url, null, null);
             //HIJO --TENTATIVO
             smsManager.sendTextMessage("+52 5547691329", null, "Audio de emergencia: https://davinci999.xyz/audio_dir/" + nameAudioFile, null, null);
-            smsManager.sendTextMessage("+52 5547691329", null, "Última ubicación " + google_url, null, null);
-
+            smsManager.sendTextMessage("+52 5547691329", null, "Última ubicación " + google_url, null, null);*/
 
 
             Log.d(TAG, "onSuccess " + google_url + " " + user);
@@ -336,7 +338,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(i4);
                 Toast.makeText(LoginActivity.this,"Hola Gabriel",Toast.LENGTH_SHORT).show();
                 stopLocationUpdates();
-                Log.d(TAG, nameAudioFile);
+
                 break;
             case 2:
                 String rolHija = "hija";
@@ -345,7 +347,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(i3);
                 Toast.makeText(LoginActivity.this,"Hola Diana",Toast.LENGTH_SHORT).show();
                 stopLocationUpdates();
-                Log.d(TAG, nameAudioFile);
+
                 break;
             case 3:
                 String rolPapa = "papa";
@@ -354,7 +356,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(i2);
                 Toast.makeText(LoginActivity.this,"Hola Juan",Toast.LENGTH_SHORT).show();
                 stopLocationUpdates();
-                Log.d(TAG, nameAudioFile);
+
                 break;
             case 4:
                 String rolMama = "mama";
@@ -362,11 +364,8 @@ public class LoginActivity extends AppCompatActivity {
                 i1.putExtra("dato",rolMama);
                 startActivity(i1);
                 Toast.makeText(LoginActivity.this,"Hola Carmen",Toast.LENGTH_SHORT).show();
-                Log.d(TAG, nameAudioFile);
+
                 break;
-
-
-
         }
     }
     public void btnRecordPress(View v) {

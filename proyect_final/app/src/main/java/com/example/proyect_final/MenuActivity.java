@@ -89,6 +89,12 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
         // Configuración botones
         luces = (ImageButton) findViewById(R.id.luces);
         musica = (ImageButton) findViewById(R.id.musica);
@@ -171,39 +177,43 @@ public class MenuActivity extends AppCompatActivity {
         if (location != null) {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
+            //Toast.makeText(this,String.valueOf(latitude),Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this,String.valueOf(longitude),Toast.LENGTH_SHORT).show();
 
             if(rol.equals("hijo"))
             {
                 // Destino RASP
-                double d = DistanciaAcasa(latitude,longitude,37.4219958,-122.0840005);
-                if(d <= 5)
+                double d = DistanciaAcasa(latitude,longitude,19.45152,-99.08918);
+                Toast.makeText(this,String.valueOf(d),Toast.LENGTH_SHORT).show();
+                if(d <= 6 && !detener_musica)
                 {
                     detener_musica = true;
-                    iniciarMusica(DistanciaMenor5m);
+                    iniciarMusica(detener_musica);
+                    encenderFoco(true,8);
                 }else
                 {
                     DistanciaMenor5m = false;
-
                 }
-                if(d <= 10 && !Detener_actualizacion)
+
+                if(d >6)
                 {
-                    Detener_actualizacion=true;
-                    encenderFoco(true,8);
-
+                    encenderFoco(false,8);
                 }
-
 
             }
             if(rol.equals("hija"))
             {
                 // Destino ESP
-                double d= DistanciaAcasa(latitude,longitude,19.4515,-99.0891);
-                if(d <= 10 && !Detener_actualizacion)
+                double d= DistanciaAcasa(latitude,longitude,19.45152,-99.08918);
+                if(d <=6 && !Detener_actualizacion)
                 {
                     Detener_actualizacion = true;
-
                     encenderFoco(true,4);
+                }
 
+                if(d > 6)
+                {
+                    encenderFoco(false,4);
                 }
             }
         }
@@ -371,4 +381,3 @@ public class MenuActivity extends AppCompatActivity {
         dataUsingVolley(jsonObject,"https://davinci999.xyz/solicitud_musica.php","Music Off");
     }
 }
-
