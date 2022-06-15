@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,26 +35,44 @@ public class PapaActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     int LOCATION_REQUEST_CODE = 1001;
 
-    private double latitude;
-    private double longitude;
+    public double latitude;
+    public double longitude;
+    static public String google_url;
+    static public int contador=0;
 
     FusedLocationProviderClient fusedLocationProviderClient;
+    SmsManager smsManager = SmsManager.getDefault();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_papa);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        getLastLocation();
+        if (ActivityCompat.checkSelfPermission(PapaActivity.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(PapaActivity.this, new String[]{Manifest.permission.SEND_SMS}, 1);
 
-        ImageButton ubicacionBoton = (ImageButton) findViewById(R.id.button);
-        ubicacionBoton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getLastLocation();
-            }
-        });
-
+        }
     }
+
+    public void btnLocation(View view)
+    {
+        contador=contador+1;
+        getLastLocation();
+        google_url = "https://www.google.com/maps/search/?api=1&query="+latitude+"%2C"+longitude;
+        Log.d(TAG,"URL "+google_url);
+        sendSMS();
+    }
+     public void sendSMS()
+     {
+         // MAMÁ
+         smsManager.sendTextMessage("+52 5515045179", null, "SmartHome Ultima Ubicacion Papa: "+google_url, null, null);
+         // HIJA
+         smsManager.sendTextMessage("+52 5516286613", null, "SmartHome Ultima Ubicacion Papa: "+google_url, null, null);
+         Log.d(TAG,"MAPA "+google_url);
+         //HIJO
+         smsManager.sendTextMessage("+52 5547691329", null, "SmartHome Última Ubicación Papá: "+google_url, null, null);
+     }
 
     // Método para regresar a la ventana principal
     public void Regresar(View view)
@@ -63,10 +82,6 @@ public class PapaActivity extends AppCompatActivity {
     }
 
     /////////  Código de GPS
-
-
-
-
     private void getLastLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
@@ -101,12 +116,14 @@ public class PapaActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    String message = "Latitud: " +String.valueOf(latitude) +
-                           "\n" + "Longitud: " +String.valueOf(longitude);
-                    try {
-                        dataUsingVolley(jsonObject_ubicacion, url, message);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    if(contador==1) {
+                        String message = "Latitud: " + String.valueOf(latitude) +
+                                "\n" + "Longitud: " + String.valueOf(longitude);
+                        try {
+                            dataUsingVolley(jsonObject_ubicacion, url, message);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                     
 
@@ -139,6 +156,5 @@ public class PapaActivity extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);
     }
 
-    
 
 }
