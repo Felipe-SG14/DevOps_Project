@@ -41,6 +41,9 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class MenuActivity extends AppCompatActivity {
 
     // Configuración botones
@@ -83,6 +86,8 @@ public class MenuActivity extends AppCompatActivity {
     // Variables para asignar roles
     private String rol;
 
+    public float distanciaCasa;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,7 +122,6 @@ public class MenuActivity extends AppCompatActivity {
         super.onStart();
         if(rol.equals("hijo"))
         {
-
            // Toast.makeText(this,String.valueOf(DistanciaMenor10m),Toast.LENGTH_SHORT).show();
 
             if(!detener_musica)
@@ -126,7 +130,7 @@ public class MenuActivity extends AppCompatActivity {
                 //Toast.makeText(this,"MUSIC ON",Toast.LENGTH_SHORT).show();
             }else
             {
-              //  Toast.makeText(this,"Fuera de rango",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"Fuera de rango",Toast.LENGTH_SHORT).show();
             }
         }else if(rol.equals("hija"))
         {
@@ -142,24 +146,12 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     // Función que calcula la distancia de la casa a la ubicación del usuario (hijo)
-    public double DistanciaAcasa( double latitudOrigen, double longitudOrigen, double latitudDestino, double longitudDestino) {
-        // Diferencia de latitudes y longitudes (En radianes)
-        double DifLatitud = (latitudDestino-latitudOrigen)*(Math.PI/180.0);
-        double DifLongitud = (longitudDestino-longitudOrigen)*(Math.PI/180.0);
-
-        //a = sin²(Δlat/2) + cos(lat1) · cos(lat2) · sin²(Δlong/2)
-        double a = Math.pow(Math.sin(DifLatitud/2.0),2.0) + (Math.cos(latitudOrigen))*(Math.cos(latitudDestino))*Math.pow(Math.sin(DifLongitud/2.0),2.0);
-
-        //c = 2 · atan2(√a, √(1−a))
-        double c = 2*(Math.atan2(Math.sqrt(a),Math.sqrt(1-a)));
-
-        // d = R · c
-        double distancia = (RadioTierraKm*c)*1000.0;      // Distancia en metros
-
-
-
-        return distancia;
-
+    public float DistanciaAcasa( double latitudOrigen, double longitudOrigen, double latitudDestino, double longitudDestino) {
+        float[] results = new float[1];
+        Location.distanceBetween(latitudOrigen, longitudOrigen,latitudDestino
+                , longitudDestino,
+                results);
+        return results[0];
     }
 
     /////////  Para actualización de la ubicación
@@ -170,20 +162,25 @@ public class MenuActivity extends AppCompatActivity {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         ActualizarUbicacion(location);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,0,locListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,10000,0,locListener);
+    }
+
+    public static Double round2Decimals(Double value, int i) {
+        return new BigDecimal(value.toString()).setScale(6, RoundingMode.HALF_UP).doubleValue();
     }
 
     private void ActualizarUbicacion(Location location) {
         if (location != null) {
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
-            //Toast.makeText(this,String.valueOf(latitude),Toast.LENGTH_SHORT).show();
-            //Toast.makeText(this,String.valueOf(longitude),Toast.LENGTH_SHORT).show();
+            latitude = round2Decimals(location.getLatitude(),6);
+            longitude = round2Decimals(location.getLongitude(),6);
+
+            Toast.makeText(this,String.valueOf(latitude),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,String.valueOf(longitude),Toast.LENGTH_SHORT).show();
 
             if(rol.equals("hijo"))
             {
                 // Destino RASP
-                double d = DistanciaAcasa(latitude,longitude,19.45152,-99.08918);
+                double d = DistanciaAcasa(latitude,longitude,19.451547, -99.089186);
                 Toast.makeText(this,String.valueOf(d),Toast.LENGTH_SHORT).show();
                 if(d <= 6 && !detener_musica)
                 {
