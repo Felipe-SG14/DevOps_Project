@@ -43,6 +43,10 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -71,6 +75,9 @@ public class MenuActivity extends AppCompatActivity {
     public boolean DistanciaMenor10m = false;
     public boolean Detener_actualizacion=false;
     public boolean detener_musica=false;
+    public List<Double> distancia = new ArrayList<Double>();
+    public int contador = 0;
+    public boolean DetenerApagado = false;
 
 
     // Constantes para calcular la distancia a la casa
@@ -162,7 +169,7 @@ public class MenuActivity extends AppCompatActivity {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         ActualizarUbicacion(location);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,10000,0,locListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,100,0,locListener);
     }
 
     public static Double round2Decimals(Double value, int i) {
@@ -174,15 +181,25 @@ public class MenuActivity extends AppCompatActivity {
             latitude = round2Decimals(location.getLatitude(),6);
             longitude = round2Decimals(location.getLongitude(),6);
 
-            Toast.makeText(this,String.valueOf(latitude),Toast.LENGTH_SHORT).show();
-            Toast.makeText(this,String.valueOf(longitude),Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this,"Lat " + String.valueOf(latitude),Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this,"Long " + String.valueOf(longitude),Toast.LENGTH_SHORT).show();
 
             if(rol.equals("hijo"))
             {
                 // Destino RASP
-                double d = DistanciaAcasa(latitude,longitude,19.451547, -99.089186);
-                Toast.makeText(this,String.valueOf(d),Toast.LENGTH_SHORT).show();
-                if(d <= 6 && !detener_musica)
+
+                double d = DistanciaAcasa(latitude,longitude,19.337417, -99.180745);
+                double dprom = 0;
+                while (contador <= 6) {
+                    distancia.add(d);
+                    contador++;
+                }
+                if (contador >= 6){
+                    dprom = PromedioDistancias(distancia);
+                    contador = 0;
+                }
+                Toast.makeText(this,"Dprom : " + String.valueOf(dprom),Toast.LENGTH_SHORT).show();
+                if(dprom <= 6 && !detener_musica)
                 {
                     detener_musica = true;
                     iniciarMusica(detener_musica);
@@ -192,28 +209,49 @@ public class MenuActivity extends AppCompatActivity {
                     DistanciaMenor5m = false;
                 }
 
-                if(d >6)
+                if(dprom > 6 && DetenerApagado == false)
                 {
                     encenderFoco(false,8);
+                    DetenerApagado = true;
                 }
 
             }
             if(rol.equals("hija"))
             {
-                // Destino ESP
-                double d= DistanciaAcasa(latitude,longitude,19.45152,-99.08918);
-                if(d <=6 && !Detener_actualizacion)
+                double d = DistanciaAcasa(latitude,longitude,19.337417, -99.180745);
+                double dprom = 0;
+                while (contador <= 6) {
+                    distancia.add(d);
+                    contador++;
+                }
+                if (contador >= 6){
+                    dprom = PromedioDistancias(distancia);
+                    contador = 0;
+                }
+                if(dprom <= 6 && !Detener_actualizacion)
                 {
                     Detener_actualizacion = true;
                     encenderFoco(true,4);
                 }
-
-                if(d > 6)
+                if(dprom > 6 && DetenerApagado == false)
                 {
                     encenderFoco(false,4);
+                    DetenerApagado = true;
                 }
             }
         }
+    }
+
+    public Double PromedioDistancias(List<Double> distancia) {
+        Collections.sort(distancia);
+        distancia.remove(0);
+        distancia.remove(distancia.size() - 1);
+        double suma = 0;
+        for (int i=0;i<=distancia.size() - 1;i++){
+            suma = suma + distancia.get(i);
+        }
+        double promedio = suma/distancia.size();
+        return promedio;
     }
 
     LocationListener locListener = new LocationListener() {
