@@ -144,17 +144,17 @@ public class MenuActivity extends AppCompatActivity {
     // Función que calcula la distancia de la casa a la ubicación del usuario (hijo)
     public double DistanciaAcasa( double latitudOrigen, double longitudOrigen, double latitudDestino, double longitudDestino) {
         // Diferencia de latitudes y longitudes (En radianes)
-        double DifLatitud = (latitudDestino-latitudOrigen)*(Math.PI/180);
-        double DifLongitud = (longitudDestino-longitudOrigen)*(Math.PI/180);
+        double DifLatitud = (latitudDestino-latitudOrigen)*(Math.PI/180.0);
+        double DifLongitud = (longitudDestino-longitudOrigen)*(Math.PI/180.0);
 
         //a = sin²(Δlat/2) + cos(lat1) · cos(lat2) · sin²(Δlong/2)
-        double a = Math.pow(Math.sin(DifLatitud/2),2) + (Math.cos(latitudOrigen))*(Math.cos(latitudDestino))*Math.pow(Math.sin(DifLongitud/2),2);
+        double a = Math.pow(Math.sin(DifLatitud/2.0),2.0) + (Math.cos(latitudOrigen))*(Math.cos(latitudDestino))*Math.pow(Math.sin(DifLongitud/2.0),2.0);
 
         //c = 2 · atan2(√a, √(1−a))
         double c = 2*(Math.atan2(Math.sqrt(a),Math.sqrt(1-a)));
 
         // d = R · c
-        double distancia = (RadioTierraKm*c)*1000;      // Distancia en metros
+        double distancia = (RadioTierraKm*c)*1000.0;      // Distancia en metros
 
 
 
