@@ -126,4 +126,18 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
 
+    <TextView
+        android:id="@+id/txt_ubi"
+        android:layout_width="182dp"
+        android:layout_height="45dp"
+        android:text="Ubi"
+        android:textColor="@color/black"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_location"
+        app:layout_constraintVertical_bias="0.262" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

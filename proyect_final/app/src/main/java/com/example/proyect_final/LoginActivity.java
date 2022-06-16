@@ -159,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             user = response.getInt("user_id");
                             Log.d(TAG, "UserTRY " + user);
-                            sendMessage();
+                            //sendMessage();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -188,40 +188,40 @@ public class LoginActivity extends AppCompatActivity {
         if (user == 2) //HIJA
         {
             // PAPÁ
-            smsManager.sendTextMessage("+52 7331556395", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
+            smsManager.sendTextMessage("7331556395", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
             // MAMÁ
-            smsManager.sendTextMessage("+52 5515045179", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
+            smsManager.sendTextMessage("5515045179", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
             //HIJO
-            smsManager.sendTextMessage("+52 5547691329", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
+            smsManager.sendTextMessage("5547691329", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
             Log.d(TAG, "onSuccess " + google_url + " " + user);
         }
         else if (user == 1) //HIJO
         {
             // HIJA
-            smsManager.sendTextMessage("+52 5516286613", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
+            smsManager.sendTextMessage("5516286613", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
             // PAPÁ
-            smsManager.sendTextMessage("+52 7331556395", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
+            smsManager.sendTextMessage("7331556395", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
             // MAMÁ
-            smsManager.sendTextMessage("+52 5515045179", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
+            smsManager.sendTextMessage("5515045179", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
             Log.d(TAG, "onSuccess " + google_url);
         }
         else if (user == 3) //PAPÁ
         {
             // MAMÁ
-            smsManager.sendTextMessage("+52 5515045179", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
+            smsManager.sendTextMessage("5515045179", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
             // HIJA
-            smsManager.sendTextMessage("+52 5516286613", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
+            smsManager.sendTextMessage("5516286613", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
             //HIJO
-            smsManager.sendTextMessage("+52 5547691329", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
+            smsManager.sendTextMessage("5547691329", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
         }
         else if (user ==4) //MAMÁ
         {
             // PAPÁ
-            smsManager.sendTextMessage("+52 7331556395", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
+            smsManager.sendTextMessage("7331556395", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
             // HIJA
-            smsManager.sendTextMessage("+52 5516286613", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
+            smsManager.sendTextMessage("5516286613", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
             //HIJO
-            smsManager.sendTextMessage("+52 5547691329", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
+            smsManager.sendTextMessage("5547691329", null, "SmartHome EMERGENCY AUDIO: https://davinci999.xyz/audio_dir/" + nameAudioFile+" MAPA: "+google_url, null, null);
         }
     }
     //------------------------------------------------------------------------
@@ -230,9 +230,6 @@ public class LoginActivity extends AppCompatActivity {
     private static int MICROPHONE_PERMISSION_CODE = 200;
     MediaRecorder mediaRecorder;
     //------------------------------------------------
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -360,17 +357,6 @@ public class LoginActivity extends AppCompatActivity {
             mediaRecorder.start();
             Toast.makeText(this, "Grabación de audio iniciada", Toast.LENGTH_LONG).show();
             //-----------------------------------------------------------------------------------
-
-            //----------------------------------------------------------------ENVÍO SMS-------------------------------------------
-
-            //ArrayList<String> supplierNames = new ArrayList<String>();
-            /*supplierNames.add("Audio de emergencia: https://davinci999.xyz/audio_dir/"+nameAudioFile);
-            supplierNames.add(" Última ubicación "+google_url);*/
-            /*String message="Audio de emergencia: https://davinci999.xyz/audio_dir/"+nameAudioFile+" Última ubicación "+google_url;
-            //ArrayList<String> parts = smsManager.divideMessage(message);
-            smsManager.sendMultipartTextMessage("+52 5550685663",null,parts ,null, null);*/
-
-
             //----------------------------------------------------------------------------------------------------------------------
 
             //----------------------------------------------GRABACIÓN AUDIO-------------------------------------------------------------------------
@@ -381,7 +367,7 @@ public class LoginActivity extends AppCompatActivity {
                     //-------------------ENVíO ARCHIVO A SERVIDOR FTP------------------------
                     new sendFileFTP().execute();
                     //-----------------------------------------------------------------------
-                    //sendMessage();
+                    sendMessage();
                     Toast.makeText(LoginActivity.this, "SMS Enviado", Toast.LENGTH_LONG).show();
                 }
             });
@@ -536,8 +522,6 @@ public class LoginActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             return null;
-
-
     }}
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }

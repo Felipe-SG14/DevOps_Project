@@ -58,6 +58,7 @@ public class MenuActivity extends AppCompatActivity {
     public TextView txt_music;
     public TextView txt_location;
     public TextView txt_lights;
+    public  TextView txt_ubi;
 
 
     // Variables ara calcular distancia
@@ -116,7 +117,7 @@ public class MenuActivity extends AppCompatActivity {
         txt_music = (TextView) findViewById(R.id.txt_music);
         txt_location = (TextView) findViewById(R.id.txt_location);
         txt_lights = (TextView) findViewById(R.id.txt_lights);
-
+        txt_ubi = (TextView) findViewById(R.id.txt_ubi);
 
 
         // Permisos de acceso a botones
@@ -135,11 +136,13 @@ public class MenuActivity extends AppCompatActivity {
             {
                 miUbicacion();
                 //Toast.makeText(this,"MUSIC ON",Toast.LENGTH_SHORT).show();
-            }else
-            {
-                Toast.makeText(this,"Fuera de rango",Toast.LENGTH_SHORT).show();
             }
-        }else if(rol.equals("hija"))
+            else
+            {
+                //Toast.makeText(this,"Fuera de rango",Toast.LENGTH_SHORT).show();
+            }
+        }
+        else if(rol.equals("hija"))
         {
             if(!Detener_actualizacion)
             {
@@ -169,7 +172,7 @@ public class MenuActivity extends AppCompatActivity {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         ActualizarUbicacion(location);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,100,0,locListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5,0,locListener);
     }
 
     public static Double round2Decimals(Double value, int i) {
@@ -187,18 +190,18 @@ public class MenuActivity extends AppCompatActivity {
             if(rol.equals("hijo"))
             {
                 // Destino RASP
-
-                double d = DistanciaAcasa(latitude,longitude,19.337417, -99.180745);
+                double d = DistanciaAcasa(latitude,longitude,19.451604, -99.089176);
                 double dprom = 0;
-                while (contador <= 6) {
+                while (contador <= 8) {
                     distancia.add(d);
                     contador++;
                 }
-                if (contador >= 6){
+                if (contador >= 8){
                     dprom = PromedioDistancias(distancia);
                     contador = 0;
                 }
-                Toast.makeText(this,"Dprom : " + String.valueOf(dprom),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"Dprom : " + String.valueOf(dprom),Toast.LENGTH_SHORT).show();
+                txt_ubi.setText(String.valueOf(round2Decimals(dprom,6)));
                 if(dprom <= 6 && !detener_musica)
                 {
                     detener_musica = true;
@@ -209,10 +212,10 @@ public class MenuActivity extends AppCompatActivity {
                     DistanciaMenor5m = false;
                 }
 
-                if(dprom > 6 && DetenerApagado == false)
+                if(dprom > 7) //&& DetenerApagado == false
                 {
                     encenderFoco(false,8);
-                    DetenerApagado = true;
+                    //DetenerApagado = true;
                 }
 
             }
@@ -220,11 +223,11 @@ public class MenuActivity extends AppCompatActivity {
             {
                 double d = DistanciaAcasa(latitude,longitude,19.337417, -99.180745);
                 double dprom = 0;
-                while (contador <= 6) {
+                while (contador <= 8) {
                     distancia.add(d);
                     contador++;
                 }
-                if (contador >= 6){
+                if (contador >= 8){
                     dprom = PromedioDistancias(distancia);
                     contador = 0;
                 }
@@ -233,10 +236,10 @@ public class MenuActivity extends AppCompatActivity {
                     Detener_actualizacion = true;
                     encenderFoco(true,4);
                 }
-                if(dprom > 6 && DetenerApagado == false)
+                if(dprom > 7) //&& DetenerApagado == false
                 {
                     encenderFoco(false,4);
-                    DetenerApagado = true;
+                    //DetenerApagado = true;
                 }
             }
         }
@@ -263,6 +266,7 @@ public class MenuActivity extends AppCompatActivity {
 
     /////////  Función para iniciar Música
     public void iniciarMusica(boolean a) {
+        Toast.makeText(this,"Reproduciendo música",Toast.LENGTH_SHORT).show();
         if(a)
         {
             String url = "https://davinci999.xyz/solicitud_musica.php";            // Falta completar URL
@@ -289,6 +293,7 @@ public class MenuActivity extends AppCompatActivity {
     /////////  Función para encender focos automático
     public void encenderFoco(boolean b, int number_switch) {
         if(b){
+            Toast.makeText(this,"Luz de habitación encendida",Toast.LENGTH_SHORT).show();
             String url = "https://davinci999.xyz/solicitud.php"; //http://davinci999.xyz
             JSONObject jsonObject_foco_on = new JSONObject();
             try {
@@ -314,6 +319,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         }
         else{
+
             JSONObject jsonObject_foco_off = new JSONObject();
             try {
                 jsonObject_foco_off.put("dispositivo_id",number_switch);
@@ -409,6 +415,7 @@ public class MenuActivity extends AppCompatActivity {
 
     // Listener para el control de la música, para parar la música
     public void controlMusica(View view) throws JSONException {
+            Toast.makeText(this,"Música detenida",Toast.LENGTH_SHORT).show();
             detener_musica=true;
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("USUARIO_ID",1);
