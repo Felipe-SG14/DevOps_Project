@@ -17,7 +17,7 @@ $datos = json_decode(file_get_contents('php://input'), true);
 
 print_r($datos);
 
-if(isset($datos["dispositivo_id"]) && isset($datos["Estado"]) && isset($datos["Intensidad"]))
+if(isset($datos["USUARIO_ID"]) && isset($datos["CLOSEHOME"]))
 {
     echo "Existe información\n";
 }
@@ -29,7 +29,7 @@ else
 $conn = mysqli_connect('localhost', 'u447795502_pedro_tsm','WB>CFYs+3u', 'u447795502_2022_tsm');
 //$sql = "INSERT INTO `pokemones` (`Nombre`, `Tipo`) VALUES ('{$datos["nombre"]}', '{$datos["tipo"]}')";
 
-$sql = "UPDATE FOCO SET Estado = '{$datos["Estado"]}', Intensidad = '{$datos["Intensidad"]}' WHERE DISPOSITIVO_ID = '{$datos["dispositivo_id"]}' ";
+$sql = "UPDATE UBICACION SET CLOSEHOME = '{$datos["CLOSEHOME"]}' WHERE usuario_id = '{$datos["USUARIO_ID"]}' ";
 
 if(mysqli_connect_errno())
 {

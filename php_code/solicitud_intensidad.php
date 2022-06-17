@@ -30,7 +30,7 @@ $conn = mysqli_connect('localhost', 'u447795502_pedro_tsm','WB>CFYs+3u', 'u44779
 //$conn = mysqli_connect('localhost','id18851704_user1','hSDAeD9*K|8Bqdmx','id18851704_spiraldatabase');
 //$sql = "INSERT INTO `pokemones` (`Nombre`, `Tipo`) VALUES ('{$datos["nombre"]}', '{$datos["tipo"]}')";
 
-$sql = "UPDATE FOCO SET Intensidad = '{$datos["Intensidad"]}' WHERE dispositivo_id = '{$datos["dispositivo_id"]}' ";
+$sql = "UPDATE FOCO SET Intensidad = '{$datos["Intensidad"]}' WHERE DISPOSITIVO_ID = '{$datos["dispositivo_id"]}' ";
 
 if(mysqli_connect_errno())
 {

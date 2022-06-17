@@ -28,12 +28,16 @@ if(mysqli_connect_errno())
  
  if($query)
  {
+    $myObj = new stdClass();
     $result = mysqli_fetch_assoc($query);
     $resultstring = $result['Estado'];
     $resultstrnigI = $result['Intensidad'];
-    echo $resultstring;
-    echo ",";
-    echo $resultstrnigI;
+
+    $myObj->Estado = $resultstring;
+    $myObj->Intensidad = $resultstrnigI;
+
+   $file = json_encode($myObj);
+   echo $file;
      
  }
  else
